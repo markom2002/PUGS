@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marija\\Desktop\\WEB\\BE\\BE.csproj": {}
+    "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\BE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marija\\Desktop\\WEB\\BE\\BE.csproj": {
+    "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\BE.csproj",
+        "projectUniqueName": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\BE.csproj",
         "projectName": "BE",
-        "projectPath": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\BE.csproj",
+        "projectPath": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\BE.csproj",
         "packagesPath": "C:\\Users\\Marija\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\obj\\",
+        "outputPath": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -51,6 +51,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.SpaServices.Extensions": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

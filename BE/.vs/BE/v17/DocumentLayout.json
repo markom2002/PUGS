@@ -1,9 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\",
+  "WorkspaceRootPath": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\web\\be\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D9116BD-C3C0-44D8-AC88-0C0BC4501CC1}|NewFolder1{8D9116BD-C3C0-44D8-AC88-0C0BC4501CC1}|C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -23,12 +30,38 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T18:37:15.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "package-lock.json",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json",
+              "RelativeDocumentMoniker": "..\\FE\\package-lock.json",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json",
+              "RelativeToolTip": "..\\FE\\package-lock.json",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-15T18:37:05.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "WeatherForecastController.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\Controllers\\WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\WEB\\BE\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\WeatherForecastController.cs",
               "RelativeToolTip": "Controllers\\WeatherForecastController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-15T11:06:50.748Z",
               "EditorCaption": ""
