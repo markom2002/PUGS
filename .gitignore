@@ -1,0 +1,9 @@
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+bin/
+obj\/nfe/node_modules\/n*.log
+*.DS_Store
+Thumbs.db
