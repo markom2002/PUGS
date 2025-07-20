@@ -8,6 +8,7 @@
 
         public int Points { get; set; }
         public int QuizId { get; set; }
+        public bool AllowMultipleAnswers { get; set; }
         public Quiz Quiz { get; set; } = default!;
 
         public ICollection<Option> Options { get; set; } = new List<Option>();

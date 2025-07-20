@@ -11,6 +11,20 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+// Dodaj CORS politiku
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")  // Frontend URL i port
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 // Dodaj Swagger i podešavanje JWT u Swagger UI
 builder.Services.AddEndpointsApiExplorer();
 
@@ -69,6 +83,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IQuizService, QuizService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IOptionService, OptionService>();
+builder.Services.AddScoped<IResultService, ResultService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -99,7 +114,9 @@ app.UseSpaStaticFiles();
 
 app.UseRouting();
 
-// Obavezno prvo autentifikacija pa autorizacija
+// Dodaj CORS middleware pre autentifikacije i autorizacije
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 

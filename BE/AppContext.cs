@@ -17,6 +17,8 @@ namespace BE
 
         public DbSet<Result> Results { get; set; }
 
+        public DbSet<Answer> Answers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,21 @@ namespace BE
                 .HasOne(o => o.Question)
                 .WithMany(q => q.Options)
                 .HasForeignKey(o => o.QuestionId);
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Result)
+                .WithMany(r => r.Answers)
+                .HasForeignKey(a => a.ResultId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany()
+                .HasForeignKey(a => a.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            
+
         }
 
     }

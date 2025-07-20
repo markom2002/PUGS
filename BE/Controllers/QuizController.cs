@@ -22,11 +22,11 @@ namespace BE.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<QuizDto>> GetById(int id)
+        public async Task<ActionResult<QuizDetailsDto>> GetById(int id)
         {
             try
             {
-                return Ok(await _quizService.GetByIdAsync(id));
+                return Ok(await _quizService.GetDetailsByIdAsync(id));
             }
             catch (Exception ex)
             {
@@ -66,5 +66,16 @@ namespace BE.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+
+        [HttpGet("category/{category}")]
+        public async Task<ActionResult<IEnumerable<QuizDto>>> GetByCategory(string category)
+        {
+            var quizzes = await _quizService.GetByCategoryAsync(category);
+            return Ok(quizzes);
+        }
+
+
+
+
     }
 }

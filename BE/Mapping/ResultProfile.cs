@@ -9,9 +9,10 @@ namespace BE.Mapping
         public ResultProfile()
         {
             CreateMap<Result, ResultViewDto>()
-                .ForMember(dest => dest.QuizTitle, opt => opt.MapFrom(src => src.Quiz.Title));
+                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Points));
 
-            CreateMap<CreateResultDto, Result>();
+            CreateMap<CreateResultDto, Result>()
+                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Points));
         }
     }
 }

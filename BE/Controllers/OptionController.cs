@@ -33,7 +33,9 @@ namespace BE.Controllers
         public async Task<IActionResult> Create(OptionDto dto)
         {
             var created = await _optionService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = (int)created.Id }, created);
+
+
         }
 
         [HttpPut("{id}")]

@@ -1,26 +1,41 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';   // dodaj import Navbar-a
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import Quizzes from './pages/Quizzes';
+import TakeQuiz from './pages/TakeQuiz';
+import AdminDashboard from './pages/AdminDashboard';
+import QuizResult from './pages/QuizResult';
+import MyResults from './pages/MyResults';
+import ResultDetails from './pages/ResultDetails';
+import AdminQuizManager from './pages/AdminQuizManager';
+import QuizForm from './pages/QuizForm';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path='/quizzes' element={<Quizzes />} />
+        <Route path="/quiz/:id" element={<TakeQuiz />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path='/results' element={<QuizResult />} />
+        <Route path="/my-results" element={<MyResults />} />
+        <Route path="/result-details/:id" element={<ResultDetails />} />
+
+        <Route path="/admin/quiz-manager" element={<AdminQuizManager />} />
+        <Route path="/admin/quiz-manager/create" element={<QuizForm />} />
+        <Route path="/admin/quiz-manager/edit/:id" element={<QuizForm />} />
+
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

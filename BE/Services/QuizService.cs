@@ -88,5 +88,60 @@ namespace BE.Services
 
             return dto;
         }
+
+        public async Task<QuizDetailsDto> GetDetailsByIdAsync(int id)
+        {
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.Options)
+                .FirstOrDefaultAsync(q => q.Id == id);
+
+            if (quiz == null)
+                throw new Exception("Quiz not found");
+
+            var quizDetailsDto = new QuizDetailsDto
+            {
+                Id = quiz.Id,
+                Title = quiz.Title,
+                Description = quiz.Description,
+                Difficulty = quiz.Difficulty,
+                TimeLimit = quiz.TimeLimit,
+                Category = quiz.Category,
+                Questions = quiz.Questions.Select(question => new QuestionDto
+                {
+                    Id = question.Id,
+                    Text = question.Text,
+                    Type = question.Type,
+                    QuizId = quiz.Id, // Obavezno ako je deo QuestionDto
+                    Points = question.Points,
+                    AllowMultipleAnswers = question.AllowMultipleAnswers,
+                    Options = question.Options.Select(option => new OptionDto
+                    {
+                        Id = option.Id,
+                        Text = option.Text,
+                        IsCorrect = option.IsCorrect,
+                        QuestionId = question.Id // Veza sa pitanjem
+                    }).ToList()
+                }).ToList()
+            };
+
+            return quizDetailsDto;
+        }
+
+        public async Task<IEnumerable<QuizDto>> GetByCategoryAsync(string category)
+        {
+            return await _context.Quizzes
+                .Where(q => q.Category.ToLower() == category.ToLower())
+                .Select(q => new QuizDto
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Description = q.Description,
+                    Difficulty = q.Difficulty,
+                    TimeLimit = q.TimeLimit,
+                    Category = q.Category,
+                })
+                .ToListAsync();
+        }
     }
 }

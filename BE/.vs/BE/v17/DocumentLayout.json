@@ -3,60 +3,108 @@
   "WorkspaceRootPath": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\resultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\resultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\resultviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\resultviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\createresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\createresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\quizcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\quizcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\quizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\quizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\optioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\optioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\optionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\optionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iquizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\iquizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\quizdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\quizdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\resultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\resultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\quizdetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\quizdetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\resultviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\resultviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\resultdetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\resultdetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\createresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\createresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\results\\answerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\results\\answerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\questiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\questiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\resultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\resultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\iresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\mapping\\resultprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:mapping\\resultprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\mapping\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:mapping\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\appcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:appcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\optiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -67,20 +115,20 @@
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\appcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:appcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\optionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\optionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\mapping\\resultprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:mapping\\resultprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -91,40 +139,20 @@
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\ioptionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\dtos\\leaderboardresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:dtos\\leaderboardresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\interfaces\\iquizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\interfaces\\iquizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\optioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\optioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\quizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\quizservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:services\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\mapping\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:mapping\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -141,9 +169,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|c:\\users\\marija\\desktop\\pugs\\be\\be.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
       "RelativeMoniker": "D:0:0:{EF009011-3897-4684-8B36-67A7DE7E85DB}|BE.csproj|solutionrelative:be.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D9116BD-C3C0-44D8-AC88-0C0BC4501CC1}|NewFolder1{8D9116BD-C3C0-44D8-AC88-0C0BC4501CC1}|C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -153,7 +178,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -161,163 +186,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "IQuizService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuizService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IQuizService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuizService.cs*",
+              "RelativeToolTip": "Services\\Interfaces\\IQuizService.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:02:15.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "QuizService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuizService.cs",
+              "RelativeDocumentMoniker": "Services\\QuizService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuizService.cs",
+              "RelativeToolTip": "Services\\QuizService.cs",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAwwIgAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:04:21.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ResultsController.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\ResultsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ResultsController.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\ResultsController.cs*",
-              "RelativeToolTip": "Controllers\\ResultsController.cs*",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAgwDwAAAAAAAAA",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\ResultsController.cs",
+              "RelativeToolTip": "Controllers\\ResultsController.cs",
+              "ViewState": "AQIAAIoAAAAAAAAAAAAAAKIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-16T15:39:21.455Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CreateResultDto.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\CreateResultDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\Results\\CreateResultDto.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\CreateResultDto.cs",
-              "RelativeToolTip": "Dtos\\Results\\CreateResultDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T15:31:13.739Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ResultViewDto.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultViewDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\Results\\ResultViewDto.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultViewDto.cs",
-              "RelativeToolTip": "Dtos\\Results\\ResultViewDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T15:36:43.058Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "Services\\UserService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\UserService.cs*",
-              "RelativeToolTip": "Services\\UserService.cs*",
-              "ViewState": "AQIAAEQAAAAAAAAAAAAgwE0AAABSAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T19:29:08.116Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAGsAAAAAAAAAAAAmwH8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T18:37:15.732Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-15T19:54:20.598Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAAwEwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T20:22:39.188Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T19:18:59.825Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "QuizController.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuizController.cs",
               "RelativeDocumentMoniker": "Controllers\\QuizController.cs",
               "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuizController.cs",
               "RelativeToolTip": "Controllers\\QuizController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEYAAAAAAAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAowEkAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-16T12:17:11.724Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "QuestionController.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuestionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\QuestionController.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuestionController.cs",
-              "RelativeToolTip": "Controllers\\QuestionController.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAcwDIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T12:37:11.409Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "OptionController.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\OptionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\OptionController.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\OptionController.cs",
-              "RelativeToolTip": "Controllers\\OptionController.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAkwDYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T13:46:36.793Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "OptionService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\OptionService.cs",
-              "RelativeDocumentMoniker": "Services\\OptionService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\OptionService.cs",
-              "RelativeToolTip": "Services\\OptionService.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAowAEAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T13:30:03.584Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 3,
               "Title": "QuizDto.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\QuizDto.cs",
               "RelativeDocumentMoniker": "Dtos\\QuizDto.cs",
@@ -330,59 +251,254 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Quiz.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Quiz.cs",
+              "RelativeDocumentMoniker": "Models\\Quiz.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Quiz.cs",
+              "RelativeToolTip": "Models\\Quiz.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T10:58:50.279Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Question.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Question.cs",
+              "RelativeDocumentMoniker": "Models\\Question.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Question.cs",
+              "RelativeToolTip": "Models\\Question.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T10:59:30.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "QuizDetailsDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\QuizDetailsDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\QuizDetailsDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\QuizDetailsDto.cs",
+              "RelativeToolTip": "Dtos\\QuizDetailsDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T10:29:40.187Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "QuestionController.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuestionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\QuestionController.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\QuestionController.cs",
+              "RelativeToolTip": "Controllers\\QuestionController.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAUwDIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:37:11.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ResultViewDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultViewDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\Results\\ResultViewDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultViewDto.cs",
+              "RelativeToolTip": "Dtos\\Results\\ResultViewDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T15:36:43.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CreateResultDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\CreateResultDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\Results\\CreateResultDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\CreateResultDto.cs",
+              "RelativeToolTip": "Dtos\\Results\\CreateResultDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T15:31:13.739Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AnswerDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\AnswerDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\Results\\AnswerDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\AnswerDto.cs",
+              "RelativeToolTip": "Dtos\\Results\\AnswerDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-18T20:52:09.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ResultDetailsDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultDetailsDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\Results\\ResultDetailsDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\Results\\ResultDetailsDto.cs",
+              "RelativeToolTip": "Dtos\\Results\\ResultDetailsDto.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAzwBoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-19T18:57:32.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 13,
+              "Title": "Option.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Option.cs",
+              "RelativeDocumentMoniker": "Models\\Option.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Option.cs",
+              "RelativeToolTip": "Models\\Option.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T10:59:58.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "QuestionDto.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\QuestionDto.cs",
               "RelativeDocumentMoniker": "Dtos\\QuestionDto.cs",
               "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\QuestionDto.cs",
               "RelativeToolTip": "Dtos\\QuestionDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAnAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-16T12:29:18.456Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "OptionDto.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\OptionDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\OptionDto.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\OptionDto.cs",
-              "RelativeToolTip": "Dtos\\OptionDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T13:27:37.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "LoginDto.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LoginDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\LoginDto.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LoginDto.cs",
-              "RelativeToolTip": "Dtos\\LoginDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Title": "ResultService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\ResultService.cs",
+              "RelativeDocumentMoniker": "Services\\ResultService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\ResultService.cs",
+              "RelativeToolTip": "Services\\ResultService.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAwEAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T19:22:35.392Z",
+              "WhenOpened": "2025-07-19T19:01:01.427Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\UserDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\UserDto.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\UserDto.cs",
-              "RelativeToolTip": "Dtos\\UserDto.cs",
+              "Title": "IResultService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IResultService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IResultService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IResultService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IResultService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T19:23:47.589Z",
+              "WhenOpened": "2025-07-19T19:00:16.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AutoMapperProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\AutoMapperProfile.cs",
+              "RelativeDocumentMoniker": "Mapping\\AutoMapperProfile.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\AutoMapperProfile.cs",
+              "RelativeToolTip": "Mapping\\AutoMapperProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T13:34:37.596Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
+              "Title": "ResultProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\ResultProfile.cs",
+              "RelativeDocumentMoniker": "Mapping\\ResultProfile.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\ResultProfile.cs",
+              "RelativeToolTip": "Mapping\\ResultProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T15:37:33.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AppContext.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\AppContext.cs",
+              "RelativeDocumentMoniker": "AppContext.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\AppContext.cs",
+              "RelativeToolTip": "AppContext.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAuwCgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T19:53:21.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Answer.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Answer.cs",
+              "RelativeDocumentMoniker": "Models\\Answer.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Answer.cs",
+              "RelativeToolTip": "Models\\Answer.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAswBAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-19T19:09:35.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Result.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Result.cs",
+              "RelativeDocumentMoniker": "Models\\Result.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Result.cs",
+              "RelativeToolTip": "Models\\Result.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAowBUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T15:29:05.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAG8AAAAAAAAAAAAuwI8AAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T18:37:15.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T19:18:59.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
               "Title": "RegisterDto.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\RegisterDto.cs",
               "RelativeDocumentMoniker": "Dtos\\RegisterDto.cs",
@@ -395,59 +511,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "AppContext.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\AppContext.cs",
-              "RelativeDocumentMoniker": "AppContext.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\AppContext.cs",
-              "RelativeToolTip": "AppContext.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAA6wBIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T19:53:21.834Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "ResultProfile.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\ResultProfile.cs",
-              "RelativeDocumentMoniker": "Mapping\\ResultProfile.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\ResultProfile.cs",
-              "RelativeToolTip": "Mapping\\ResultProfile.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T15:37:33.006Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "IQuestionService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuestionService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IQuestionService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuestionService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IQuestionService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T12:30:47.431Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "IOptionService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IOptionService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IOptionService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IOptionService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IOptionService.cs",
+              "DocumentIndex": 25,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\UserDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\UserDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\UserDto.cs",
+              "RelativeToolTip": "Dtos\\UserDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T13:29:36.137Z",
+              "WhenOpened": "2025-07-15T19:23:47.589Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
+              "Title": "OptionDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\OptionDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\OptionDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\OptionDto.cs",
+              "RelativeToolTip": "Dtos\\OptionDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T13:27:37.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LoginDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LoginDto.cs",
+              "RelativeToolTip": "Dtos\\LoginDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T19:22:35.392Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\UserService.cs",
+              "RelativeToolTip": "Services\\UserService.cs",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAwwF4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-15T19:29:08.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "QuestionService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuestionService.cs",
+              "RelativeDocumentMoniker": "Services\\QuestionService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuestionService.cs",
+              "RelativeToolTip": "Services\\QuestionService.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAswEQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:32:19.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "OptionService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\OptionService.cs",
+              "RelativeDocumentMoniker": "Services\\OptionService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\OptionService.cs",
+              "RelativeToolTip": "Services\\OptionService.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAswD8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T13:30:03.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IUserService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IUserService.cs",
@@ -460,111 +602,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "IQuizService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuizService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IQuizService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuizService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IQuizService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "DocumentIndex": 32,
+              "Title": "IQuestionService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuestionService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IQuestionService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IQuestionService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IQuestionService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T12:02:15.252Z",
+              "WhenOpened": "2025-07-16T12:30:47.431Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "QuizService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuizService.cs",
-              "RelativeDocumentMoniker": "Services\\QuizService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuizService.cs",
-              "RelativeToolTip": "Services\\QuizService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAuAAAA",
+              "DocumentIndex": 33,
+              "Title": "IOptionService.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IOptionService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IOptionService.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\Interfaces\\IOptionService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IOptionService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T12:04:21.93Z",
+              "WhenOpened": "2025-07-16T13:29:36.137Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "QuestionService.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuestionService.cs",
-              "RelativeDocumentMoniker": "Services\\QuestionService.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Services\\QuestionService.cs",
-              "RelativeToolTip": "Services\\QuestionService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAAAAAAA",
+              "DocumentIndex": 34,
+              "Title": "LeaderboardResultDto.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LeaderboardResultDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\LeaderboardResultDto.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Dtos\\LeaderboardResultDto.cs",
+              "RelativeToolTip": "Dtos\\LeaderboardResultDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T12:32:19.58Z",
+              "WhenOpened": "2025-07-18T17:50:47.77Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "AutoMapperProfile.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\AutoMapperProfile.cs",
-              "RelativeDocumentMoniker": "Mapping\\AutoMapperProfile.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Mapping\\AutoMapperProfile.cs",
-              "RelativeToolTip": "Mapping\\AutoMapperProfile.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
+              "DocumentIndex": 35,
+              "Title": "OptionController.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\OptionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\OptionController.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\OptionController.cs",
+              "RelativeToolTip": "Controllers\\OptionController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T13:34:37.596Z",
+              "WhenOpened": "2025-07-16T13:46:36.793Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "Result.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Result.cs",
-              "RelativeDocumentMoniker": "Models\\Result.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Result.cs",
-              "RelativeToolTip": "Models\\Result.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "DocumentIndex": 36,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T15:29:05.794Z",
+              "WhenOpened": "2025-07-15T20:22:39.188Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Question.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Question.cs",
-              "RelativeDocumentMoniker": "Models\\Question.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Question.cs",
-              "RelativeToolTip": "Models\\Question.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T10:59:30.528Z",
+              "DocumentIndex": 37,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-15T19:54:20.598Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "Option.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Option.cs",
-              "RelativeDocumentMoniker": "Models\\Option.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Option.cs",
-              "RelativeToolTip": "Models\\Option.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T10:59:58.328Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "Quiz.cs",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Quiz.cs",
-              "RelativeDocumentMoniker": "Models\\Quiz.cs",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Models\\Quiz.cs",
-              "RelativeToolTip": "Models\\Quiz.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T10:58:50.279Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -577,7 +693,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 39,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
@@ -590,7 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 40,
               "Title": "20250715211045_InitialCreate.cs",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\Migrations\\20250715211045_InitialCreate.cs",
               "RelativeDocumentMoniker": "Migrations\\20250715211045_InitialCreate.cs",
@@ -603,7 +719,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 41,
               "Title": "BE",
               "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\BE\\BE.csproj",
               "RelativeDocumentMoniker": "BE.csproj",
@@ -611,19 +727,6 @@
               "RelativeToolTip": "BE.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-07-15T23:17:48.571Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "package-lock.json",
-              "DocumentMoniker": "C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json",
-              "RelativeDocumentMoniker": "..\\FE\\package-lock.json",
-              "ToolTip": "C:\\Users\\Marija\\Desktop\\PUGS\\FE\\package-lock.json",
-              "RelativeToolTip": "..\\FE\\package-lock.json",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-15T18:37:05.381Z",
               "EditorCaption": ""
             }
           ]

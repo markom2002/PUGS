@@ -4,24 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BE.Models;
 using BE.Dtos.Results;
+using BE.Dtos;
+using System.Security.Claims;
+using BE.Services;
+using BE.Services.Interfaces;
 
 namespace BE.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/results")]
     public class ResultsController : ControllerBase
     {
         private readonly AppContext _context;
         private readonly IMapper _mapper;
+        private readonly IResultService _resultService;
 
-        public ResultsController(AppContext context, IMapper mapper)
+        public ResultsController(AppContext context, IMapper mapper, IResultService resultService)
         {
             _context = context;
             _mapper = mapper;
+            _resultService = resultService;
         }
 
         // GET: api/results
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResultViewDto>>> GetAllResults()
         {
@@ -37,11 +43,21 @@ namespace BE.Controllers
         [HttpGet("user")]
         public async Task<ActionResult<IEnumerable<ResultViewDto>>> GetUserResults()
         {
-            var userId = int.Parse(User.Claims.First(c => c.Type == "id").Value);
+            var userIdClaim = User.FindFirst("id");
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Nije pronađen ID korisnika u tokenu.");
+            }
+
+            if (!int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return BadRequest("Nevalidan ID korisnika.");
+            }
 
             var results = await _context.Results
                 .Where(r => r.UserId == userId)
                 .Include(r => r.Quiz)
+                .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();
 
             return Ok(_mapper.Map<IEnumerable<ResultViewDto>>(results));
@@ -50,52 +66,97 @@ namespace BE.Controllers
         // POST: api/results
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<ResultViewDto>> CreateResult(CreateResultDto dto)
+        public async Task<IActionResult> CreateResult(CreateResultDto dto)
         {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+            var userIdClaim = User.FindFirst("id");
             if (userIdClaim == null)
-                return Unauthorized("User ID claim is missing in token.");
+            {
+                return Unauthorized("Korisnik nije prijavljen.");
+            }
+            var userId = int.Parse(userIdClaim.Value);
 
-            if (!int.TryParse(userIdClaim.Value, out int userId))
-                return BadRequest("Invalid User ID claim.");
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.Options)
+                .FirstOrDefaultAsync(q => q.Id == dto.QuizId);
 
-            var result = _mapper.Map<Result>(dto);
-            result.UserId = userId;
-            result.CreatedAt = DateTime.UtcNow;
+            if (quiz == null) return NotFound("Quiz not found");
+
+            int totalPoints = 0;
+
+            var result = new Result
+            {
+                QuizId = dto.QuizId,
+                UserId = userId,
+                CreatedAt = DateTime.Now,
+                Answers = new List<Answer>()
+            };
+
+            foreach (var answerDto in dto.Answers)
+            {
+                var question = quiz.Questions.FirstOrDefault(q => q.Id == answerDto.QuestionId);
+                if (question == null) continue;
+
+                bool isCorrect = false;
+
+                if (question.Type == "single" || question.Type == "multiple")
+                {
+                    var correctOptions = question.Options.Where(o => o.IsCorrect).Select(o => o.Id).OrderBy(x => x);
+                    var selectedOptions = answerDto.SelectedOptionIds.OrderBy(x => x);
+                    isCorrect = correctOptions.SequenceEqual(selectedOptions);
+                }
+                else if (question.Type == "truefalse")
+                {
+                    var correctOption = question.Options.FirstOrDefault(o => o.IsCorrect);
+                    isCorrect = correctOption != null && answerDto.SelectedOptionIds.Contains(correctOption.Id);
+                }
+                else if (question.Type == "fill")
+                {
+                    var correctOption = question.Options.FirstOrDefault(o => o.IsCorrect);
+                    if (correctOption != null)
+                        isCorrect = string.Equals(correctOption.Text.Trim(), answerDto.UserAnswer?.Trim(), StringComparison.OrdinalIgnoreCase);
+                }
+
+                if (isCorrect)
+                    totalPoints += question.Points;
+
+                // ➕ Dodavanje odgovora u listu odgovora
+                var answer = new Answer
+                {
+                    QuestionId = answerDto.QuestionId,
+                    SelectedOptionIds = string.Join(",", answerDto.SelectedOptionIds), // Ako je string, ili koristi poseban AnswerOption entitet ako imaš vezu
+                    UserAnswer = answerDto.UserAnswer
+                };
+
+                result.Answers.Add(answer);
+            }
+
+            result.Points = totalPoints;
 
             _context.Results.Add(result);
             await _context.SaveChangesAsync();
 
-            var resultDto = _mapper.Map<ResultViewDto>(result);
-            return CreatedAtAction(nameof(GetUserResults), new { id = result.Id }, resultDto);
+            return Ok();
         }
 
-        // GET: api/results/leaderboard?quizId=1&period=monthly
-        [AllowAnonymous]
-        [HttpGet("leaderboard")]
-        public async Task<ActionResult<IEnumerable<ResultViewDto>>> GetLeaderboard(int quizId, string period = "all")
+
+        // GET: api/results/{id}
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ResultDetailsDto>> GetResultDetails(int id)
         {
-            var query = _context.Results.Include(r => r.Quiz)
-                .Where(r => r.QuizId == quizId);
-
-            if (period == "monthly")
+            try
             {
-                var monthAgo = DateTime.UtcNow.AddMonths(-1);
-                query = query.Where(r => r.CreatedAt >= monthAgo);
+                var resultDetails = await _resultService.GetDetailsByIdAsync(id);
+                return Ok(resultDetails);
             }
-            else if (period == "weekly")
+            catch (Exception ex)
             {
-                var weekAgo = DateTime.UtcNow.AddDays(-7);
-                query = query.Where(r => r.CreatedAt >= weekAgo);
+                return NotFound(ex.Message);
             }
-
-            var topResults = await query
-                .OrderByDescending(r => r.Percentage)
-                .ThenBy(r => r.Duration)
-                .Take(10)
-                .ToListAsync();
-
-            return Ok(_mapper.Map<IEnumerable<ResultViewDto>>(topResults));
         }
+        
+
+     
     }
 }
