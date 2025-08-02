@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { register } from '../services/AuthService';
 import { RegisterDto } from '../models/Auth';
+import './css/Register.css';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterDto>({
@@ -33,7 +34,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='register-container'>
       <h2>Registracija</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>Uspješna registracija!</p>}

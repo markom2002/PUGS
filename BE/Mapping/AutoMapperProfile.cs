@@ -9,7 +9,10 @@ namespace BE.Mapping
         public AutoMapperProfile()
         {
             CreateMap<Option, OptionDto>().ReverseMap();
-            CreateMap<Question, QuestionDto>().ReverseMap();
+            CreateMap<Question, QuestionDto>()
+                .ForMember(dest => dest.CorrectTextAnswer, opt => opt.MapFrom(src => src.CorrectTextAnswer))
+                .ReverseMap();
+
             CreateMap<Quiz, QuizDto>().ReverseMap();
         }
     }

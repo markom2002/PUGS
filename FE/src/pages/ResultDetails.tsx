@@ -1,54 +1,74 @@
-// src/pages/ResultDetails.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getResultDetails } from '../services/ResultService';
-import { ResultDetailsDto } from '../models/Result';
+import { getResultDetails, getUserQuizAttempts } from '../services/ResultService';
+import { ResultDetailsDto, QuizAttemptDto } from '../models/Result';
+import ProgressChart from './ProgressChart';
+import { UserAttempt } from "./ProgressChart";
+import './css/ResultDetails.css';
+
+
 
 const ResultDetails: React.FC = () => {
   const { id } = useParams();
   const [result, setResult] = useState<ResultDetailsDto | null>(null);
   const [loading, setLoading] = useState(true);
+  const [attempts, setAttempts] = useState<QuizAttemptDto[]>([]);
 
- useEffect(() => {
-    const fetchResultDetails = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const data = await getResultDetails(Number(id));
-        console.log("Fetched result details:", data);
-        setResult(data);
+        const resultData = await getResultDetails(Number(id));
+        setResult(resultData);
+
+        const attemptsData = await getUserQuizAttempts(resultData.quizId);
+        setAttempts(attemptsData);
       } catch (error) {
-        console.error("Greška pri dohvatanju rezultata:", error);
+        console.error("Greška pri dohvatanju podataka:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchResultDetails();
+    fetchData();
   }, [id]);
 
   if (loading) return <div>Učitavanje...</div>;
   if (!result) return <div>Rezultat nije pronađen.</div>;
 
+  // Mapiranje u tip koji ProgressChart očekuje
+  const formattedAttempts: UserAttempt[] = attempts.map(a => ({
+    attemptDate: a.createdAt,   // proveri da li je 'createdAt' ili 'attemptDate' u QuizAttemptDto
+    points: a.points,
+    percentage: a.percentage,
+  }));
+
   return (
-  <div className="p-6">
-    <h2 className="text-xl font-bold mb-4">{result.quizTitle} - Detalji rezultata</h2>
-    <p className="mb-2">Trajanje: {result.duration} sekundi</p>
-    <p className="mb-4">Procenat: {result.percentage}% | Poeni: {result.points}</p>
+    <div className="result-container">
+      <h2 className="result-title">{result.quizTitle} - Detalji rezultata</h2>
+      <p className="result-info">Trajanje: {result.duration} sekundi</p>
+      <p className="result-info">Procenat: {result.percentage}% | Poeni: {result.points}</p>
 
-    {result.answers.map((q, idx) => (
-      <div key={q.questionId} className="mb-4 p-3 border rounded">
-        <p className="font-semibold">{idx + 1}. {q.questionText}</p>
-        <p className="text-sm">Tip: {q.type}</p>
-        <p className={`mt-1 ${q.isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-          Tvoj odgovor: {q.userAnswers.length > 0 ? q.userAnswers.join(', ') : 'Nema odgovora'}
-        </p>
-        {!q.isCorrect && (
-          <p className="text-green-600">Tačan odgovor: {q.correctAnswers.join(', ')}</p>
-        )}
-      </div>
-    ))}
-  </div>
-);
+      {result.answers.map((q, idx) => (
+        <div key={q.questionId} className="answer-box">
+          <p className="question-text">{idx + 1}. {q.questionText}</p>
+          <p className="question-type">Tip: {q.type}</p>
+          <p className={q.isCorrect ? 'correct' : 'incorrect'}>
+            Tvoj odgovor: {q.userAnswers.length > 0 ? q.userAnswers.join(', ') : 'Nema odgovora'}
+          </p>
+          {!q.isCorrect && (
+            <p className="correct">Tačan odgovor: {q.correctAnswers.join(', ')}</p>
+          )}
+        </div>
+      ))}
 
+      {formattedAttempts.length > 0 && (
+        <div className="chart-section" style={{ marginTop: '40px' }}>
+          <h3>Grafikon napretka</h3>
+          <ProgressChart attempts={formattedAttempts} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default ResultDetails;

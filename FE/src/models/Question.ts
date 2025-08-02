@@ -9,4 +9,5 @@ export interface QuestionDto {
   points: number;
   allowMultipleAnswers: boolean;
   options: OptionDto[];
+  correctTextAnswer?: string;
 }

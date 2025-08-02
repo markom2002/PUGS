@@ -8,6 +8,7 @@ using BE.Dtos;
 using System.Security.Claims;
 using BE.Services;
 using BE.Services.Interfaces;
+using BE.Dtos.Leaderboard;
 
 namespace BE.Controllers
 {
@@ -83,13 +84,15 @@ namespace BE.Controllers
             if (quiz == null) return NotFound("Quiz not found");
 
             int totalPoints = 0;
+            int correctAnswers = 0;
 
             var result = new Result
             {
                 QuizId = dto.QuizId,
                 UserId = userId,
                 CreatedAt = DateTime.Now,
-                Answers = new List<Answer>()
+                Answers = new List<Answer>(),
+                Duration = dto.Duration
             };
 
             foreach (var answerDto in dto.Answers)
@@ -110,31 +113,47 @@ namespace BE.Controllers
                     var correctOption = question.Options.FirstOrDefault(o => o.IsCorrect);
                     isCorrect = correctOption != null && answerDto.SelectedOptionIds.Contains(correctOption.Id);
                 }
-                else if (question.Type == "fill")
+                else if (question.Type == "fill" || question.Type == "text")
                 {
                     var correctOption = question.Options.FirstOrDefault(o => o.IsCorrect);
+
                     if (correctOption != null)
+                    {
                         isCorrect = string.Equals(correctOption.Text.Trim(), answerDto.UserAnswer?.Trim(), StringComparison.OrdinalIgnoreCase);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(question.CorrectTextAnswer))
+                    {
+                        isCorrect = string.Equals(question.CorrectTextAnswer.Trim(), answerDto.UserAnswer?.Trim(), StringComparison.OrdinalIgnoreCase);
+                    }
                 }
 
                 if (isCorrect)
+                {
                     totalPoints += question.Points;
-
+                    correctAnswers++;
+                }
                 // ➕ Dodavanje odgovora u listu odgovora
                 var answer = new Answer
                 {
                     QuestionId = answerDto.QuestionId,
                     SelectedOptionIds = string.Join(",", answerDto.SelectedOptionIds), // Ako je string, ili koristi poseban AnswerOption entitet ako imaš vezu
-                    UserAnswer = answerDto.UserAnswer
+                    UserAnswer = answerDto.UserAnswer,
+                    IsCorrect = isCorrect
                 };
 
                 result.Answers.Add(answer);
             }
 
             result.Points = totalPoints;
+            result.CorrectAnswers = correctAnswers;
+            result.Percentage = quiz.Questions.Count > 0
+                ? Math.Round((double)correctAnswers * 100 / quiz.Questions.Count, 2)
+                : 0;
 
             _context.Results.Add(result);
             await _context.SaveChangesAsync();
+
+
 
             return Ok();
         }
@@ -155,8 +174,40 @@ namespace BE.Controllers
                 return NotFound(ex.Message);
             }
         }
-        
 
-     
+        [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<UserResultDto>>> GetAllUserResults()
+        {
+            var results = await _resultService.GetAllUserResultsAsync();
+            return Ok(results);
+        }
+
+
+
+        [HttpPost("leaderboard")]
+        public async Task<IActionResult> GetLeaderboard([FromBody] LeaderboardFilterDto filter)
+        {
+            var leaderboard = await _resultService.GetLeaderboardAsync(filter);
+            return Ok(leaderboard);
+        }
+
+
+        [Authorize]
+        [HttpGet("progress/{quizId}")]
+        public async Task<IActionResult> GetUserProgress(int quizId)
+        {
+            var userIdClaim = User.FindFirst("id");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                return Unauthorized();
+
+            var progress = await _resultService.GetUserProgressAsync(userId, quizId);
+            return Ok(progress);
+        }
+
+
+
+
+
     }
 }

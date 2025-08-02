@@ -90,6 +90,9 @@ namespace BE.Migrations
                     b.Property<bool>("AllowMultipleAnswers")
                         .HasColumnType("bit");
 
+                    b.Property<string>("CorrectTextAnswer")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Points")
                         .HasColumnType("int");
 

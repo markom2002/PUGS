@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BE.Services.Interfaces;
 using BE.Dtos;
+using BE.Dtos.Quiz;
 
 namespace BE.Controllers
 {
@@ -74,6 +75,40 @@ namespace BE.Controllers
             return Ok(quizzes);
         }
 
+        [HttpPost("full")]
+        public async Task<ActionResult<QuizDetailsDto>> CreateWithDetails([FromBody] CreateQuizDetailsDto dto)
+        {
+            var createdQuiz = await _quizService.CreateWithDetailsAsync(dto);
+            return Ok(createdQuiz);
+        }
+
+        [HttpPut("full/{id}")]
+        public async Task<ActionResult<QuizDetailsDto>> UpdateWithDetails(int id, UpdateQuizDetailsDto dto)
+        {
+            try
+            {
+                return Ok(await _quizService.UpdateWithDetailsAsync(id, dto));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+
+        [HttpDelete("questions/{questionId}")]
+        public async Task<IActionResult> DeleteQuestion(int questionId)
+        {
+            try
+            {
+                await _quizService.DeleteQuestionAsync(questionId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
 
 
 

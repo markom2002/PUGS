@@ -9,6 +9,9 @@
         public int QuizId { get; set; }
         public bool AllowMultipleAnswers { get; set; }
 
+        public string? CorrectTextAnswer { get; set; }
+
+
         public List<OptionDto> Options { get; set; } = new();
     }
 }

@@ -4,6 +4,7 @@ import { login } from '../services/AuthService';
 import { LoginDto } from '../models/Auth';
 import { useNavigate } from 'react-router-dom';
 import { parseJwt } from '../utils/token';
+import './css/Login.css'; // ✅ Dodato
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginDto>({
@@ -27,9 +28,8 @@ const Login: React.FC = () => {
 
       const payload = parseJwt(response.token);
       const role = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      const userId = payload["id"]; // ili "sub" ako je tako podešeno
+      const userId = payload["id"];
       localStorage.setItem("userId", userId); 
-
 
       if (role === 'Admin') {
         navigate('/admin/dashboard');
@@ -42,10 +42,10 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        {error && <p>{error}</p>}
         <input
           type="text"
           name="usernameOrEmail"
@@ -55,7 +55,6 @@ const Login: React.FC = () => {
           required
           autoComplete="username"
         />
-        <br />
         <input
           type="password"
           name="password"
@@ -65,7 +64,6 @@ const Login: React.FC = () => {
           required
           autoComplete="current-password"
         />
-        <br />
         <button type="submit">Login</button>
       </form>
     </div>

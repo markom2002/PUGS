@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { UserResult } from '../models/UserResult';
-import { ResultDto, ResultDetailsDto } from '../models/Result';
+import { ResultDto, ResultDetailsDto, QuizAttemptDto } from '../models/Result';
+
 
 
 
@@ -70,6 +71,29 @@ export const getMyResults = async (): Promise<ResultDto[]> => {
 export const getResultDetails = async (id: number): Promise<ResultDetailsDto> => {
   const token = localStorage.getItem('token');
   const response = await axios.get(`${API_URL}/api/results/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+
+export const getAllUserResults = async (): Promise<UserResult[]> => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${API_URL}/api/results/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+
+
+export const getUserQuizAttempts = async (quizId: number): Promise<QuizAttemptDto[]> => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${API_URL}/api/results/progress/${quizId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

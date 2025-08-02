@@ -1,4 +1,5 @@
 ﻿using BE.Dtos;
+using BE.Dtos.Quiz;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BE.Services.Interfaces
@@ -13,6 +14,13 @@ namespace BE.Services.Interfaces
         Task<QuizDetailsDto> GetDetailsByIdAsync(int id);
 
         Task<IEnumerable<QuizDto>> GetByCategoryAsync(string category);
+
+        Task<QuizDetailsDto> CreateWithDetailsAsync(CreateQuizDetailsDto dto);
+
+        Task<QuizDetailsDto> UpdateWithDetailsAsync(int id, UpdateQuizDetailsDto dto);
+
+        Task DeleteQuestionAsync(int questionId);
+
 
 
     }

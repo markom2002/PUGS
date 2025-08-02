@@ -1,21 +1,32 @@
-// src/pages/AdminDashboard.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './css/AdminDashboard.css';
 
 const AdminDashboard: React.FC = () => {
-  const navigate = useNavigate(); // <--- OVO JE NEDOSTAJALO
+  const navigate = useNavigate();
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
-      <p className="mb-6">Ovde će biti CRUD nad kvizovima i pitanjima.</p>
+    <div className="admin-dashboard-container">
+      <h2 className="admin-dashboard-title">Admin Dashboard</h2>
+      <p className="admin-dashboard-description">
+        Ovde će biti CRUD nad kvizovima i pitanjima.
+      </p>
 
-      <button
-        onClick={() => navigate('/admin/quiz-manager')}
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
-      >
-        Upravljaj kvizovima
-      </button>
+      <div className="admin-dashboard-buttons">
+        <button
+          className="btn btn-blue"
+          onClick={() => navigate('/admin/quiz-manager')}
+        >
+          Upravljaj kvizovima
+        </button>
+
+        <button
+          className="btn btn-green"
+          onClick={() => navigate('/admin/results')}
+        >
+          Pregled rezultata korisnika
+        </button>
+      </div>
     </div>
   );
 };

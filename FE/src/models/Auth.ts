@@ -17,5 +17,5 @@ export interface AuthResponse {
   userId: number;
   username: string;
   email: string;
-  role: string; // npr. 'User' ili 'Admin'
+  role?: string; // npr. 'User' ili 'Admin'
 }

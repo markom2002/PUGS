@@ -1,37 +1,35 @@
-//src/pages/TaskQuiz.tsx
+// src/pages/TakeQuiz.tsx
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getQuizById } from '../services/QuizService';
 import { submitQuizResult } from '../services/ResultService';
 import { QuizDetailsDto } from '../models/Quiz';
 import { QuestionDto } from '../models/Question';
+import './css/TakeQuiz.css';
 
 const TakeQuiz: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
 
   const [quiz, setQuiz] = useState<QuizDetailsDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState<{ [questionId: number]: any }>({});
   const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const startTimeRef = useRef<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const hasSubmittedRef = useRef(false);
 
-
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
 
   // Precizni timer sa Date.now()
   useEffect(() => {
-    //Restartujemo sve prije ucitavanja novog kviza
     setQuiz(null);
     setAnswers({});
     setTimeLeft(0);
     setIsSubmitted(false);
-    
+    setCurrentQuestionIndex(0);
 
     const fetchQuiz = async () => {
       if (!id) return;
@@ -42,7 +40,7 @@ const TakeQuiz: React.FC = () => {
         startTimeRef.current = Date.now();
         setTimeLeft(data.timeLimit);
 
-        timerRef.current = setInterval(() => { 
+        timerRef.current = setInterval(() => {
           if (startTimeRef.current === null || hasSubmittedRef.current) return;
 
           const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
@@ -52,12 +50,12 @@ const TakeQuiz: React.FC = () => {
             clearInterval(timerRef.current!);
             setTimeLeft(0);
 
-          if (!hasSubmittedRef.current) {
-            handleSubmit();
+            if (!hasSubmittedRef.current) {
+              handleSubmit();
             }
           } else {
-          setTimeLeft(remaining);
-          } 
+            setTimeLeft(remaining);
+          }
         }, 250);
       } catch (error) {
         console.error('Greška pri učitavanju kviza:', error);
@@ -67,7 +65,6 @@ const TakeQuiz: React.FC = () => {
     };
 
     fetchQuiz();
-    
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -79,7 +76,7 @@ const TakeQuiz: React.FC = () => {
     setAnswers((prev) => {
       const current = prev[question.id];
 
-      if (question.type === 'fill') {
+      if (question.type === 'text') {
         return { ...prev, [question.id]: value };
       }
 
@@ -120,7 +117,6 @@ const TakeQuiz: React.FC = () => {
         if (userAnswer?.[0] === correctOption?.id) {
           correctCount++;
         }
-
       } else if (question.type === 'multiple') {
         const correctOptions = question.options.filter((o) => o.isCorrect).map((o) => o.id);
         const userOptions = Array.isArray(userAnswer) ? userAnswer : [];
@@ -131,11 +127,10 @@ const TakeQuiz: React.FC = () => {
         ) {
           correctCount++;
         }
-
-      } else if (question.type === 'fill') {
-        const correctText = question.options[0]?.text?.trim().toLowerCase();
+      } else if (question.type === 'fill'  || question.type === 'text') {
+        const correctText = question.correctTextAnswer?.trim().toLowerCase() ?? '';
         const userText = (userAnswer || '').trim().toLowerCase();
-        if (userText === correctText) {
+        if (userText === correctText && correctText !== '') {
           correctCount++;
         }
       }
@@ -156,16 +151,14 @@ const TakeQuiz: React.FC = () => {
       if (question.type === 'single' || question.type === 'truefalse') {
         const correctOption = question.options.find((o) => o.isCorrect);
         isCorrect = userAnswer?.[0] === correctOption?.id;
-
       } else if (question.type === 'multiple') {
-        const correctOptions = question.options.filter((o) => o.isCorrect).map(o => o.id);
+        const correctOptions = question.options.filter((o) => o.isCorrect).map((o) => o.id);
         const userOptions = Array.isArray(userAnswer) ? userAnswer : [];
-        isCorrect = correctOptions.length === userOptions.length && correctOptions.every(id => userOptions.includes(id));
-
-      } else if (question.type === 'fill') {
-        const correctText = question.options[0]?.text?.trim().toLowerCase();
+        isCorrect = correctOptions.length === userOptions.length && correctOptions.every((id) => userOptions.includes(id));
+      } else if (question.type === 'fill' || question.type === 'text') {
+        const correctText = question.correctTextAnswer?.trim().toLowerCase() ?? '';
         const userText = (userAnswer || '').trim().toLowerCase();
-        isCorrect = userText === correctText;
+        isCorrect = userText === correctText && correctText !== '';
       }
 
       if (isCorrect) {
@@ -179,18 +172,14 @@ const TakeQuiz: React.FC = () => {
   const handleSubmit = async () => {
     if (hasSubmittedRef.current) return;
 
-        hasSubmittedRef.current = true; // Obeleži da je submit pozvan
+    hasSubmittedRef.current = true;
 
-
-      setIsSubmitted(true);
-      
+    setIsSubmitted(true);
 
     if (!quiz || !startTimeRef.current) {
       navigate('/results', { state: { message: 'Kviz nije dostupan' } });
       return;
     }
-
-    setIsSubmitted(true);
 
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -209,12 +198,11 @@ const TakeQuiz: React.FC = () => {
       return {
         questionId: question.id,
         selectedOptionIds: Array.isArray(answer) ? answer.map(String) : [],
-        textAnswer: typeof answer === 'string' ? answer : undefined,
+        userAnswer: typeof answer === 'string' ? answer : undefined,
       };
     });
 
-    const userId = localStorage.getItem("userId");
-
+    const userId = localStorage.getItem('userId');
 
     const payload = {
       userId: userId ? parseInt(userId) : undefined,
@@ -226,12 +214,9 @@ const TakeQuiz: React.FC = () => {
       duration: durationStr,
     };
 
-    
-
     try {
       await submitQuizResult(payload);
 
-      // Pripremi kompletan objekat za navigaciju sa svim detaljima
       const resultState = {
         quizId: quiz.id,
         quizTitle: quiz.title,
@@ -245,46 +230,47 @@ const TakeQuiz: React.FC = () => {
           type: question.type,
           userAnswer: (() => {
             const ans = answers[question.id];
-            if (question.type === 'fill') {
+            if (question.type === 'fill' || question.type === 'text') {
               return typeof ans === 'string' ? ans : 'Nema odgovora';
             }
             if (Array.isArray(ans)) {
               if (ans.length === 0) return 'Nema odgovora';
-              // map option ids to option text
               return ans
                 .map((optId: number) => {
-                  const opt = question.options.find(o => o.id === String(optId));
-
-
-
+                  const opt = question.options.find((o) => o.id === optId);
                   return opt ? opt.text : '';
                 })
-                .filter(t => t)
+                .filter((t) => t)
                 .join(', ');
             }
             return 'Nema odgovora';
           })(),
           correctAnswer: (() => {
-            const correctOpts = question.options.filter(o => o.isCorrect).map(o => o.text);
-            return correctOpts.join(', ');
-          })(),
+  if (question.type === 'text' || question.type === 'fill') {
+    // Ovde koristi correctTextAnswer ako postoji
+    return question.correctTextAnswer ?? 'Nema odgovora';
+  }
+  const correctOpts = question.options.filter((o) => o.isCorrect && o.text?.trim()).map((o) => o.text!.trim());
+  return correctOpts.length > 0 ? correctOpts.join(', ') : 'Nema odgovora';
+})(),
+
           isCorrect: (() => {
             if (!quiz) return false;
-            if (question.type === 'fill') {
+            if (question.type === 'fill' || question.type === 'text') {
               const userAns = answers[question.id];
-              const correctText = question.options[0]?.text?.trim().toLowerCase();
-              return (typeof userAns === 'string' && userAns.trim().toLowerCase() === correctText);
+              const correctText = question.correctTextAnswer?.trim().toLowerCase() ?? '';
+              return typeof userAns === 'string' && userAns.trim().toLowerCase() === correctText && correctText !== '';
             }
             if (question.type === 'single' || question.type === 'truefalse') {
               const userAns = answers[question.id];
-              const correctOpt = question.options.find(o => o.isCorrect);
+              const correctOpt = question.options.find((o) => o.isCorrect);
               return userAns?.[0] === correctOpt?.id;
             }
             if (question.type === 'multiple') {
               const userAns = answers[question.id];
-              const correctOpts = question.options.filter(o => o.isCorrect).map(o => o.id);
+              const correctOpts = question.options.filter((o) => o.isCorrect).map((o) => o.id);
               if (!Array.isArray(userAns)) return false;
-              return correctOpts.length === userAns.length && correctOpts.every(id => userAns.includes(id));
+              return correctOpts.length === userAns.length && correctOpts.every((id) => userAns.includes(id));
             }
             return false;
           })(),
@@ -301,70 +287,89 @@ const TakeQuiz: React.FC = () => {
   if (loading) return <div>Učitavanje kviza...</div>;
   if (!quiz) return <div>Kviz nije pronađen.</div>;
 
+  const currentQuestion = quiz.questions[currentQuestionIndex];
+
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{quiz.title}</h2>
-      <p className="mb-6 text-gray-600 font-medium">
+    <div className="take-quiz-container">
+      <h2 className="take-quiz-title">{quiz.title}</h2>
+      <p className="take-quiz-timer">
         Preostalo vreme: <span className="font-semibold">{timeLeft} sekundi</span>
       </p>
 
-      {quiz.questions.map((question) => (
-        <div key={question.id} className="mb-10">
-          <h3 className="text-xl font-semibold mb-4">{question.text}</h3>
+      <div key={currentQuestion.id} className="question-block">
+        <h3 className="question-text">{currentQuestion.text}</h3>
 
-          {(question.type === 'single' || question.type === 'truefalse') && (
-            <div className="flex flex-col space-y-3">
-              {question.options.map((opt) => (
-                <label key={opt.id} className="flex items-center space-x-3 cursor-pointer text-gray-800">
-                  <input
-                    type="radio"
-                    name={`q_${question.id}`}
-                    value={opt.id}
-                    checked={Array.isArray(answers[question.id]) && answers[question.id][0] === opt.id}
-                    onChange={() => handleAnswerChange(question, opt.id)}
-                    className="w-6 h-6"
-                  />
-                  <span className="text-lg">{opt.text}</span>
-                </label>
-              ))}
-            </div>
-          )}
+        {(currentQuestion.type === 'single' || currentQuestion.type === 'truefalse') && (
+          <div className="flex flex-col space-y-3">
+            {currentQuestion.options.map((opt) => (
+              <label key={opt.id} className="option-label">
+                <input
+                  type="radio"
+                  name={`q_${currentQuestion.id}`}
+                  value={opt.id}
+                  checked={Array.isArray(answers[currentQuestion.id]) && answers[currentQuestion.id][0] === opt.id}
+                  onChange={() => handleAnswerChange(currentQuestion, opt.id)}
+                  className="w-6 h-6"
+                />
+                <span className="text-lg">{opt.text}</span>
+              </label>
+            ))}
+          </div>
+        )}
 
-          {question.type === 'multiple' && (
-            <div className="flex flex-col space-y-3">
-              {question.options.map((opt) => (
-                <label key={opt.id} className="flex items-center space-x-3 cursor-pointer text-gray-800">
-                  <input
-                    type="checkbox"
-                    value={opt.id}
-                    checked={Array.isArray(answers[question.id]) && answers[question.id].includes(opt.id)}
-                    onChange={() => handleAnswerChange(question, opt.id)}
-                    className="w-6 h-6"
-                  />
-                  <span className="text-lg">{opt.text}</span>
-                </label>
-              ))}
-            </div>
-          )}
+        {currentQuestion.type === 'multiple' && (
+          <div className="flex flex-col space-y-3">
+            {currentQuestion.options.map((opt) => (
+              <label key={opt.id} className="option-label">
+                <input
+                  type="checkbox"
+                  value={opt.id}
+                  checked={Array.isArray(answers[currentQuestion.id]) && answers[currentQuestion.id].includes(opt.id)}
+                  onChange={() => handleAnswerChange(currentQuestion, opt.id)}
+                  className="w-6 h-6"
+                />
+                <span className="text-lg">{opt.text}</span>
+              </label>
+            ))}
+          </div>
+        )}
 
-          {question.type === 'fill' && (
-            <input
-              type="text"
-              className="border border-gray-400 p-3 rounded w-full text-lg"
-              placeholder="Unesite odgovor"
-              value={typeof answers[question.id] === 'string' ? answers[question.id] : ''}
-              onChange={(e) => handleAnswerChange(question, e.target.value)}
-            />
-          )}
-        </div>
-      ))}
+        {currentQuestion.type === 'text' && (
+          <input
+            type="text"
+            className="fill-input"
+            placeholder="Unesite odgovor"
+            value={typeof answers[currentQuestion.id] === 'string' ? answers[currentQuestion.id] : ''}
+            onChange={(e) => handleAnswerChange(currentQuestion, e.target.value)}
+          />
+        )}
+      </div>
 
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-700 text-white px-6 py-3 rounded hover:bg-blue-800 transition"
-      >
-        Završi kviz
-      </button>
+      <div className="flex justify-between mt-6">
+        <button
+          onClick={() => setCurrentQuestionIndex((idx) => Math.max(0, idx - 1))}
+          disabled={currentQuestionIndex === 0}
+          className="quiz-button next"
+        >
+          Nazad
+        </button>
+
+        {currentQuestionIndex < quiz.questions.length - 1 ? (
+          <button
+            onClick={() => setCurrentQuestionIndex((idx) => Math.min(quiz.questions.length - 1, idx + 1))}
+            className="quiz-button next"
+          >
+            Napred
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className="quiz-button next"
+          >
+            Završi kviz
+          </button>
+        )}
+      </div>
     </div>
   );
 };

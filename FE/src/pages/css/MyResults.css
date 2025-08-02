@@ -1,0 +1,56 @@
+/* MyResults.css */
+
+.results-container {
+  background-color: #e0f2ff;
+  min-height: 100vh;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: darkblue;
+}
+
+.results-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.results-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.results-table th {
+  background-color: #e6f4ff;
+  color: #004080;
+}
+
+.results-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.results-link {
+  color: #007acc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.results-link:hover {
+  text-decoration: underline;
+}
+
+.total-points {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+}

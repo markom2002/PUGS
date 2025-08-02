@@ -9,6 +9,7 @@ export interface ResultDto {
 
 export interface ResultDetailsDto {
   id: number;
+  quizId: number;
   quizTitle: string;
   correctAnswers: number;
   percentage: number;
@@ -24,4 +25,11 @@ export interface ResultDetailsDto {
     isCorrect: boolean;
   }[];
 }
+
+export interface QuizAttemptDto {
+  percentage: number;
+  points: number;
+  createdAt: string;
+}
+
 

@@ -1,7 +1,8 @@
 // src/services/QuizService.ts
 import api from '../api/api';
-import { QuizDto, QuizDetailsDto } from '../models/Quiz';
+import { QuizDto, QuizDetailsDto, UpdateQuizDetailsDto } from '../models/Quiz';
 import { QuestionDto } from '../models/Question';
+
 
 export interface SubmitAnswerDto {
   questionId: number;
@@ -76,7 +77,7 @@ export const createQuiz = async (quiz: QuizDto): Promise<QuizDto> => {
 /**
  * Ažurira postojeći kviz
  */
-export const updateQuiz = async (id: number, quiz: QuizDto): Promise<QuizDto> => {
+export const updateQuiz = async (id: number, quiz: QuizDetailsDto): Promise<QuizDetailsDto> => {
   const response = await api.put(`/api/quizzes/${id}`, quiz);
   return response.data;
 };
@@ -85,5 +86,64 @@ export const updateQuiz = async (id: number, quiz: QuizDto): Promise<QuizDto> =>
 
 export const getQuizzesByCategory = async (category: string): Promise<QuizDto[]> => {
   const response = await api.get(`/api/quizzes/category/${category}`);
+  return response.data;
+};
+
+
+
+export const updateQuizWithDetails = async (id: number, quiz: UpdateQuizDetailsDto): Promise<void> => {
+  const dto = {
+    title: quiz.title,
+    description: quiz.description,
+    difficulty: quiz.difficulty,
+    timeLimit: quiz.timeLimit,
+    category: quiz.category,
+    questions: quiz.questions.map(q => ({
+      id: q.id ?? 0,
+      text: q.text,
+      type: q.type,
+      points: q.points,
+      allowMultipleAnswers: q.allowMultipleAnswers,
+      correctTextAnswer: q.correctTextAnswer ?? '',
+      options: q.options.map(o => ({
+        id: o.id ?? 0,
+        text: o.text,
+        isCorrect: o.isCorrect,
+      })),
+    }))
+    
+  };
+
+  await api.put(`/api/quizzes/full/${id}`, dto);
+};
+
+export const deleteQuestionById = async (questionId: number): Promise<void> => {
+  const response = await api.delete(`/api/quizzes/questions/${questionId}`);
+  if (!response.status.toString().startsWith('2')) {
+    throw new Error('Neuspešno brisanje pitanja');
+  }
+};
+
+
+// Kreira novi kviz sa pitanjima i opcijama (POST /api/quizzes/full)
+export const createQuizWithDetails = async (quiz: {
+  title: string;
+  description: string;
+  difficulty: string;
+  timeLimit: number;
+  category: string;
+  questions: {
+    text: string;
+    type: string;
+    points: number;
+    allowMultipleAnswers: boolean;
+    correctTextAnswer?: string;
+    options: {
+      text: string;
+      isCorrect: boolean;
+    }[];
+  }[];
+}): Promise<QuizDetailsDto> => {
+  const response = await api.post('/api/quizzes/full', quiz);
   return response.data;
 };

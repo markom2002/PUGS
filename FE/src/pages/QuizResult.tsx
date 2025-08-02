@@ -1,13 +1,14 @@
 // src/pages/QuizResult.tsx
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './css/QuizResult.css';
 
 interface QuestionResult {
   id: number;
   text: string;
   type: string;
-  userAnswer: string;
-  correctAnswer: string;
+  userAnswer: string | string[];
+  correctAnswer: string | string[];
   isCorrect: boolean;
 }
 
@@ -27,49 +28,57 @@ const QuizResult: React.FC = () => {
   const navigate = useNavigate();
   const result = location.state as QuizResultState | null;
 
-  useEffect(() => {
-    if (result?.userId) {
-      localStorage.setItem('userId', result.userId.toString());
-    }
-  }, [result]);
-
   if (!result) {
-    return <div className="p-6">Nema podataka o rezultatu.</div>;
+    return <div className="quiz-result-container">Nema podataka o rezultatu.</div>;
   }
 
+  const formatAnswer = (answer: string | string[], type: string) => {
+    if (type === 'text') {
+      return Array.isArray(answer) ? answer[0] || 'Nema odgovora' : answer || 'Nema odgovora';
+    }
+    if (type === 'multiple') {
+      return Array.isArray(answer) ? (answer.length ? answer.join(', ') : 'Nema odgovora') : answer || 'Nema odgovora';
+    }
+    return Array.isArray(answer) ? answer[0] || 'Nema odgovora' : answer || 'Nema odgovora';
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Rezultat kviza</h1>
+    <div className="quiz-result-container">
+      <h1 className="quiz-result-title">Rezultat kviza</h1>
 
       {result.quizTitle && (
-        <p><strong>Naziv kviza:</strong> {result.quizTitle}</p>
+        <p className="result-info"><strong>Naziv kviza:</strong> {result.quizTitle}</p>
       )}
-
-      <p><strong>Tačnih odgovora:</strong> {result.correctAnswers}</p>
-      <p><strong>Procenat:</strong> {result.percentage}%</p>
+      <p className="result-info"><strong>Tačnih odgovora:</strong> {result.correctAnswers}</p>
+      <p className="result-info"><strong>Procenat:</strong> {result.percentage}%</p>
       {result.points !== undefined && (
-        <p><strong>Poeni:</strong> {result.points}</p>
+        <p className="result-info"><strong>Poeni:</strong> {result.points}</p>
       )}
-      <p><strong>Vreme:</strong> {result.duration}</p>
+      <p className="result-info"><strong>Vreme:</strong> {result.duration}</p>
 
-      {/* Prikaz pitanja sa odgovorima */}
       {result.questions && result.questions.length > 0 && (
         <>
-          <hr className="my-6" />
-          <h2 className="text-xl font-semibold mb-4">Pitanja i odgovori</h2>
-          <div className="space-y-4">
+          <hr style={{ margin: '24px 0' }} />
+          <h2 className="quiz-result-subtitle">Pitanja i odgovori</h2>
+          <div>
             {result.questions.map((q, idx) => (
               <div
                 key={q.id}
-                className={`p-4 rounded border-l-4 ${
-                  q.isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'
-                }`}
+                className={`question-block ${q.isCorrect ? 'correct-answer' : 'incorrect-answer'}`}
               >
-                <p className="font-semibold">{idx + 1}. {q.text}</p>
+                <p className="question-text"><strong>{idx + 1}. {q.text}</strong></p>
                 <p><strong>Tip:</strong> {q.type}</p>
-                <p><strong>Tvoj odgovor:</strong> {q.userAnswer || 'Nema odgovora'}</p>
-                {!q.isCorrect && (
-                  <p><strong>Tačan odgovor:</strong> {q.correctAnswer || 'Nema odgovora'}</p>
+
+                <p>
+                  <strong>Tvoj odgovor:</strong>{' '}
+                  {formatAnswer(q.userAnswer, q.type)}
+                </p>
+
+                {(!q.isCorrect || (q.correctAnswer && (Array.isArray(q.correctAnswer) ? q.correctAnswer.length > 0 : q.correctAnswer !== ''))) && (
+                  <p>
+                    <strong>Tačan odgovor:</strong>{' '}
+                    {formatAnswer(q.correctAnswer, q.type)}
+                  </p>
                 )}
               </div>
             ))}
@@ -77,10 +86,7 @@ const QuizResult: React.FC = () => {
         </>
       )}
 
-      <button
-        onClick={() => navigate('/quizzes')}
-        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded"
-      >
+      <button onClick={() => navigate('/quizzes')} className="back-button">
         Nazad na kvizove
       </button>
     </div>

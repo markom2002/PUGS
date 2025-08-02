@@ -1,0 +1,136 @@
+/* src/pages/QuizForm.css */
+
+.quiz-form-container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.quiz-form-container h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.quiz-form-container form > div {
+  margin-bottom: 16px;
+}
+
+.quiz-form-container label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.quiz-form-container input[type="text"],
+.quiz-form-container input[type="number"],
+.quiz-form-container select,
+.quiz-form-container textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #9ca3af;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.quiz-form-container textarea {
+  resize: vertical;
+}
+
+.quiz-form-container hr {
+  margin: 24px 0;
+  border-color: #d1d5db;
+}
+
+.question-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 12px;
+}
+
+.question-list li {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.question-list li span {
+  font-size: 1rem;
+}
+
+.question-list li span i {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.question-list button {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: white;
+}
+
+.question-list .edit-btn {
+  background-color: #f59e0b; /* žuta */
+}
+
+.question-list .delete-btn {
+  background-color: #dc2626; /* crvena */
+  margin-left: 8px;
+}
+
+.add-question-btn {
+  background-color: #16a34a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.editing-question-container {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #f9fafb;
+}
+
+.editing-question-container h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.submit-btn-container {
+  padding-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.error-msg {
+  color: #dc2626;
+  margin-bottom: 16px;
+  font-weight: 600;
+}

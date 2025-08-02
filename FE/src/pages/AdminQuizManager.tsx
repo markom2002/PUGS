@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllQuizzes, deleteQuiz } from '../services/QuizService';
 import { useNavigate } from 'react-router-dom';
 import { QuizDto } from '../models/Quiz';
+import './css/AdminQuizManager.css'; // importuj novi css
 
 const AdminQuizManager: React.FC = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -39,23 +40,23 @@ const AdminQuizManager: React.FC = () => {
   const uniqueCategories = Array.from(new Set(allQuizzes.map(q => q.category))).sort();
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Upravljanje kvizovima</h1>
+    <div className="admin-quiz-manager-container">
+      <h1 className="admin-quiz-manager-title">Upravljanje kvizovima</h1>
 
       <button
         onClick={handleCreate}
-        className="mb-4 px-4 py-2 bg-green-600 text-white rounded"
+        className="btn btn-green"
       >
         Kreiraj novi kviz
       </button>
 
-      <div className="mb-4">
-        <label htmlFor="categoryFilter" className="mr-2 font-semibold">Filter po kategoriji:</label>
+      <div className="category-filter">
+        <label htmlFor="categoryFilter" className="category-filter-label">Filter po kategoriji:</label>
         <select
           id="categoryFilter"
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="p-2 border rounded"
+          className="category-filter-select"
         >
           <option value="">Sve kategorije</option>
           {uniqueCategories.map(cat => (
@@ -67,23 +68,27 @@ const AdminQuizManager: React.FC = () => {
       </div>
 
       {filteredQuizzes.length === 0 ? (
-        <p>Nema kvizova za izabranu kategoriju.</p>
+        <p className="no-quizzes-message">Nema kvizova za izabranu kategoriju.</p>
       ) : (
         filteredQuizzes.map((quiz) => (
-          <div key={quiz.id} className="p-4 mb-4 border rounded shadow">
-            <p><strong>{quiz.title}</strong> - {quiz.description}</p>
-            <button
-              onClick={() => handleEdit(quiz.id)}
-              className="mr-2 px-3 py-1 bg-yellow-500 text-white rounded"
-            >
-              Izmeni
-            </button>
-            <button
-              onClick={() => handleDelete(quiz.id)}
-              className="px-3 py-1 bg-red-600 text-white rounded"
-            >
-              Obriši
-            </button>
+          <div key={quiz.id} className="quiz-item">
+            <div className="quiz-info">
+              <strong>{quiz.title}</strong> - {quiz.description}
+            </div>
+            <div className="quiz-actions">
+              <button
+                onClick={() => handleEdit(quiz.id)}
+                className="btn btn-yellow"
+              >
+                Izmeni
+              </button>
+              <button
+                onClick={() => handleDelete(quiz.id)}
+                className="btn btn-red"
+              >
+                Obriši
+              </button>
+            </div>
           </div>
         ))
       )}

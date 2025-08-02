@@ -1,0 +1,70 @@
+.leaderboard-container {
+  background-color: #e0f2ff;
+  min-height: 100vh;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.leaderboard-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #0d47a1;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.leaderboard-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.leaderboard-filters select {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
+  min-width: 200px;
+}
+
+.leaderboard-table-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+.leaderboard-table th {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
+  text-align: center;
+}
+
+.leaderboard-table td {
+  text-align: center;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.leaderboard-table tr:hover {
+  background-color: #f1faff;
+}

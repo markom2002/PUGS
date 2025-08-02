@@ -1,0 +1,44 @@
+/* Home.css */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #d0ebff; /* svetlo plava pozadina */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #003366; /* tamnoplavi tekst */
+  padding: 20px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 2.8rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #002244; /* još tamnija plava za naslov */
+}
+
+.home-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.home-button {
+  background-color: #ffffff; /* bela dugmad */
+  color: #007acc; /* plavi tekst */
+  border: 2px solid #007acc;
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+}
+
+.home-button:hover {
+  background-color: #e6f4ff; /* svetlo plava na hover */
+  color: #005999;
+  transform: scale(1.05);
+}

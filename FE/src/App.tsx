@@ -13,6 +13,8 @@ import MyResults from './pages/MyResults';
 import ResultDetails from './pages/ResultDetails';
 import AdminQuizManager from './pages/AdminQuizManager';
 import QuizForm from './pages/QuizForm';
+import AllUserResults from './pages/AllUserResults';
+import Leaderboard from './pages/Leaderboard';
 
 const App: React.FC = () => {
   return (
@@ -32,6 +34,9 @@ const App: React.FC = () => {
         <Route path="/admin/quiz-manager" element={<AdminQuizManager />} />
         <Route path="/admin/quiz-manager/create" element={<QuizForm />} />
         <Route path="/admin/quiz-manager/edit/:id" element={<QuizForm />} />
+        <Route path="/admin/results" element={<AllUserResults />} />
+
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
       </Routes>
     </Router>
