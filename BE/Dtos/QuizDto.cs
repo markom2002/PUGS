@@ -8,5 +8,7 @@
         public string Difficulty { get; set; } = default!;
         public int TimeLimit { get; set; }
         public string Category { get; set; } = default!;
+
+        public int QuestionCount { get; set; }
     }
 }

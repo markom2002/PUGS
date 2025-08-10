@@ -15,6 +15,11 @@ import AdminQuizManager from './pages/AdminQuizManager';
 import QuizForm from './pages/QuizForm';
 import AllUserResults from './pages/AllUserResults';
 import Leaderboard from './pages/Leaderboard';
+import CreateLiveQuizRoom from './pages/QuizHub/CreateLiveQuizRoom';
+import LiveHostRoom from './pages/QuizHub/LiveHostRoom';
+import JoinLiveQuiz from './pages/QuizHub/JoinLiveQuiz';
+import LiveQuiz from './pages/QuizHub/LiveQuiz';
+
 
 const App: React.FC = () => {
   return (
@@ -38,6 +43,10 @@ const App: React.FC = () => {
 
         <Route path="/leaderboard" element={<Leaderboard />} />
 
+        <Route path="/admin/live-quiz" element={<CreateLiveQuizRoom />} /> 
+        <Route path="/live-host/:roomCode" element={<LiveHostRoom />} />
+        <Route path="/join-live" element={<JoinLiveQuiz />} />
+        <Route path="/live-quiz" element={<LiveQuiz />} />
       </Routes>
     </Router>
   );

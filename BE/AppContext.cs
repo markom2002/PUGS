@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BE.Models; // importuj svoje modele
+using BE.Models;
+using BE.Models.QuizHub; // importuj svoje modele
 
 namespace BE
 {
@@ -18,6 +19,10 @@ namespace BE
         public DbSet<Result> Results { get; set; }
 
         public DbSet<Answer> Answers { get; set; }
+
+        public DbSet<LiveQuizRoom> LiveQuizRooms { get; set; }
+
+        public DbSet<LiveQuizParticipant> LiveQuizParticipants { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +45,13 @@ namespace BE
                 .HasForeignKey(a => a.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
+            //Konfiguracija za Live sobu
+            modelBuilder.Entity<LiveQuizParticipant>()
+                .HasOne(p => p.Room)
+                .WithMany(r => r.Participants)
+                .HasForeignKey(p => p.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
         }
 

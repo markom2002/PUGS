@@ -26,6 +26,12 @@ const AdminDashboard: React.FC = () => {
         >
           Pregled rezultata korisnika
         </button>
+        <button
+          className="btn btn-purple"
+          onClick={() => navigate('/admin/live-quiz')}
+        >
+          Kreiraj sobu
+        </button>
       </div>
     </div>
   );

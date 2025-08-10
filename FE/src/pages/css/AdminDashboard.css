@@ -94,3 +94,17 @@
 .btn:hover::after {
   opacity: 1;
 }
+
+
+.btn-purple {
+  background-color: #6b46c1;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-purple:hover {
+  background-color: #553c9a;
+}

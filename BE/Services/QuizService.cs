@@ -3,6 +3,7 @@ using BE.Dtos.Quiz;
 using BE.Models;
 using BE.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BE.Services
 {
@@ -70,17 +71,19 @@ namespace BE.Services
 
         public async Task<IEnumerable<QuizDto>> GetAllAsync()
         {
-            return await _context.Quizzes.Select(q => new QuizDto
-            {
-                Id = q.Id,
-                Title = q.Title,
-                Description = q.Description,
-                Difficulty = q.Difficulty,
-                TimeLimit = q.TimeLimit,
-                Category = q.Category
-
-
-            }).ToListAsync();
+            return await _context.Quizzes
+                .Include(q => q.Questions)
+                .Select(q => new QuizDto
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Description = q.Description,
+                    Difficulty = q.Difficulty,
+                    TimeLimit = q.TimeLimit,
+                    Category = q.Category,
+                    QuestionCount = q.Questions.Count()
+                })
+                .ToListAsync();
 
         }
 
@@ -96,7 +99,8 @@ namespace BE.Services
                 Description = quiz.Description,
                 Difficulty = quiz.Difficulty,
                 TimeLimit = quiz.TimeLimit,
-                Category = quiz.Category
+                Category = quiz.Category,
+                QuestionCount = quiz.Questions?.Count ?? 0
             };
         }
 
@@ -134,6 +138,7 @@ namespace BE.Services
                 Difficulty = quiz.Difficulty,
                 TimeLimit = quiz.TimeLimit,
                 Category = quiz.Category,
+                QuestionCount = quiz.Questions?.Count ?? 0,
                 Questions = quiz.Questions.Select(question => new QuestionDto
                 {
                     Id = question.Id,
@@ -168,6 +173,7 @@ namespace BE.Services
                     Difficulty = q.Difficulty,
                     TimeLimit = q.TimeLimit,
                     Category = q.Category,
+                    QuestionCount = q.Questions.Count()
                 })
                 .ToListAsync();
         }

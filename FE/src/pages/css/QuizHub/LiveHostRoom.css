@@ -1,0 +1,78 @@
+/* LiveHostRoom.css */
+
+.live-host-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background-color: #f0f7ff; /* vrlo svetlo plava */
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 70, 140, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #003366; /* tamnoplavi tekst */
+}
+
+.live-host-container h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #004080;
+}
+
+.live-host-container p {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #004080cc;
+}
+
+.live-host-container strong {
+  font-weight: 700;
+  color: #003366;
+}
+
+.players-list {
+  margin-top: 20px;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 80, 160, 0.1);
+}
+
+.players-list h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #004080;
+}
+
+.players-list ul {
+  list-style-type: disc;
+  padding-left: 30px;
+  color: #0055aa;
+  font-size: 1.1rem;
+}
+
+.players-list ul li {
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.start-quiz-button {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 36px;
+  background-color: #007acc;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 120, 204, 0.5);
+}
+
+.start-quiz-button:hover {
+  background-color: #005fa3;
+}

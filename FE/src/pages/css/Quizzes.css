@@ -45,9 +45,6 @@
 }
 
 .results-button {
-  display: block;
-  margin: 0 auto 30px auto;
-  padding: 10px 20px;
   background-color: #1976d2;
   color: white;
   border: none;
@@ -61,26 +58,27 @@
   background-color: #12599b;
 }
 
-/* Lista kvizova - vertikalno poravnata */
 .quiz-list {
-  list-style: none;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  align-items: center; /* centriraj kartice */
+  gap: 20px;
+  padding: 0;
+  list-style: none;
 }
 
-/* Svaki kviz kao pravougaonik sa većom visinom i manjom širinom */
 .quiz-item {
   background-color: #ffffff;
   border: 1px solid #cfd8dc;
   border-radius: 12px;
-  padding: 24px 32px;
+  padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 65%;
-  min-height: 180px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .quiz-item:hover {
@@ -88,21 +86,41 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.quiz-item h3 {
-  margin: 0 0 12px;
-  color: #0d47a1;
-  font-size: 1.5rem;
+.quiz-header {
+  margin-bottom: 10px;
 }
 
-.quiz-item p {
-  margin: 6px 0;
-  color: #333;
+.quiz-header h3 {
+  margin: 0;
+  color: #0d47a1;
+  font-size: 1.6rem;
+}
+
+.quiz-description {
+  margin-bottom: 15px;
+  color: #555;
   font-size: 1rem;
-  line-height: 1.5;
+}
+
+.quiz-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.quiz-info-item {
+  background: #e3f2fd;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #0d47a1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .quiz-item button {
-  margin-top: 14px;
   padding: 10px 22px;
   background-color: #388e3c;
   color: white;
@@ -112,10 +130,51 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  align-self: center;
 }
 
 .quiz-item button:hover {
   background-color: #2e7d32;
 }
 
+.join-live-button {
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
+.join-live-button:hover {
+  background-color: #4a148c;
+}
+
+.top-buttons {
+  display: flex;
+  justify-content: center; /* centriraj dugmad */
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.top-buttons button {
+  padding: 10px 20px;
+  min-width: 160px; /* iste širine */
+  text-align: center;
+}
+
+.leaderboard-button {
+  background-color: #ffb703;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.leaderboard-button:hover {
+  background-color: #fb8500;
+}

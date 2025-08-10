@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20250717122549_AddPointsToQuestion")]
-    partial class AddPointsToQuestion
+    [Migration("20250803160108_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,38 @@ namespace BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("BE.Models.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResultId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedOptionIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserAnswer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("ResultId");
+
+                    b.ToTable("Answers");
+                });
 
             modelBuilder.Entity("BE.Models.Option", b =>
                 {
@@ -57,6 +89,12 @@ namespace BE.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowMultipleAnswers")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CorrectTextAnswer")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
@@ -111,6 +149,63 @@ namespace BE.Migrations
                     b.ToTable("Quizzes");
                 });
 
+            modelBuilder.Entity("BE.Models.QuizHub.LiveQuizParticipant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConnectionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CorrectAnswers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalTime")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("LiveQuizParticipants");
+                });
+
+            modelBuilder.Entity("BE.Models.QuizHub.LiveQuizRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LiveQuizRooms");
+                });
+
             modelBuilder.Entity("BE.Models.Result", b =>
                 {
                     b.Property<int>("Id")
@@ -130,6 +225,9 @@ namespace BE.Migrations
 
                     b.Property<double>("Percentage")
                         .HasColumnType("float");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
@@ -178,6 +276,25 @@ namespace BE.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BE.Models.Answer", b =>
+                {
+                    b.HasOne("BE.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BE.Models.Result", "Result")
+                        .WithMany("Answers")
+                        .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Result");
+                });
+
             modelBuilder.Entity("BE.Models.Option", b =>
                 {
                     b.HasOne("BE.Models.Question", "Question")
@@ -198,6 +315,17 @@ namespace BE.Migrations
                         .IsRequired();
 
                     b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("BE.Models.QuizHub.LiveQuizParticipant", b =>
+                {
+                    b.HasOne("BE.Models.QuizHub.LiveQuizRoom", "Room")
+                        .WithMany("Participants")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("BE.Models.Result", b =>
@@ -227,6 +355,16 @@ namespace BE.Migrations
             modelBuilder.Entity("BE.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("BE.Models.QuizHub.LiveQuizRoom", b =>
+                {
+                    b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("BE.Models.Result", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

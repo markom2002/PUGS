@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllQuizzes } from '../services/QuizService';
 import { QuizDto } from '../models/Quiz';
 import { useNavigate } from 'react-router-dom';
-import './css/Quizzes.css'; // ✅ dodato
+import './css/Quizzes.css';
 
 const Quizzes: React.FC = () => {
   const [quizzes, setQuizzes] = useState<QuizDto[]>([]);
@@ -67,15 +67,33 @@ const Quizzes: React.FC = () => {
     navigate('/my-results');
   };
 
+  const handleJoinLive = () => {
+    navigate('/join-live');
+  };
+
+  const handleViewLeaderboard = () => {
+    navigate('/leaderboard');
+  };
+
   if (loading) return <p>Učitavanje kvizova...</p>;
 
   return (
     <div className="quizzes-container">
       <h2 className="quizzes-header">Dostupni kvizovi</h2>
 
-      <button className="results-button" onClick={handleViewMyResults}>
-        Pogledaj moje rezultate
-      </button>
+      <div className="top-buttons">
+        <button className="results-button" onClick={handleViewMyResults}>
+          📄 Moji rezultati
+        </button>
+
+        <button className="join-live-button" onClick={handleJoinLive}>
+          📡 Pridruži se Live Kvizu
+        </button>
+
+        <button className="leaderboard-button" onClick={handleViewLeaderboard}>
+          🏆 Rang lista
+        </button>
+      </div>
 
       <div className="filter-controls">
         <input
@@ -114,18 +132,27 @@ const Quizzes: React.FC = () => {
         <p>Nema dostupnih kvizova.</p>
       ) : (
         <ul className="quiz-list">
-          {quizzes.map((quiz) => (
-            <li key={quiz.id} className="quiz-item">
-              <h3>{quiz.title}</h3>
-              <p><strong>Kategorija:</strong> {quiz.category}</p>
-              <p><strong>Opis:</strong> {quiz.description}</p>
-              <p><strong>Težina:</strong> {quiz.difficulty}</p>
-              <p><strong>Broj pitanja:</strong> {quiz.questionCount}</p>
-              <p><strong>Vremensko ograničenje:</strong> {quiz.timeLimit} sekundi</p>
-              <button onClick={() => handleStartQuiz(quiz.id)}>Pokreni kviz</button>
-            </li>
-          ))}
-        </ul>
+  {quizzes.map((quiz) => (
+    <li key={quiz.id} className="quiz-item">
+      <div>
+        <div className="quiz-header">
+          <h3>{quiz.title}</h3>
+        </div>
+        <p className="quiz-description">{quiz.description}</p>
+
+        <div className="quiz-info">
+          <div className="quiz-info-item">📂 {quiz.category}</div>
+          <div className="quiz-info-item">⚡ {quiz.difficulty}</div>
+          <div className="quiz-info-item">❓ {quiz.questionCount} {quiz.questionCount === 1 ? 'pitanje' : 'pitanja'}</div>
+          <div className="quiz-info-item">⏱ {quiz.timeLimit}s</div>
+        </div>
+      </div>
+
+      <button onClick={() => handleStartQuiz(quiz.id)}>🚀 Pokreni kviz</button>
+    </li>
+  ))}
+</ul>
+
       )}
     </div>
   );

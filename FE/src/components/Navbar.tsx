@@ -24,10 +24,12 @@ const Navbar: React.FC = () => {
       {token && (
         <>
           <Link to="/quizzes" style={{ marginRight: '15px' }}>Kvizovi</Link>
-          <Link to="/leaderboard" style={{ marginRight: '15px' }}>Rang lista</Link>
+          
           <button onClick={handleLogout}>Logout</button>
         </>
       )}
+      
+
     </nav>
   );
 };

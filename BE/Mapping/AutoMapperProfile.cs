@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BE.Dtos;
+using BE.Dtos.QuizHub;
 using BE.Models;
+using BE.Models.QuizHub;
 
 namespace BE.Mapping
 {
@@ -14,6 +16,11 @@ namespace BE.Mapping
                 .ReverseMap();
 
             CreateMap<Quiz, QuizDto>().ReverseMap();
+
+            CreateMap<LiveQuizParticipant, LiveQuizParticipantDto>()
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
+
+
         }
     }
 }

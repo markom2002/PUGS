@@ -1,0 +1,101 @@
+/* CreateLiveQuizRoom.css */
+
+.create-live-quiz-container {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background-color: #e6f2ff; /* svetlo plava pozadina */
+  border-radius: 12px;
+  box-shadow: 0 0 14px rgba(0, 51, 102, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #003366; /* tamnoplavi tekst */
+}
+
+.create-live-quiz-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #004080;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.quiz-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1.8px solid #99c2ff;
+  border-radius: 8px;
+  background-color: white;
+  color: #003366;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.quiz-select:hover,
+.quiz-select:focus {
+  border-color: #007acc;
+  outline: none;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.button-create {
+  background-color: #28a745;
+  color: white;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.button-create:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.button-start {
+  background-color: #007acc;
+  color: white;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.button-start:hover:not(:disabled) {
+  background-color: #005fa3;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+
+.room-code-container {
+  margin-top: 20px;
+  background-color: #cce4ff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: #004080;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: inset 0 0 6px rgba(0, 51, 102, 0.2);
+}
