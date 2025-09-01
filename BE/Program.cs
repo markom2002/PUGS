@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-// Dodaj CORS politiku
+// CORS politika, slanje zahteva BE
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Dodaj Swagger i podešavanje JWT u Swagger UI
+//Swagger i podešavanje JWT u Swagger UI
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -106,7 +106,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false,         // po potrebi uključi validaciju
+        ValidateIssuer = false,        
         ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
@@ -134,13 +134,13 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-//app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseSpaStaticFiles();
 
 app.UseRouting();
 
-// Dodaj CORS middleware pre autentifikacije i autorizacije
+// CORS middleware pre autentifikacije i autorizacije
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();

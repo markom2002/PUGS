@@ -70,7 +70,7 @@ namespace BE.Controllers
         public async Task<IActionResult> CreateResult(CreateResultDto dto)
         {
             var userIdClaim = User.FindFirst("id");
-            if (userIdClaim == null)
+            if (userIdClaim == null) 
             {
                 return Unauthorized("Korisnik nije prijavljen.");
             }
@@ -78,7 +78,7 @@ namespace BE.Controllers
 
             var quiz = await _context.Quizzes
                 .Include(q => q.Questions)
-                    .ThenInclude(q => q.Options)
+                .ThenInclude(q => q.Options)
                 .FirstOrDefaultAsync(q => q.Id == dto.QuizId);
 
             if (quiz == null) return NotFound("Quiz not found");
@@ -132,11 +132,11 @@ namespace BE.Controllers
                     totalPoints += question.Points;
                     correctAnswers++;
                 }
-                // ➕ Dodavanje odgovora u listu odgovora
+                // Dodavanje odgovora u listu odgovora
                 var answer = new Answer
                 {
                     QuestionId = answerDto.QuestionId,
-                    SelectedOptionIds = string.Join(",", answerDto.SelectedOptionIds), // Ako je string, ili koristi poseban AnswerOption entitet ako imaš vezu
+                    SelectedOptionIds = string.Join(",", answerDto.SelectedOptionIds), 
                     UserAnswer = answerDto.UserAnswer,
                     IsCorrect = isCorrect
                 };
@@ -147,9 +147,7 @@ namespace BE.Controllers
             result.Points = totalPoints;
             result.CorrectAnswers = correctAnswers;
             result.Percentage = quiz.Questions.Count > 0
-                ? Math.Round((double)correctAnswers * 100 / quiz.Questions.Count, 2)
-                : 0;
-
+                ? Math.Round((double)correctAnswers * 100 / quiz.Questions.Count, 2) : 0;
             _context.Results.Add(result);
             await _context.SaveChangesAsync();
 

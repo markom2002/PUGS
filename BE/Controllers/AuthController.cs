@@ -46,13 +46,8 @@ namespace BE.Controllers
 
         }
 
-        [HttpGet("test")]
-        public ActionResult<string> Test()
-        {
-            return "Auth controller radi!";
-        }
 
-        // Novi endpoint za proveru ko je ulogovan i koje role ima
+        
         [Authorize]
         [HttpGet("whoami")]
         public ActionResult GetCurrentUser()

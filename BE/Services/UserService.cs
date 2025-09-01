@@ -75,10 +75,10 @@ namespace BE.Services
         {
             var claims = new List<Claim>
             {
-                new Claim("id", user.Id.ToString()),  // VAŽNO: dodaj ID korisnika
+                new Claim("id", user.Id.ToString()),  
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)  // "Admin" ili "Korisnik"
+                new Claim(ClaimTypes.Role, user.Role)  
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

@@ -1,6 +1,7 @@
 // src/components/Navbar.tsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './Navbar.css';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -13,23 +14,27 @@ const Navbar: React.FC = () => {
   const token = localStorage.getItem('token');
 
   return (
-    <nav style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <Link to="/" style={{ marginRight: '15px' }}>Početna</Link>
-      {!token && (
-        <>
-          <Link to="/login" style={{ marginRight: '15px' }}>Login</Link>
-          <Link to="/register" style={{ marginRight: '15px' }}>Register</Link>
-        </>
-      )}
-      {token && (
-        <>
-          <Link to="/quizzes" style={{ marginRight: '15px' }}>Kvizovi</Link>
-          
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      )}
-      
+    <nav className="navbar">
+      <div className="navbar-links">
+        <Link to="/">Početna</Link>
+        {!token && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+        {token && (
+          <>
+            <Link to="/quizzes">Kvizovi</Link>
+          </>
+        )}
+      </div>
 
+      {token && (
+        <button onClick={handleLogout}>
+          Logout
+        </button>
+      )}
     </nav>
   );
 };

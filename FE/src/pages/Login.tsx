@@ -4,7 +4,7 @@ import { login } from '../services/AuthService';
 import { LoginDto } from '../models/Auth';
 import { useNavigate } from 'react-router-dom';
 import { parseJwt } from '../utils/token';
-import './css/Login.css'; // ✅ Dodato
+import './css/Login.css'; 
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginDto>({
@@ -27,9 +27,11 @@ const Login: React.FC = () => {
       setError(null);
 
       const payload = parseJwt(response.token);
-      const role = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      const userId = payload["id"];
-      localStorage.setItem("userId", userId); 
+    const role = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const userId = payload["id"];
+    const userName = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("userName", userName);
 
       if (role === 'Admin') {
         navigate('/admin/dashboard');
@@ -71,3 +73,6 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
+

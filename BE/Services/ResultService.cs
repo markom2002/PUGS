@@ -17,14 +17,15 @@ namespace BE.Services
         {
             _context = context;
         }
-
+        
+        // Detalji jednog kviza
         public async Task<ResultDetailsDto> GetDetailsByIdAsync(int resultId)
         {
             var result = await _context.Results
                 .Include(r => r.Quiz)
                 .Include(r => r.Answers)
-                    .ThenInclude(a => a.Question)
-                        .ThenInclude(q => q.Options)
+                .ThenInclude(a => a.Question)
+                .ThenInclude(q => q.Options)
                 .FirstOrDefaultAsync(r => r.Id == resultId);
 
             if (result == null)
@@ -71,6 +72,7 @@ namespace BE.Services
             return dto;
         }
 
+        //Admin - pregled svih korisnika
         public async Task<List<UserResultDto>> GetAllUserResultsAsync()
         {
             var results = await _context.Results
@@ -90,6 +92,8 @@ namespace BE.Services
                 Points = r.Points
             }).ToList();
         }
+
+        // Rang lista
 
         public async Task<List<LeaderboardEntryDto>> GetLeaderboardAsync(LeaderboardFilterDto filter)
         {

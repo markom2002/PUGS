@@ -74,6 +74,11 @@ const Register: React.FC = () => {
           onChange={handleChange}
         />
         <br />
+        {formData.imageUrl && (
+          <div className="image-preview">
+          <img src={formData.imageUrl} alt="Preview" />
+          </div>
+          )}
         <button type="submit">Registruj se</button>
       </form>
     </div>
