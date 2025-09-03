@@ -35,9 +35,9 @@ const ResultDetails: React.FC = () => {
   if (loading) return <div>Učitavanje...</div>;
   if (!result) return <div>Rezultat nije pronađen.</div>;
 
-  // Mapiranje u tip koji ProgressChart očekuje
+ 
   const formattedAttempts: UserAttempt[] = attempts.map(a => ({
-    attemptDate: a.createdAt,   // proveri da li je 'createdAt' ili 'attemptDate' u QuizAttemptDto
+    attemptDate: a.createdAt,  
     points: a.points,
     percentage: a.percentage,
   }));

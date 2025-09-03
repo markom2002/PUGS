@@ -25,7 +25,7 @@ const QuizForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Stanje za trenutno pitanje koje se edit-uje
+  // Stanje za trenutno pitanje koje se edituje
   const [editingQuestion, setEditingQuestion] = useState<QuestionDto | null>(null);
 
   useEffect(() => {

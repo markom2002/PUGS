@@ -8,9 +8,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="admin-dashboard-container">
       <h2 className="admin-dashboard-title">Admin Dashboard</h2>
-      <p className="admin-dashboard-description">
-        Ovde će biti CRUD nad kvizovima i pitanjima.
-      </p>
+      
 
       <div className="admin-dashboard-buttons">
         <button

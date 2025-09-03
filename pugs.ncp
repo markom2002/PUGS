@@ -1,0 +1,204 @@
+<Project>
+  <Name>pugs</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>pugs</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>User</Name>
+        <Access>Public</Access>
+        <Location left="48" top="158" />
+        <Size width="162" height="179" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">string Username</Member>
+        <Member type="Field">string Email</Member>
+        <Member type="Field">string PasswordHash</Member>
+        <Member type="Field">string? ImageUrl</Member>
+        <Member type="Field">string Role</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Quiz</Name>
+        <Access>Public</Access>
+        <Location left="313" top="302" />
+        <Size width="162" height="179" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">string Title</Member>
+        <Member type="Field">string Description</Member>
+        <Member type="Field">string Category</Member>
+        <Member type="Field">string Difficulty</Member>
+        <Member type="Field">int TimeLimit</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Question</Name>
+        <Access>Public</Access>
+        <Location left="313" top="625" />
+        <Size width="162" height="196" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">string Text</Member>
+        <Member type="Field">string Type</Member>
+        <Member type="Field">int Points</Member>
+        <Member type="Field">int QuizId</Member>
+        <Member type="Field">bool AllowMultipleAnswers</Member>
+        <Member type="Field">string? CorrectTextAnswer</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Option</Name>
+        <Access>Public</Access>
+        <Location left="625" top="661" />
+        <Size width="162" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">string Text</Member>
+        <Member type="Field">bool IsCorrect</Member>
+        <Member type="Field">int QuestionId</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Result</Name>
+        <Access>Public</Access>
+        <Location left="48" top="441" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">int UserId</Member>
+        <Member type="Field">int QuizId</Member>
+        <Member type="Field">int CorrectAnswers</Member>
+        <Member type="Field">double Percentage</Member>
+        <Member type="Field">TimeSpan Duration</Member>
+        <Member type="Field">DateTime CreatedAt</Member>
+        <Member type="Field">int Points</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Answer</Name>
+        <Access>Public</Access>
+        <Location left="563" top="419" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">int ResultId</Member>
+        <Member type="Field">int QuestionId</Member>
+        <Member type="Field">bool IsCorrect</Member>
+        <Member type="Field">string? SelectedOptionIds</Member>
+        <Member type="Field">string? UserAnswer</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LiveQuizParticipant</Name>
+        <Access>Public</Access>
+        <Location left="597" top="115" />
+        <Size width="162" height="199" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">int RoomId</Member>
+        <Member type="Field">int UserId</Member>
+        <Member type="Field">string ConnectionId</Member>
+        <Member type="Field">int Score</Member>
+        <Member type="Field">int CorrectAnswers</Member>
+        <Member type="Field">double TotalTime</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LiveQuizRoom</Name>
+        <Access>Public</Access>
+        <Location left="292" top="10" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Id</Member>
+        <Member type="Field">string RoomCode</Member>
+        <Member type="Field">int QuizId</Member>
+        <Member type="Field">DateTime CreatedAt</Member>
+        <Member type="Field">bool IsQuizStarted</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="0" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="1" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>506</X>
+          <Y>733</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="4" second="5">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>536</X>
+          <Y>514</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="5" second="2">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>536</X>
+          <Y>567</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>*</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="7" second="6">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="6" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>572</X>
+          <Y>255</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>*</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="7" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>*</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

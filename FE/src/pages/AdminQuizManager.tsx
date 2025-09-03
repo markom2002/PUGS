@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllQuizzes, deleteQuiz } from '../services/QuizService';
 import { useNavigate } from 'react-router-dom';
 import { QuizDto } from '../models/Quiz';
-import './css/AdminQuizManager.css'; // importuj novi css
+import './css/AdminQuizManager.css'; 
 
 const AdminQuizManager: React.FC = () => {
   const [categoryFilter, setCategoryFilter] = useState('');

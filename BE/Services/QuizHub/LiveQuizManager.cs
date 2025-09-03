@@ -224,11 +224,21 @@ namespace BE.Services.QuizHub
 
             bool firstTimeAnswering = true;
             QuizState? quizState = null;
-            if (_activeQuizzes.TryGetValue(roomCode, out var qsOuter))
+
+            if (_activeQuizzes.TryGetValue(roomCode, out var quizStateOuter))
             {
-                quizState = qsOuter;
+                quizState = quizStateOuter;
                 firstTimeAnswering = quizState.TryMarkUserAnsweredQuestion(userId, questionId);
+
+                quizState.CorrectnessMap[userId] = isCorrect;
+                quizState.MarkAnswered(userId);
+
+                if (isCorrect && firstTimeAnswering)
+                {
+                    quizState.CorrectAnswerDurations[userId] = durationMs;
+                }
             }
+
 
             if (isCorrect && firstTimeAnswering)
             {
@@ -237,34 +247,39 @@ namespace BE.Services.QuizHub
 
                 Console.WriteLine($"[SubmitAnswerAsync] Trenutni rezultat za {participant.User?.Username} -> Ukupno: {participant.Score}, Tacnih: {participant.CorrectAnswers}, Vreme: {durationMs / 1000:F2}s");
 
-                if (_activeQuizzes.TryGetValue(roomCode, out var activeQs))
+                if (quizState != null &&
+                    !quizState.BonusAwarded &&
+                    quizState.CorrectnessMap.Count == room.Participants.Count(p => p.User != null && p.User.Username.ToLower() != "admin") &&
+                    quizState.CorrectnessMap.Values.All(val => val))
                 {
-                    if (!activeQs.BonusAwarded)
+                    // Nađi korisnika sa najbržim tačnim odgovorom
+                    var fastest = quizState.CorrectAnswerDurations.OrderBy(kv => kv.Value).FirstOrDefault();
+                    var fastestUserId = fastest.Key;
+                    var fastestDurationMs = fastest.Value;
+
+                    var fastestParticipant = room.Participants.FirstOrDefault(p => p.UserId == fastestUserId);
+                    if (fastestParticipant != null)
                     {
-                        double remainingRatio = Math.Max(0, (activeQs.QuestionTimeLimitMs - durationMs) / (double)activeQs.QuestionTimeLimitMs);
+                        double remainingRatio = Math.Max(0, (quizState.QuestionTimeLimitMs - fastestDurationMs) / (double)quizState.QuestionTimeLimitMs);
                         int bonus = (int)Math.Round(question.Points * remainingRatio);
 
                         if (bonus > 0)
                         {
-                            participant.Score += bonus;
-                            Console.WriteLine($"[BonusAward] {participant.User?.Username} dobija {bonus} bonus poena za pitanje {questionId} (najbrži tačan odgovor).");
+                            fastestParticipant.Score += bonus;
+                            Console.WriteLine($"[BonusAward] {fastestParticipant.User?.Username} dobija {bonus} bonus poena za pitanje {questionId} (najbrži tačan odgovor).");
                         }
-
-                        activeQs.BonusAwarded = true;
                     }
+
+                    quizState.BonusAwarded = true;
                 }
             }
+
             else if (!firstTimeAnswering)
             {
                 Console.WriteLine($"[SubmitAnswerAsync] Korisnik {userId} je već odgovorio na pitanje {questionId}, ne dodeljujem poene ponovo.");
             }
 
             participant.TotalTime += durationMs / 1000.0;
-
-            if (quizState != null)
-            {
-                quizState.MarkAnswered(userId);
-            }
 
             await context.SaveChangesAsync();
 
@@ -273,6 +288,7 @@ namespace BE.Services.QuizHub
 
             Console.WriteLine($"[SubmitAnswerAsync] Trenutni rezultat za {participant.User?.Username} -> Ukupno: {participant.Score}, Tačnih: {participant.CorrectAnswers}, Vreme: {participant.TotalTime:F2}s");
         }
+
 
         public async Task<List<LiveQuizParticipantDto>> GetLeaderboardAsync(string roomCode, AppContext context)
         {
@@ -294,6 +310,7 @@ namespace BE.Services.QuizHub
                 })
                 .OrderByDescending(x => x.Score)
                 .ThenByDescending(x => x.CorrectAnswers)
+                .ThenBy(x => x.TotalTime)
                 .ToList();
 
             return result;
@@ -351,6 +368,12 @@ namespace BE.Services.QuizHub
 
             private readonly Dictionary<int, HashSet<int>> _userAnsweredQuestions = new();
 
+            public Dictionary<int, bool> CorrectnessMap = new();
+
+            public Dictionary<int, int> CorrectAnswerDurations = new(); 
+
+
+
             public DateTime QuestionStartTime { get; private set; }
             public int QuestionTimeLimitMs { get; set; } = 9000;
 
@@ -366,6 +389,7 @@ namespace BE.Services.QuizHub
                 _answeredUserIds.Clear();
                 QuestionStartTime = DateTime.UtcNow;
                 BonusAwarded = false;
+                CorrectnessMap.Clear();
             }
 
             public void MarkAnswered(int userId)

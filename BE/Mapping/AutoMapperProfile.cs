@@ -11,16 +11,17 @@ namespace BE.Mapping
         public AutoMapperProfile()
         {
             CreateMap<Option, OptionDto>().ReverseMap();
+
             CreateMap<Question, QuestionDto>()
                 .ForMember(dest => dest.CorrectTextAnswer, opt => opt.MapFrom(src => src.CorrectTextAnswer))
+                .ForMember(dest => dest.Options, opt => opt.MapFrom(src => src.Options)) 
                 .ReverseMap();
 
             CreateMap<Quiz, QuizDto>().ReverseMap();
 
             CreateMap<LiveQuizParticipant, LiveQuizParticipantDto>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
-
-
         }
     }
+
 }

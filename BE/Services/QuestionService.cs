@@ -21,8 +21,10 @@ namespace BE.Services
 
         public async Task<Question> GetByIdAsync(int id)
         {
-            var question = await _context.Questions.Include(q => q.Quiz)
-                                                   .FirstOrDefaultAsync(q => q.Id == id);
+            var question = await _context.Questions
+                .Include(q => q.Quiz)
+                .Include(q => q.Options) 
+                .FirstOrDefaultAsync(q => q.Id == id);
             if (question == null)
                 throw new Exception("Question not found");
             return question;

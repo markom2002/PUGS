@@ -27,7 +27,7 @@ const Register: React.FC = () => {
       setSuccess(true);
       setError(null);
       alert('Registracija uspješna!');
-      // Ovde možeš dodati redirect npr. navigate('/home')
+      
     } catch (err: any) {
       setError('Greška prilikom registracije. Provjerite podatke.');
     }

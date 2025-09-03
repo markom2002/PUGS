@@ -42,13 +42,38 @@ namespace BE.Services
             var option = await _context.Options.FindAsync(id);
             if (option == null) return null;
 
+            
+            if (dto.IsCorrect)
+            {
+                
+                var question = await _context.Questions
+                    .FirstOrDefaultAsync(q => q.Id == dto.QuestionId);
+
+                if (question != null &&
+                    (question.Type == "single" || question.Type == "truefalse"))
+                {
+                    
+                    var otherOptions = await _context.Options
+                        .Where(o => o.QuestionId == dto.QuestionId && o.Id != id)
+                        .ToListAsync();
+
+                    foreach (var otherOption in otherOptions)
+                    {
+                        otherOption.IsCorrect = false;
+                    }
+                }
+            }
+
+            
             option.Text = dto.Text;
             option.IsCorrect = dto.IsCorrect;
             option.QuestionId = dto.QuestionId;
 
             await _context.SaveChangesAsync();
+
             return _mapper.Map<OptionDto>(option);
         }
+
 
         public async Task<bool> DeleteAsync(int id)
         {

@@ -78,6 +78,7 @@ namespace BE.Services
             var results = await _context.Results
                 .Include(r => r.User)
                 .Include(r => r.Quiz)
+                .Where(r => r.User.Username != "admin")
                 .ToListAsync();
 
             return results.Select(r => new UserResultDto
@@ -100,6 +101,7 @@ namespace BE.Services
             var query = _context.Results
                 .Include(r => r.User)
                 .Include(r => r.Quiz)
+                .Where(r => r.User.Username != "admin")
                 .AsQueryable();
 
             if (filter.QuizId.HasValue)

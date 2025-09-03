@@ -23,7 +23,7 @@ const TakeQuiz: React.FC = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Precizni timer sa Date.now()
+  
   useEffect(() => {
     setQuiz(null);
     setAnswers({});
@@ -246,13 +246,13 @@ const TakeQuiz: React.FC = () => {
             return 'Nema odgovora';
           })(),
           correctAnswer: (() => {
-  if (question.type === 'text' || question.type === 'fill') {
-    // Ovde koristi correctTextAnswer ako postoji
-    return question.correctTextAnswer ?? 'Nema odgovora';
-  }
-  const correctOpts = question.options.filter((o) => o.isCorrect && o.text?.trim()).map((o) => o.text!.trim());
-  return correctOpts.length > 0 ? correctOpts.join(', ') : 'Nema odgovora';
-})(),
+            if (question.type === 'text' || question.type === 'fill') {
+    
+            return question.correctTextAnswer ?? 'Nema odgovora';
+            }
+          const correctOpts = question.options.filter((o) => o.isCorrect && o.text?.trim()).map((o) => o.text!.trim());
+          return correctOpts.length > 0 ? correctOpts.join(', ') : 'Nema odgovora';
+          })(),
 
           isCorrect: (() => {
             if (!quiz) return false;

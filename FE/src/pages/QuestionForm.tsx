@@ -10,7 +10,7 @@ interface QuestionFormProps {
   onCancel: () => void;
 }
 
-let tempOptionId = -1; // koristi se za privremene ID-jeve
+let tempOptionId = -1; // privremeni id
 
 const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onSave, onCancel }) => {
   const [question, setQuestion] = useState<QuestionDto>(() => ({
@@ -61,20 +61,31 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onSave, onCanc
   };
 
   const updateOption = (
-    index: number,
-    field: keyof Pick<OptionDto, 'text' | 'isCorrect'>,
-    value: string | boolean
-  ) => {
-    setQuestion((prev) => {
-      const newOptions = [...prev.options];
-      if (field === 'text' && typeof value === 'string') {
-        newOptions[index].text = value;
-      } else if (field === 'isCorrect' && typeof value === 'boolean') {
-        newOptions[index].isCorrect = value;
+  index: number,
+  field: keyof Pick<OptionDto, 'text' | 'isCorrect'>,
+  value: string | boolean
+) => {
+  setQuestion((prev) => {
+    const newOptions = [...prev.options];
+
+    if (field === 'text' && typeof value === 'string') {
+      newOptions[index].text = value;
+    }
+
+    if (field === 'isCorrect' && typeof value === 'boolean') {
+      if ((prev.type === 'single' || prev.type === 'truefalse') && value === true) {
+        
+        newOptions.forEach((opt) => (opt.isCorrect = false));
       }
-      return { ...prev, options: newOptions };
-    });
-  };
+
+      
+      newOptions[index].isCorrect = value;
+    }
+
+    return { ...prev, options: newOptions };
+  });
+};
+
 
   const removeOption = (index: number) => {
     setQuestion((prev) => {
@@ -195,8 +206,22 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onSave, onCanc
                   type={question.type === 'multiple' ? 'checkbox' : 'radio'}
                   name="correctOption"
                   checked={option.isCorrect}
-                  onChange={(e) => updateOption(idx, 'isCorrect', e.target.checked)}
-                />
+                  onChange={() => {
+   
+                    if (question.type === 'single' || question.type === 'truefalse') {
+                      setQuestion((prev) => {
+                       const updatedOptions = prev.options.map((opt, optIdx) => ({
+                       ...opt,
+                      isCorrect: optIdx === idx, 
+                      }));
+                    return { ...prev, options: updatedOptions };
+                    });
+                  } else {
+      
+                     updateOption(idx, 'isCorrect', !option.isCorrect);
+                  }
+                }}
+              />
                 Tačno
               </label>
               <button type="button" onClick={() => removeOption(idx)} title="Obriši opciju">

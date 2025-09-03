@@ -32,7 +32,6 @@ export const getAllQuizzes = async (
  */
 export const getQuizById = async (quizId: number): Promise<QuizDetailsDto> => {
   const response = await api.get<QuizDetailsDto>(`/api/quizzes/${quizId}`);
-  // Koristi type assertion da TS ne kuka
   const questions = response.data.questions as QuestionDto[];
   console.log('API odgovor getQuizById:', response.data);
   console.log('Points u pitanjima:', questions.map(q => q.points ?? 0));
@@ -40,7 +39,7 @@ export const getQuizById = async (quizId: number): Promise<QuizDetailsDto> => {
 };
 
 /**
- * Šalje korisničke odgovore na kviz i dobija rezultat nazad.
+ * Šalje korisničke odgovore na kviz i dobija rezultat nazad
  */
 export const submitQuizAnswers = async (
   quizId: number,
