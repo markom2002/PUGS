@@ -1,3 +1,8 @@
+import {
+  clearMatchSession,
+  readMatchSession,
+  rememberMatchSession,
+} from "../utils/matchSession";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import RoomInvite from "../components/RoomInvite";
@@ -80,24 +85,22 @@ export async function arenaRequest(
   });
   const data = await response.json();
   if (!response.ok)
-    throw new Error(data.error || "Zahtjev nije uspio. Pokušaj ponovo.");
+    throw Object.assign(
+      new Error(data.error || "Zahtjev nije uspio. Pokušaj ponovo."),
+      { status: response.status },
+    );
   return data;
 }
 const icons = ["↗", "◈", "◎", "⚡", "◷", "⌘", "✳", "❋"];
 export default function Arena() {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   useEffect(() => installVictoryAudioUnlock(), []);
-  const [session, setSession] = useState<Session | null>(() => {
-    try {
-      return JSON.parse(
-        sessionStorage.getItem("pugs-arena") ||
-          localStorage.getItem("skocko-session") ||
-          "null",
-      );
-    } catch {
-      return null;
-    }
-  });
+  const invitation = params.has("code") ? params.get("code") || "" : null;
+  const [session, setSession] = useState<Session | null>(() =>
+    readMatchSession(invitation),
+  );
+  const restoring = useRef(Boolean(session));
+  const previousInvitation = useRef(invitation);
   const [state, setState] = useState<State | null>(null);
   const [mode, setMode] = useState(params.has("code") ? "join" : "create");
   const [name, setName] = useState("");
@@ -120,6 +123,24 @@ export default function Arena() {
     const ticket = generation.current;
     const next: State = await arenaRequest(`rooms/${session.code}`, session);
     if (ticket !== generation.current) return;
+    if (next.phase === "finished") {
+      clearMatchSession();
+      if (restoring.current) {
+        restoring.current = false;
+        generation.current++;
+        setSession(null);
+        setState(null);
+        setMode("create");
+        setCode("");
+        setName("");
+        setVotes([]);
+        setError(
+          "Prethodna partija je završena. Za novi meč ponovo napravi sobu ili unesi novi PIN.",
+        );
+        return next;
+      }
+    }
+    restoring.current = false;
     offset.current = Date.parse(next.serverNow) - Date.now();
     setState(next);
     setOnline(true);
@@ -134,6 +155,22 @@ export default function Arena() {
         await refresh();
       } catch (e) {
         if (!cancelled) {
+          const status = (e as Error & { status?: number }).status;
+          if (status === 401 || status === 400 || status === 404) {
+            clearMatchSession();
+            generation.current++;
+            restoring.current = false;
+            setSession(null);
+            setState(null);
+            setMode("join");
+            setCode(session.code);
+            setName("");
+            setVotes([]);
+            setError(
+              "Soba je zatvorena ili je čekaonica osvježena. Ponovo se prijavi u sobu za novi meč.",
+            );
+            return;
+          }
           setOnline(false);
           setError((e as Error).message);
         }
@@ -148,6 +185,20 @@ export default function Arena() {
       generation.current++;
     };
   }, [session, refresh]);
+  useEffect(() => {
+    if (previousInvitation.current === invitation) return;
+    previousInvitation.current = invitation;
+    clearMatchSession();
+    generation.current++;
+    restoring.current = false;
+    setSession(null);
+    setState(null);
+    setMode(invitation === null ? "create" : "join");
+    setCode(invitation || "");
+    setName("");
+    setVotes([]);
+    setError("");
+  }, [invitation]);
   useEffect(() => {
     setAnswer("");
     setAudioError("");
@@ -232,10 +283,20 @@ export default function Arena() {
     }
   }
   function leave() {
+    setName("");
+    setVotes([]);
+    setCode("");
+    setMode(state?.isHost ? "create" : "join");
+    restoring.current = false;
+    previousInvitation.current = null;
+    setParams({}, { replace: true });
     clearMusicPreviews();
+    if (session && state?.phase === "lobby")
+      void arenaRequest(`rooms/${session.code}/leave`, session, {}).catch(
+        () => {},
+      );
     generation.current++;
-    sessionStorage.removeItem("pugs-arena");
-    localStorage.removeItem("skocko-session");
+    clearMatchSession();
     setSession(null);
     setState(null);
     setError("");
@@ -248,8 +309,10 @@ export default function Arena() {
         null,
         mode === "create" ? { name, seconds } : { name },
       );
-      sessionStorage.setItem("pugs-arena", JSON.stringify(next));
-      localStorage.setItem("skocko-session", JSON.stringify(next));
+      rememberMatchSession(next);
+      previousInvitation.current = next.code;
+      setParams({ code: next.code }, { replace: true });
+      restoring.current = false;
       setSession(next);
     });
   }
@@ -492,6 +555,32 @@ export default function Arena() {
                   {state.isHost && (
                     <section className="arena-panel">
                       <span className="eyebrow">RUNDA 06 / DOMAĆA MUZIKA</span>
+                      <div className="lobby-reset">
+                        <div>
+                          <strong>Novi meč, svježa ekipa.</strong>
+                          <p>
+                            U novu sobu svaki igrač ulazi ponovo. Ovim dugmetom
+                            uklanjaš sve igrače iz ove čekaonice, osim domaćina.
+                          </p>
+                        </div>
+                        <button
+                          className="arena-secondary"
+                          disabled={busy}
+                          onClick={() =>
+                            action(async () => {
+                              await arenaRequest(
+                                `rooms/${state.code}/reset-lobby`,
+                                session,
+                                {},
+                              );
+                              setVotes([]);
+                              await refresh();
+                            })
+                          }
+                        >
+                          Isprazni čekaonicu
+                        </button>
+                      </div>
                       <h2>Pet pjesama. Prepoznaj hit.</h2>
                       <p>
                         Aplikacija automatski bira pet domaćih hitova iz baze,

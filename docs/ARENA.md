@@ -31,7 +31,7 @@ Za razvoj pokreni `dotnet run --launch-profile http` iz `BE`, a `npm start` iz `
 
 ## Oporavak i ograničenja
 
-Sesija igrača se čuva u tabu i na uređaju (`sessionStorage` i `localStorage`): osvježavanje ili ponovno otvaranje na istom origin-u vraća igrača u sobu dok je server čuva. „Napusti prikaz” briše lokalnu aktivnu sesiju, ali ne uklanja učesnika iz sobe. Za instalaciju i lokalnu/internet igru pogledaj [APP.md](APP.md).
+Sesija igrača se čuva samo u tabu (`sessionStorage`) za povratak u isti aktivni meč nakon osvježavanja. Završetak meča briše prijavu. Nova pozivnica otvara novu prijavu, čak i kada je ranije postojala druga soba. U čekaonici izlazak gosta odmah uklanja gosta; izlazak domaćina zatvara čekaonicu. Započeta partija nastavlja se i ako neko napusti prikaz. Za instalaciju i lokalnu/internet igru pogledaj [APP.md](APP.md).
 
 Backend čuva stanje i tokene u ignorisanom folderu `BE/arena-data`; muzički katalog je u SQL Server tabeli `QuizAppDB.dbo.MusicTracks`. Ne izlaži taj folder kroz statički server i ne commituj ga. Restart procesa zadržava partije mlađe od tri sata, uz nastavak po stvarnom satu (partija nije pauzirana dok server ne radi). Sačuvano stanje je namijenjeno jednom server procesu sa trajnim diskom. Više instanci zahtijeva zajedničku bazu/Redis i koordinaciju. Stari audio fajlovi se ne brišu automatski.
 
@@ -98,3 +98,10 @@ Do pet preview isečaka koji su već učitani tokom muzičkih pitanja privremeno
 Iz dostupnog preview-a bira se do 18 sekundi kontinuirano energičnog zvuka, uz kratko poravnanje početka na jači ulaz fraze i postepeno pojačavanje/stišavanje. Analiza koristi amplitudu i kontinuitet energije, bez semantičkog prepoznavanja refrena; ne garantuje refren niti pristup punoj pjesmi. Kratak preview svira u svojoj raspoloživoj dužini. Pauza, nastavak, ponavljanje i jačina zvuka ostaju dostupni.
 
 Provjere: `npm test -- --watchAll=false --runInBand` u FE; `node tests/victory-autoplay-browser.mjs` iz korijena za stvarni Edge s pravilom `document-user-activation-required`. Browser provjera pokreće svoj razvojni backend na portu 5108 s izolovanim podacima u `.qa`, koristi stvarni preview i ne mijenja aktivne sobe. Potrebni su .NET, lokalni SQL Server, internet, izgrađeni frontend i instaliran Edge.
+
+## Novi meč i novi PIN
+
+Svako kreiranje sobe dobija nov šestocifreni PIN. Već iskorišćeni PIN-ovi čuvaju se u ignorisanom `BE/arena-data/used-room-codes.json` i ne ponavljaju se nakon zatvaranja sobe ili restarta. Novi meč kreira se kao nova soba sa domaćinom, bez naslijeđenih gostiju i glasova. Svi igrači ponovo unose PIN i nadimak.
+
+Domaćin prije početka može kliknuti „Isprazni čekaonicu”: svi gosti se uklanjaju, tokeni prestaju da važe i svi ponovo glasaju. PIN se pri pražnjenju iste čekaonice ne mijenja; novi PIN dobija se kreiranjem nove sobe. Aktivni meč se ovim dugmetom ne može resetovati. Završni ekran ostaje vidljiv učesnicima koji su ga dočekali, ali se prijava ne koristi za automatski ulazak u naredni meč.
+Otvaranje `/arena` bez PIN-a uvijek započinje novu prijavu. Povratak u postojeći meč preko sačuvane sesije dozvoljen je samo ako URL sadrži isti aktivni PIN. Nakon ulaska URL se usklađuje sa novim PIN-om.

@@ -20,6 +20,8 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
     [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds));
     [EnableRateLimiting("arena-join"), HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
+    [HttpPost("rooms/{code}/reset-lobby")] public IActionResult ResetLobby(string code) => Run(() => arena.ResetLobby(code,Token));
+    [HttpPost("rooms/{code}/leave")] public IActionResult Leave(string code) => Run(() => arena.Leave(code,Token));
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
     [HttpGet("connection")] public IActionResult Connection([FromServices] ArenaConnectionInfo connection) => Ok(connection.Describe(Request));
     [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());

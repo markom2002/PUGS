@@ -12,7 +12,7 @@ try{
  let target;for(let i=0;i<50;i++){try{target=(await(await fetch('http://127.0.0.1:9337/json/list')).json()).find(t=>t.type==='page');if(target)break;}catch{}await delay(200);}assert(target);
  socket=new WebSocket(target.webSocketDebuggerUrl);await new Promise((resolve,reject)=>{socket.onopen=resolve;socket.onerror=reject;});let id=0;const pending=new Map();socket.onmessage=e=>{const d=JSON.parse(e.data);const p=pending.get(d.id);if(p){pending.delete(d.id);d.error?p.reject(Error(JSON.stringify(d.error))):p.resolve(d.result);}};const send=(method,params={})=>new Promise((resolve,reject)=>{const current=++id;pending.set(current,{resolve,reject});socket.send(JSON.stringify({id:current,method,params}));});
  const evaluate=async expression=>(await send('Runtime.evaluate',{expression,returnByValue:true})).result.value;
- await send('Page.enable');await send('Page.navigate',{url:base+'/arena'});await delay(500);
+ await send('Page.enable');await send('Page.navigate',{url:base+'/arena?code=990001'});await delay(500);
  await evaluate(`sessionStorage.setItem('pugs-arena',JSON.stringify({code:'990001',token:'autoplay-player'}))`);await send('Page.reload',{ignoreCache:true});
  for(let i=0;i<50;i++){if(await evaluate('Boolean(document.querySelector("#arena-answer"))'))break;await delay(200);}
  const point=JSON.parse(await evaluate(`(()=>{const e=document.querySelector('#arena-answer');if(!e)throw Error('Question not rendered');e.scrollIntoView({block:'center'});const r=e.getBoundingClientRect();return JSON.stringify({x:r.x+r.width/2,y:r.y+r.height/2});})()`));

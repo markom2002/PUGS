@@ -103,6 +103,23 @@ service=new ArenaService(clock,config);
 Check(service.With(vc,vt,(r,p)=>ArenaService.GetVictorySong(r)?.Index)==28,"Victory music selection survives restart");
 var victoryState=J(service.State(vc,vt)).GetProperty("victory");
 Check(victoryState.GetProperty("winnerNames").GetArrayLength()==2,"Shared victory names are explicit");
+// A new room is a new match: fresh PIN, empty guest roster, old enrolments invalid.
+var rh=J(service.Create("Fresh host",20));var rc=rh.GetProperty("code").GetString()!;var rt=rh.GetProperty("token").GetString()!;
+var rg=J(service.Join(rc,"Returning guest"));var rgt=rg.GetProperty("token").GetString()!;
+Reject(()=>service.ResetLobby(rc,rgt),"Guest cannot clear waiting room");
+service.Vote(rc,rt,categories);service.Vote(rc,rgt,categories);service.ResetLobby(rc,rt);
+var empty=J(service.State(rc,rt));Check(empty.GetProperty("players").GetArrayLength()==1,"Host reset leaves only the host");
+Check(empty.GetProperty("votes").GetArrayLength()==0,"Votes reset for fresh lobby");
+Reject(()=>service.State(rc,rgt),"Removed guest token cannot re-enter silently");
+var joinedAgain=J(service.Join(rc,"Returning guest"));Check(joinedAgain.GetProperty("token").GetString()!=rgt,"Returning guest explicitly joins with fresh token");
+service.Leave(rc,joinedAgain.GetProperty("token").GetString()!);Check(J(service.State(rc,rt)).GetProperty("players").GetArrayLength()==1,"Leaving lobby removes guest immediately");
+service.Leave(rc,rt);Reject(()=>service.State(rc,rt),"Host leaving closes the waiting room");
+var reserved=JsonSerializer.Deserialize<string[]>(File.ReadAllText(Path.Combine(directory,"used-room-codes.json")))!;
+Check(reserved.Contains(rc),"Closed room PIN remains reserved on disk");
+service=new ArenaService(clock,config);var fresh=J(service.Create("New match",20));var newCode=fresh.GetProperty("code").GetString()!;
+Check(!reserved.Contains(newCode),"New room PIN is fresh even after server restart");
+Check(J(service.State(newCode,fresh.GetProperty("token").GetString()!)).GetProperty("players").GetArrayLength()==1,"New match never carries guests from an earlier room");
+Reject(()=>service.ResetLobby(c2,t2),"Cannot clear participants during an active game");
 Console.WriteLine("All arena checks passed. Temporary test data: " + directory);
 
 class TestClock : TimeProvider

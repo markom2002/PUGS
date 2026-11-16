@@ -30,6 +30,9 @@ public class ArenaService
 {
     readonly TimeProvider clock;
     readonly string? savePath;
+    readonly string? codesPath;
+    readonly HashSet<string> usedCodes = new();
+    bool codesDirty;
     static readonly JsonSerializerOptions json = new() { IncludeFields = true, PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate };
     public ArenaService(TimeProvider clock, IConfiguration config)
     {
@@ -38,14 +41,20 @@ public class ArenaService
         {
             var directory = config["Arena:DataPath"] ?? Path.Combine(Directory.GetCurrentDirectory(), "arena-data");
             Directory.CreateDirectory(directory); savePath = Path.Combine(directory, "rooms.json");
+            codesPath = Path.Combine(directory, "used-room-codes.json");
+            if (File.Exists(codesPath)) foreach (var code in JsonSerializer.Deserialize<string[]>(File.ReadAllText(codesPath)) ?? Array.Empty<string>()) usedCodes.Add(code);
             if (File.Exists(savePath))
                 foreach (var r in JsonSerializer.Deserialize<List<ArenaRoom>>(File.ReadAllText(savePath), json) ?? new())
-                    if (clock.GetUtcNow() - r.Touched < TimeSpan.FromHours(3)) rooms[r.Code] = r;
+                    { if (usedCodes.Add(r.Code)) codesDirty = true; if (clock.GetUtcNow() - r.Touched < TimeSpan.FromHours(3)) rooms[r.Code] = r; }
         }
     }
     void Save()
     {
         if (savePath == null) return;
+        if(codesDirty&&codesPath!=null){
+            File.WriteAllText(codesPath+".tmp",JsonSerializer.Serialize(usedCodes));
+            File.Move(codesPath+".tmp",codesPath,true);codesDirty=false;
+        }
         File.WriteAllText(savePath + ".tmp", JsonSerializer.Serialize(rooms.Values, json));
         File.Move(savePath + ".tmp", savePath, true);
     }
@@ -72,8 +81,10 @@ public class ArenaService
         {
             foreach (var key in rooms.Where(x => clock.GetUtcNow() - x.Value.Touched > TimeSpan.FromHours(3)).Select(x => x.Key).ToArray()) rooms.Remove(key);
             if (rooms.Count >= 500) throw new InvalidOperationException("Server je pun. Pokušaj kasnije.");
+            if (usedCodes.Count >= 900000) throw new InvalidOperationException("Sve oznake soba su iskorišćene. Potrebno je proširiti PIN prostor.");
             string code;
-            do { code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString(); } while (rooms.ContainsKey(code));
+            do { code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString(); } while (usedCodes.Contains(code));
+            usedCodes.Add(code); codesDirty = true;
             var room = new ArenaRoom { Code = code, Seconds = Math.Clamp(seconds, 10, 20) };
             var player = new ArenaPlayer { Name = Name(name) };
             room.Touched = clock.GetUtcNow(); room.Players.Add(player); rooms.Add(code, room); Save();
@@ -94,6 +105,21 @@ public class ArenaService
             return new { code = room.Code, token = player.Token };
         }
     }
+    public object ResetLobby(string code,string token)=>With(code,token,(r,p)=>{
+        Host(r,p);
+        if(r.Phase!="lobby")throw new InvalidOperationException("Čekaonica se može isprazniti samo prije početka partije.");
+        int removed=r.Players.Count-1;r.Players.RemoveRange(1,removed);
+        p.Votes=Array.Empty<string>();p.Score=0;p.Correct=0;p.Answers.Clear();p.ResponseTimesMs.Clear();
+        r.Music.Clear();r.Questions=Array.Empty<ArenaQuestion>();r.Selected=Array.Empty<string>();r.Index=-1;
+        return new {ok=true,removed};
+    });
+    public object Leave(string code,string token)=>With(code,token,(r,p)=>{
+        if(r.Phase=="lobby"){
+            if(r.Players[0]==p)rooms.Remove(r.Code);
+            else r.Players.Remove(p);
+        }
+        return new {ok=true};
+    });
     public static void Host(ArenaRoom room, ArenaPlayer player)
     { if (room.Players[0] != player) throw new UnauthorizedAccessException("Samo domaćin upravlja partijom."); }
     public object Vote(string code, string token, string[] votes) => With(code, token, (r, p) =>

@@ -1,4 +1,4 @@
-﻿# Aplikacija na telefonu i laptopu
+# Aplikacija na telefonu i laptopu
 
 Skočko je instalabilna web aplikacija (PWA). Nije APK/EXE paket i ne zahtijeva App Store. Chrome/Edge mogu ponuditi instalaciju, a iPhone koristi Safari → Podijeli → Dodaj na početni ekran. Puna instalacija zahtijeva HTTPS, osim lokalnog razvoja na localhost-u. Izvor: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable.
 
@@ -42,7 +42,7 @@ Lokalni server nastavlja raditi. Za stalni HTTPS hosting postavi `Arena:PublicUr
 - Service worker se generiše uz production build. Kešira samo verzionisani interfejs i ikonice; API, poeni, tokeni i muzika se ne keširaju.
 - Bez interneta aplikacija može otvoriti ranije preuzet interfejs, ali partija i muzika zahtijevaju dostupan server. Nema offline slanja odgovora.
 - Nova verzija ne prekida partiju automatskim reloadom: prikazuje se obavještenje i korisnik bira osvježavanje.
-- Sesija se pamti na uređaju i poslije zatvaranja prozora. Napuštanje prikaza briše aktivnu lokalnu sesiju. HTTPS i LAN origin imaju zasebno spremište; za igru iz instalirane aplikacije otvori HTTPS adresu prije ulaska u sobu.
+- Sesija se pamti samo u tabu za oporavak istog aktivnog meča. Nova pozivnica i završetak meča brišu staru prijavu; za svaki novi meč igrači ponovo unose nadimak i PIN. Prijave se više ne pamte kroz localStorage. HTTPS i LAN origin imaju zasebno spremište.
 - U javnom režimu (`Arena:PublicMode=true`) dostupni su Arena API i interfejs. Raniji administratorski API, Swagger, stari SignalR i upload su blokirani. Kreiranje i ulazak imaju ograničenje pokušaja po IP adresi.
 
 Ovo je privatna multiplayer aplikacija za probne partije s društvom, ne završena infrastruktura za javni komercijalni servis. Postojeće AutoMapper/CRA zavisnosti imaju prijavljena upozorenja koja treba zasebno riješiti prije takvog lansiranja.
