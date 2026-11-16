@@ -19,6 +19,7 @@ import CreateLiveQuizRoom from './pages/QuizHub/CreateLiveQuizRoom';
 import LiveHostRoom from './pages/QuizHub/LiveHostRoom';
 import JoinLiveQuiz from './pages/QuizHub/JoinLiveQuiz';
 import LiveQuiz from './pages/QuizHub/LiveQuiz';
+import Arena from './pages/Arena';
 
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     <Router>
       <Navbar />
       <Routes>
+        <Route path='/arena' element={<Arena />} />
         <Route path='/' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
