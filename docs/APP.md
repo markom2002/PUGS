@@ -58,3 +58,5 @@ Dvoklik na Desktop precicu `Pokreni Skocko` provjerava SQL Express, pokrece back
 Ako Desktop precica nedostaje, dvoklik na `Vrati precicu.cmd` u folderu projekta ponovo je pravi na stvarnom Windows Desktopu. Zatvaranje browsera ne zaustavlja backend pokrenut launcherom. Poslije gasenja ili restarta racunara ponovo klikni `Pokreni Skocko`.
 
 Desktop pokretac je obican `Pokreni Skocko.cmd`, jer sistem moze odbiti cuvanje .lnk precica koje pokrecu PowerShell. On poziva isti launcher; prozor se zatvara po uspjesnom pokretanju.
+
+Pokretac ispisuje status dok ceka server (do 180 sekundi). Ponovni klik otvara vec dostupnu aplikaciju i kada prethodno pokretanje jos traje. Greske ostaju vidljive u prozoru; nema modalnog dijaloga koji drzi zakljucavanje.
