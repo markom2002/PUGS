@@ -25,8 +25,8 @@ Reject(() => service.Answer(code, token, 0, "anything"), "No pre-game scoring");
 Reject(() => service.Start(code, token), "Missing clips block start");
 var categories = QuestionBank.Categories.Keys.Take(4).ToArray();
 var observer=J(service.Join(code,"Observer")); var observerToken=observer.GetProperty("token").GetString()!; service.Vote(code,observerToken,categories);
-Reject(() => service.Vote(code, token, new[] { "Sport", "Sport", "Sport", "Sport" }), "Duplicate categories rejected");
-service.Vote(code, token, categories); service.Vote(code, guestToken, categories);
+Reject(() => service.Vote(code, guestToken, new[] { "Sport", "Sport", "Sport", "Sport" }), "Duplicate categories rejected");
+service.Vote(code, guestToken, categories);
 service.With(code, token, (r, p) => { for (int i = 0; i < 5; i++) r.Music.Add(new ArenaQuestion("Pjesma?", new[] { "Naslov " + i }, "Muzičko finale", "clip.mp3", "Izvođač")); return true; });
 service.Start(code, token); Reject(() => service.Start(code, token), "Double start rejected");
 clock.Add(4);
@@ -64,7 +64,7 @@ var h2=J(service.Create("Voditelj",20));var c2=h2.GetProperty("code").GetString(
 var a2=J(service.Join(c2,"Ana"));var ta=a2.GetProperty("token").GetString()!;
 var b2=J(service.Join(c2,"Boris"));var tb=b2.GetProperty("token").GetString()!;
 var c3=J(service.Join(c2,"Cedo"));var tc=c3.GetProperty("token").GetString()!;
-foreach(var t in new[]{t2,ta,tb,tc}) service.Vote(c2,t,categories);
+foreach(var t in new[]{ta,tb,tc}) service.Vote(c2,t,categories);
 service.With(c2,t2,(r,p)=>{for(int j=0;j<5;j++)r.Music.Add(new ArenaQuestion("Music?",new[]{"Test"},"Music","test.mp3"));return true;});
 service.Start(c2,t2);clock.Add(4);service.State(c2,ta);
 var answer2=service.With(c2,t2,(r,p)=>r.Questions[0].Answers[0]);
@@ -107,7 +107,7 @@ Check(victoryState.GetProperty("winnerNames").GetArrayLength()==2,"Shared victor
 var rh=J(service.Create("Fresh host",20));var rc=rh.GetProperty("code").GetString()!;var rt=rh.GetProperty("token").GetString()!;
 var rg=J(service.Join(rc,"Returning guest"));var rgt=rg.GetProperty("token").GetString()!;
 Reject(()=>service.ResetLobby(rc,rgt),"Guest cannot clear waiting room");
-service.Vote(rc,rt,categories);service.Vote(rc,rgt,categories);service.ResetLobby(rc,rt);
+service.Participation(rc,rt,true);service.Vote(rc,rt,categories);service.Vote(rc,rgt,categories);service.ResetLobby(rc,rt);
 var empty=J(service.State(rc,rt));Check(empty.GetProperty("players").GetArrayLength()==1,"Host reset leaves only the host");
 Check(empty.GetProperty("votes").GetArrayLength()==0,"Votes reset for fresh lobby");
 Reject(()=>service.State(rc,rgt),"Removed guest token cannot re-enter silently");
@@ -120,6 +120,27 @@ service=new ArenaService(clock,config);var fresh=J(service.Create("New match",20
 Check(!reserved.Contains(newCode),"New room PIN is fresh even after server restart");
 Check(J(service.State(newCode,fresh.GetProperty("token").GetString()!)).GetProperty("players").GetArrayLength()==1,"New match never carries guests from an earlier room");
 Reject(()=>service.ResetLobby(c2,t2),"Cannot clear participants during an active game");
+// Host role is server enforced and survives restart.
+var ph=J(service.Create("Playing host",20));var pc=ph.GetProperty("code").GetString()!;var pt=ph.GetProperty("token").GetString()!;
+var pg=J(service.Join(pc,"Opponent"));var pgt=pg.GetProperty("token").GetString()!;
+Reject(()=>service.Vote(pc,pt,categories),"Spectator host cannot vote");
+Reject(()=>service.Participation(pc,pgt,true),"Guest cannot change host role");
+service.Participation(pc,pt,true);service.Vote(pc,pt,categories);service.Participation(pc,pt,false);
+Check(J(service.State(pc,pt)).GetProperty("votes").GetArrayLength()==0,"Disabling participation clears host votes");
+service.Participation(pc,pt,true);service.Vote(pc,pgt,categories);
+service.With(pc,pt,(r,p)=>{for(int i=0;i<5;i++)r.Music.Add(new ArenaQuestion("Music",new[]{"Host song"},"Music","test.mp3"));return true;});
+Reject(()=>service.Start(pc,pt),"Playing host must also choose categories");
+service.Vote(pc,pt,categories);service.Start(pc,pt);clock.Add(4);
+Reject(()=>service.Participation(pc,pt,false),"Host role cannot change during match");
+var hostState=J(service.State(pc,pt));Check(hostState.GetProperty("competitorCount").GetInt32()==2,"Playing host included in competition");
+service.With(pc,pt,(r,p)=>{r.Players[1].Score=150;r.Players[1].Answers[0]=("answer",150);return true;});
+hostState=J(service.State(pc,pt));Check(!hostState.GetProperty("rankingLive").GetBoolean(),"Playing host has no privileged live correctness view");
+var hostAnswer=service.With(pc,pt,(r,p)=>r.Questions[0].Answers[0]);service.Answer(pc,pt,0,hostAnswer);
+Check(J(service.State(pc,pt)).GetProperty("submitted").GetBoolean(),"Playing host can answer");
+service=new ArenaService(clock,config);Check(J(service.State(pc,pt)).GetProperty("hostParticipates").GetBoolean(),"Host role survives restart");
+service.With(pc,pt,(r,p)=>{r.Index=29;r.Phase="finished";p.Score=500;p.Answers[25]=("Host song",150);p.ResponseTimesMs[25]=500;return true;});
+var hostVictory=J(service.State(pc,pt));Check(hostVictory.GetProperty("victory").GetProperty("winnerNames")[0].GetString()=="Playing host","Playing host can win");
+Check(hostVictory.GetProperty("victory").GetProperty("song").GetProperty("player").GetString()=="Playing host","Host victory selects their fastest correct song");
 Console.WriteLine("All arena checks passed. Temporary test data: " + directory);
 
 class TestClock : TimeProvider

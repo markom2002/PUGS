@@ -8,6 +8,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
     string AudioDirectory => config["Arena:DataPath"] ?? Path.Combine(env.ContentRootPath, "arena-data");
     public record CreateRequest(string Name, int Seconds = 20);
     public record JoinRequest(string Name);
+    public record ParticipationRequest(bool Participates);
     public record VoteRequest(string[] Categories);
     public record AnswerRequest(int Index, string Answer);
     string Token => Request.Headers["X-Player-Token"].ToString();
@@ -22,6 +23,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
     [HttpPost("rooms/{code}/reset-lobby")] public IActionResult ResetLobby(string code) => Run(() => arena.ResetLobby(code,Token));
     [HttpPost("rooms/{code}/leave")] public IActionResult Leave(string code) => Run(() => arena.Leave(code,Token));
+    [HttpPost("rooms/{code}/participation")] public IActionResult Participation(string code, ParticipationRequest req) => Run(() => arena.Participation(code, Token, req.Participates));
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
     [HttpGet("connection")] public IActionResult Connection([FromServices] ArenaConnectionInfo connection) => Ok(connection.Describe(Request));
     [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());

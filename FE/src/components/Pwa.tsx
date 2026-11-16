@@ -214,7 +214,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               spreman za sljedeću partiju.
             </p>
             {!window.isSecureContext && secureUrl && (
-              <a className="install-primary install-secure-link" href={secureUrl}>Otvori verziju za instalaciju ?</a>
+              <a className="install-primary install-secure-link" href={secureUrl}>Otvori verziju za instalaciju ↗</a>
             )}
             {prompt ? (
               <button

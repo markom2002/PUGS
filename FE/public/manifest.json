@@ -1,9 +1,9 @@
-﻿{
+{
   "id": "/",
   "name": "Skočko Arena",
   "short_name": "Skočko",
   "description": "Tvoja ekipa. Šest rundi. Jedan pobjednik.",
-  "start_url": "/arena?source=app",
+  "start_url": "/?source=app",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
@@ -38,7 +38,7 @@
       "description": "Napravi novu partiju"
     },
     {
-      "name": "Imam PIN",
+      "name": "Pridruži se",
       "url": "/arena?code=",
       "description": "Pridruži se prijateljima"
     }

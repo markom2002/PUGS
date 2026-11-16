@@ -20,6 +20,7 @@ type Session = { code: string; token: string };
 type Player = {
   name: string;
   host: boolean;
+  participating?: boolean;
   score: number | null;
   correct: number | null;
   voted: boolean;
@@ -39,6 +40,7 @@ type State = {
   deadline: string;
   serverNow: string;
   isHost: boolean;
+  hostParticipates?: boolean;
   me: string;
   votes: string[];
   selected: string[];
@@ -242,7 +244,7 @@ export default function Arena() {
           if (cancelled) { playback.dispose(); return; }
           audioRef.current = playback;
           try { await playback.play(); if (!cancelled) setPlaying(true); }
-          catch { if (!cancelled) setAudioError("Dodirni dugme da uklju?i? zvuk na ovom ure?aju."); }
+          catch { if (!cancelled) setAudioError("Dodirni dugme da uključiš zvuk na ovom uređaju."); }
         }).catch(() => { if (!cancelled) setAudioError("Pjesma nije dostupna. Provjeri internet vezu."); });
     }
     return () => { cancelled = true; controller.abort(); playback?.dispose(); };
@@ -470,6 +472,25 @@ export default function Arena() {
               {state.phase === "lobby" ? (
                 <>
                   <RoomInvite code={state.code} />
+                  {state.isHost && (
+                    <section className="arena-panel host-role">
+                      <span className="eyebrow">TVOJA ULOGA U PARTIJI</span>
+                      <h2>Vodiš ekipu. Ulaziš li u igru?</h2>
+                      <div className="host-role-options" role="group" aria-label="Učešće admina">
+                        {[false, true].map((participates) => (
+                          <button key={String(participates)} className={Boolean(state.hostParticipates) === participates ? "selected" : ""}
+                            aria-pressed={Boolean(state.hostParticipates) === participates} disabled={busy}
+                            onClick={() => action(async () => {
+                              await arenaRequest(`rooms/${state.code}/participation`, session, { participates });
+                              setVotes([]); await refresh();
+                            })}>
+                            <strong>{participates ? "⚡ Igram sa ekipom" : "◈ Samo vodim partiju"}</strong>
+                            <span>{participates ? "Biraš oblasti, odgovaraš i boriš se za pobjedu." : "Upravljaš sobom, bez glasanja i skupljanja poena."}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  )}
                   <section className="arena-panel">
                     <div className="section-heading">
                       <div>
@@ -482,10 +503,12 @@ export default function Arena() {
                       Svako bira četiri oblasti. Četiri sa najviše glasova ulaze
                       u partiju; izjednačene bira žrijeb.
                     </p>
-                    <div className="category-grid">
+                    {state.isHost && !state.hostParticipates && <p className="host-spectator-note">Vodiš partiju van konkurencije. Oblasti biraju igrači; za glasanje uključi „Igram sa ekipom“.</p>}
+                    <div className="category-grid" aria-disabled={state.isHost && !state.hostParticipates}>
                       {state.categories.map((c, i) => (
                         <button
                           key={c}
+                          disabled={busy || (state.isHost && !state.hostParticipates)}
                           aria-pressed={votes.includes(c)}
                           className={votes.includes(c) ? "chosen" : ""}
                           onClick={() =>
@@ -506,7 +529,7 @@ export default function Arena() {
                     </div>
                     <button
                       className="arena-primary"
-                      disabled={busy || votes.length !== 4}
+                      disabled={busy || votes.length !== 4 || (state.isHost && !state.hostParticipates)}
                       onClick={() =>
                         action(async () => {
                           await arenaRequest(
@@ -570,7 +593,7 @@ export default function Arena() {
                         disabled={
                           busy ||
                           state.players.length < 2 ||
-                          state.players.some((p) => !p.voted)
+                          state.players.some((p) => (!(p.host && !p.participating)) && !p.voted)
                         }
                         onClick={() =>
                           action(async () => {
@@ -612,14 +635,14 @@ export default function Arena() {
                   }
                   players={state.players}
                   me={state.me}
-                  host={state.isHost}
+                  host={state.isHost && !state.hostParticipates}
                   code={state.code}
                   token={session.token}
                   onAgain={leave}
                 />
               ) : (
                 <section className={`question-card ${hasAudio ? "music-question" : ""} ${questionActive && remaining <= 5 ? "final-seconds" : ""}`} key={state.index}>
-                  <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / 6</span><span>{hasAudio ? "PREPOZNAJ HIT" : "BRZINA ? ZNANJE"}</span></div>
+                  <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / 6</span><span>{hasAudio ? "PREPOZNAJ HIT" : "BRZINA × ZNANJE"}</span></div>
                   <div className="question-meta">
                     <span className="pill">{state.question?.category}</span>
                     <span>PITANJE {(state.index % 5) + 1} / 5</span>
@@ -691,7 +714,7 @@ export default function Arena() {
                       {audioError && <p role="alert">{audioError}</p>}
                     </div>
                   )}
-                  {questionActive && state.isHost ? (
+                  {questionActive && state.isHost && !state.hostParticipates ? (
                     <div className="answer-reveal">
                       <span>REŽIJA PARTIJE</span>
                       <h3>Ekipa je na potezu.</h3>
@@ -812,12 +835,12 @@ export default function Arena() {
                     <div className="ranking-summary">
                       <strong>
                         {state.answeredCount ??
-                          state.players.filter((p) => !p.host && p.answered)
+                          state.players.filter((p) => !(p.host && !p.participating) && p.answered)
                             .length}
                         <small>
                           /
                           {state.competitorCount ??
-                            state.players.filter((p) => !p.host).length}
+                            state.players.filter((p) => !(p.host && !p.participating)).length}
                         </small>
                       </strong>
                       <span>igrača je odgovorilo</span>
@@ -843,7 +866,7 @@ export default function Arena() {
                       className={`${p.name === state.me ? "me" : ""} ${p.fastest && p.answered ? "fastest-player" : ""}`}
                     >
                       <span className="ranking-position">
-                        {p.host
+                        {(p.host && !p.participating)
                           ? "◇"
                           : state.phase === "lobby"
                             ? "·"
@@ -855,7 +878,7 @@ export default function Arena() {
                           {p.name === state.me && <small> TI</small>}
                         </strong>
                         <small>
-                          {p.host
+                          {(p.host && !p.participating)
                             ? "Domaćin · van konkurencije"
                             : state.phase === "lobby"
                               ? p.voted
@@ -867,7 +890,7 @@ export default function Arena() {
                                   ? `${p.responseMs != null ? (p.responseMs / 1000).toFixed(2) + " s" : "Poslato"}${p.fastest ? " · ⚡ najbrži" : ""}`
                                   : "Razmišlja…"}
                         </small>
-                        {!p.host &&
+                        {!(p.host && !p.participating) &&
                           state.phase !== "lobby" &&
                           p.averageMs != null && (
                             <small className="ranking-average">
@@ -882,11 +905,11 @@ export default function Arena() {
                             ? p.voted
                               ? "✓"
                               : "·"
-                            : p.host
+                            : (p.host && !p.participating)
                               ? "—"
                               : (p.score ?? 0)}
                         </b>
-                        {state.phase !== "lobby" && !p.host && (
+                        {state.phase !== "lobby" && !(p.host && !p.participating) && (
                           <>
                             <small>poena</small>
                             <span

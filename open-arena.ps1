@@ -12,7 +12,7 @@ try {
         Write-Host 'Prethodno pokretanje je jos u toku. Provjeravam server...'
         try {
             $null = Invoke-RestMethod "http://localhost:$Port/api/arena/connection" -TimeoutSec 5
-            Start-Process "http://localhost:$Port/arena"
+            Start-Process "http://localhost:$Port/"
             Write-Host 'Kviz je otvoren u browseru.'
             return
         } catch { throw 'Drugo pokretanje je u toku. Sacekaj minut i pokusaj ponovo.' }
@@ -72,8 +72,8 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'HTTPS veza nije dostupna.' }
         $connection = Invoke-RestMethod "$url/api/arena/connection" -TimeoutSec 5
     } catch { Write-Warning 'Internet link nije dostupan. Lokalna igra i dalje radi.' }
-    $openUrl = "$url/arena"
-    if ($connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/arena" }
+    $openUrl = "$url/"
+    if ($connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/" }
     Write-Host "Kviz je spreman: $openUrl"
     Start-Process $openUrl
 } catch {

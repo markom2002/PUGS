@@ -25,7 +25,7 @@ const Home: React.FC = () => (
             Pokreni partiju <span>↗</span>
           </Link>
           <Link className="hero-secondary" to="/arena?code=">
-            Imam PIN sobe →
+            Pridruži se →
           </Link>
         </div>
         <div className="hero-caption">

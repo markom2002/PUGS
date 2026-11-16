@@ -232,3 +232,30 @@ test("a participant removed by the host returns to the join form", async () => {
   expect(screen.getByLabelText("Tvoj nadimak")).toHaveValue("");
   expect(sessionStorage.getItem("pugs-arena")).toBeNull();
 });
+
+test("host role switch enables categories only when the host participates", async () => {
+  let participates = false;
+  sessionStorage.setItem("pugs-arena", JSON.stringify({ code: "123456", token: "host-token" }));
+  global.fetch = jest.fn().mockImplementation(async (url, options) => {
+    if (String(url).endsWith("/participation")) {
+      participates = JSON.parse(options.body).participates;
+      return { ok: true, json: async () => ({ ok: true }) };
+    }
+    return { ok: true, json: async () => ({
+      code: "123456", phase: "lobby", index: -1, seconds: 20,
+      deadline: new Date().toISOString(), serverNow: new Date().toISOString(),
+      isHost: true, hostParticipates: participates, me: "Admin", votes: [], selected: [],
+      categories: ["Sport", "Nauka", "Priroda", "Istorija"], musicCount: 0, music: null,
+      players: [{ name: "Admin", host: true, participating: participates, voted: false, score: 0, correct: 0, answered: false }],
+      question: null, answer: null, artist: null, submitted: false, myAnswer: null, points: null,
+    }) };
+  });
+  render(<MemoryRouter initialEntries={["/arena?code=123456"]}><Arena /></MemoryRouter>);
+  const category = await screen.findByRole("button", { name: /Sport/ });
+  expect(category).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: /Igram sa ekipom/ }));
+  await waitFor(() => expect(category).toBeEnabled());
+  expect(screen.getByRole("button", { name: /Igram sa ekipom/ })).toHaveAttribute("aria-pressed", "true");
+  fireEvent.click(screen.getByRole("button", { name: /Samo vodim partiju/ }));
+  await waitFor(() => expect(category).toBeDisabled());
+});

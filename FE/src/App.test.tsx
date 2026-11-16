@@ -12,7 +12,7 @@ test("home offers a real multiplayer entry and describes six rounds", () => {
   expect(
     screen.getByRole("link", { name: /Pokreni partiju/i }),
   ).toHaveAttribute("href", "/arena");
-  expect(screen.getByRole("link", { name: /Imam PIN/i })).toHaveAttribute(
+  expect(screen.getByRole("link", { name: /Pridru\u017ei se/i })).toHaveAttribute(
     "href",
     "/arena?code=",
   );

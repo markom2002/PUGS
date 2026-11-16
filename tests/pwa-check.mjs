@@ -1,6 +1,6 @@
 ﻿import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
 const root='FE/build/';const read=p=>fs.readFileSync(root+p,'utf8').replace(/^\uFEFF/,'');
-const manifest=JSON.parse(read('manifest.json'));assert.equal(manifest.id,'/');assert.equal(manifest.display,'standalone');assert.equal(manifest.scope,'/');
+const manifest=JSON.parse(read('manifest.json'));assert.equal(manifest.id,'/');assert.equal(new URL(manifest.start_url,'https://party.example').pathname,'/');assert.equal(manifest.display,'standalone');assert.equal(manifest.scope,'/');
 for(const size of[192,512]){const icon=manifest.icons.find(i=>i.sizes===`${size}x${size}`);assert(icon);const image=fs.readFileSync(root+icon.src.replace(/^\//,''));assert.equal(image.readUInt32BE(16),size);assert.equal(image.readUInt32BE(20),size);}
 const listeners={};let precache=[];let skips=0;const deleted=[];
 const fakeCaches={open:async()=>({addAll:async assets=>{precache=assets;}}),keys:async()=>['other-app-cache','skocko-static-old'],delete:async key=>{deleted.push(key);},match:async()=>undefined};
