@@ -50,3 +50,7 @@ Ovo je privatna multiplayer aplikacija za probne partije s društvom, ne završe
 ## Ponovno pokretanje i zakljucan BE.exe
 
 Ako je Arena vec pokrenuta, `start-arena.ps1` ispisuje postojece linkove bez novog builda. Za obnovu aplikacije koristi `.\start-arena.ps1 -Restart`, odnosno `.\start-arena.ps1 -Public -Restart` za internet. Restart prekida aktivne veze. Skripta zaustavlja samo backend iz ovog foldera. Nemoj paralelno pokretati `dotnet run` ili `dotnet ef database update` dok isti backend radi: Windows zakljucava njegov BE.exe i build prijavljuje MSB3027/MSB3021.
+
+## Pokretanje jednim klikom
+
+Dvoklik na `Pokreni Skocko.vbs` (ili Desktop precicu) provjerava SQL Express, pokrece backend u pozadini i otvara http://localhost:5087/arena. Backend posluzuje i frontend; nije potreban npm start. Postojeci server se koristi bez dupliranja procesa. SQL se pokrece samo ako je ugasen; tada Windows moze traziti administratorsko odobrenje. Prvo pokretanje bez builda automatski pravi FE/BE build. Za primjenu novih izmjena koristi start-arena.ps1 -Public -Restart. Logovi su u .qa/launcher-*.log. Internet tunel se zasebno pokrece skriptom start-internet.ps1; LAN igranje ga ne zahtijeva.
