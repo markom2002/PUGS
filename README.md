@@ -1,45 +1,48 @@
-# PUGS - Platforma za Upravljanje i Generisanje Sadržaja kvizova
+﻿# Skočko Arena (PUGS)
 
-## Nova multiplayer Arena
+Multiplayer kviz za računar i telefon: šest rundi, po pet pitanja, PIN/QR ulazak, serverski tajmer i poredak uživo.
 
-Šest rundi, Kaladont, četiri oblasti po izboru ekipe i muzičko finale. Novi responsive UI za telefon i računar, QR/PIN ulazak, serverski tajmeri i bodovanje.
-
-Pokreni `.\start-arena.ps1` iz korijena projekta (.NET 8 SDK + Node.js). Arena: `http://localhost:5087/arena`. Muzička biblioteka koristi postojeći SQL Server QuizAppDB i automatski puni tabelu dbo.MusicTracks.
-
-Detaljna pravila, muzika, razvoj i povezivanje telefona: [docs/ARENA.md](docs/ARENA.md).
-
-Full-stack web aplikacija za upravljanje i izvođenje kvizova u realnom vremenu.
-
-## Arhitektura
-
-- `BE/` - Backend (.NET 7, REST API, SignalR)
-- `FE/` - Frontend (React + TypeScript)
--  Baza podataka: SQL Server (koristi se SQL Server Management  Studio - SSMS za upravljanje bazom i migracije)
-- `.env` i `appsettings.json` - konfiguracije
-
-## Funkcionalnosti
-
-- Registracija i login (JWT, hesirane lozinke)
-- Role-based pristup (admin, user)
-- CRUD kvizova (admin)
-- Live kviz sa tajmerom i rang listom (SignalR)
-- Višestruki pokušaji i praćenje rezultata
+- Kaladont opšteg znanja, četiri oblasti po glasanju ekipe i domaće muzičko finale.
+- Katalog od 813 pjesama u SQL Server tabeli `QuizAppDB.dbo.MusicTracks`; pet žanrova se bira automatski po partiji.
+- Proglašenje pobjednika sa animacijama i soundtrackom njegovog najbržeg tačnog muzičkog pogotka.
 
 ## Pokretanje
 
-**Backend** (`BE/`):
-dotnet ef database update
-dotnet run
+Potrebni su .NET 8 SDK, Node.js 20+ i SQL Server. U `BE/appsettings.json` podesi `ConnectionStrings:DefaultConnection` za postojeću bazu `QuizAppDB`. Muzička tabela se automatski kreira i puni bez izmjene postojećih podataka.
 
-**Frontend** ('FE/'):
-npm install
-'.env' -> REACT_APP_API_URL=http://localhost:5087
-npm start
+Iz korijena projekta:
 
-## Napomene
+```powershell
+.\start-arena.ps1
+```
 
-- Frontend koristi servise za HTTP pozive
-- Modeli i DTO su odvojeni
-- REST konvencije su ispoštovane
-- Token se validira, lozinke su heširane
-- UML dijagram i migracije dostupni u projektu
+Otvori `http://localhost:5087/arena`. Za drugi port koristi `.\start-arena.ps1 -Port 5099`. Telefon mora biti na istoj mreži; otvori `http://IP-RACUNARA:5087/arena`. Ako dijeliš QR/pozivnicu, i na računaru otvori tu LAN adresu.
+
+Muzički katalog čuva podatke i odgovore. Originalni Deezer preview isečci se dobavljaju preko interneta, pa audio zahtijeva mrežnu vezu i dostupnost izvora.
+
+## Razvoj i provjere
+
+Pokreni `dotnet run --launch-profile http` iz `BE`, a `npm ci` i `npm start` iz `FE`. Frontend na portu 3000 preko proxy-ja koristi backend na portu 5087.
+
+```powershell
+dotnet run --project tests/ArenaChecks
+dotnet build BE/BE.csproj
+cd FE
+npm test -- --watchAll=false --runInBand
+npm run build
+```
+
+`tests/music-library-http.mjs`, `tests/arena-http.mjs` i `tests/arena-browser.mjs` su dodatne provjere za razvojni server; koriste `ARENA_TEST_URL`. HTTP provjere prave probne sobe. Browser provjera koristi lokalno instaliran Edge na Windowsu.
+
+## Fajlovi
+
+- `FE/`: React/TypeScript interfejs.
+- `BE/Arena/`: nova Arena, bodovanje, muzička biblioteka i početni katalog.
+- `BE/Migrations/`: istorija postojeće SQL baze; ne brisati.
+- `BE/arena-data/`: lokalno stanje partija i tokeni; nije u Gitu.
+- `scripts/seed-music.mjs`: obnavljanje početnog kataloga pjesama.
+- `pugs.ncp`: originalni dijagram modela projekta.
+
+Raniji nalozi, administracija i preostale klasične rute ostaju u projektu. Stranice Kvizovi i Moji rezultati su uklonjene, a njihove stare adrese preusmjeravaju u Arenu.
+
+Detaljna pravila, ograničenja i planirane funkcije: [docs/ARENA.md](docs/ARENA.md).

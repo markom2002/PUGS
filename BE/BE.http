@@ -1,6 +1,11 @@
-@BE_HostAddress = http://localhost:5087
+﻿@BE_HostAddress = http://localhost:5087
 
-GET {{BE_HostAddress}}/weatherforecast/
+### Music catalogue in SQL Server
+GET {{BE_HostAddress}}/api/arena/music/status
 Accept: application/json
 
-###
+### Create an Arena room
+POST {{BE_HostAddress}}/api/arena/rooms
+Content-Type: application/json
+
+{"name":"Voditelj","seconds":20}

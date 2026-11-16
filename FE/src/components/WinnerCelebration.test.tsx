@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import {render,screen,fireEvent,waitFor} from '@testing-library/react';
 import WinnerCelebration from './WinnerCelebration';
 const base={players:[{name:'Ana',score:950,rank:1,correct:12},{name:'Boris',score:800,rank:2,correct:10}],me:'Ana',host:false,code:'123456',token:'secret',onAgain:jest.fn()};
