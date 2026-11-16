@@ -5,12 +5,14 @@ namespace BE.Arena;
 public sealed class MusicLibrary
 {
     readonly string connectionString;
+    readonly string cacheDirectory;
     readonly IHttpClientFactory clients;
     static readonly JsonSerializerOptions Json = new() { PropertyNameCaseInsensitive = true };
     public record Song(long Id, string Title, string Artist, string SourceUrl, string[] Answers, string Genre = "Pop i rock");
     public MusicLibrary(IConfiguration config, IWebHostEnvironment env, IHttpClientFactory clients)
     {
         this.clients = clients;
+        cacheDirectory=Path.Combine(config["Arena:DataPath"]??Path.Combine(env.ContentRootPath,"arena-data"),"audio-cache");Directory.CreateDirectory(cacheDirectory);
         connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Nedostaje SQL Server konekcija za muzičku biblioteku.");
         using var db = Open();
         using var schema = db.CreateCommand();
@@ -53,7 +55,7 @@ public sealed class MusicLibrary
         return new {count=genres.Values.Sum(),genres,provider="Deezer",storage="SQL Server / QuizAppDB"};
     }
     // Selection is database-only: starting a room no longer waits for a music provider.
-    public Task<ArenaQuestion[]> PickAsync(CancellationToken ct)
+    public Task<ArenaQuestion[]> PickAsync(CancellationToken ct, bool offline=false)
     {
         ct.ThrowIfCancellationRequested();
         var songs=new List<Song>();
@@ -61,6 +63,8 @@ public sealed class MusicLibrary
             using var cmd=db.CreateCommand();cmd.CommandText="SELECT Id,Title,Artist,SourceUrl,Answers,Genre FROM dbo.MusicTracks ORDER BY NEWID()";
             using var reader=cmd.ExecuteReader();while(reader.Read())songs.Add(new Song(reader.GetInt64(0),reader.GetString(1),reader.GetString(2),reader.GetString(3),JsonSerializer.Deserialize<string[]>(reader.GetString(4))!,reader.GetString(5)));
         }
+        if(offline)songs=songs.Where(s=>File.Exists(Path.Combine(cacheDirectory,s.Id+".mp3"))).ToList();
+        if(songs.Count<5)throw new InvalidOperationException("Pripremi najmanje pet pjesama za offline igru dok imas internet.");
         var selected=new List<Song>();
         // Prefer five different genres and artists; never repeat the same song title.
         foreach(var group in songs.GroupBy(s=>s.Genre).OrderBy(_=>Random.Shared.Next())) {
@@ -85,12 +89,16 @@ public sealed class MusicLibrary
     {
         using var db=Open(); using var cmd=db.CreateCommand(); cmd.CommandText="SELECT COUNT(*) FROM dbo.MusicTracks WHERE Id=@id"; cmd.Parameters.AddWithValue("@id",id);
         if(Convert.ToInt32(cmd.ExecuteScalar())!=1) throw new InvalidOperationException("Pjesma nije u biblioteci.");
+        var cached=Path.Combine(cacheDirectory,id+".mp3");
+        if(File.Exists(cached))return await File.ReadAllBytesAsync(cached,ct);
         var preview=await PreviewAsync(id,ct) ?? throw new InvalidOperationException("Isečak ove pjesme trenutno nije dostupan.");
         var http=clients.CreateClient("music");
         using var response=await http.GetAsync(preview,HttpCompletionOption.ResponseHeadersRead,ct); response.EnsureSuccessStatusCode();
         await using var stream=await response.Content.ReadAsStreamAsync(ct);
         using var result=new MemoryStream(); var buffer=new byte[16384]; int count;
         while((count=await stream.ReadAsync(buffer,ct))>0) { if(result.Length+count>3*1024*1024) throw new InvalidOperationException("Muzički isečak je prevelik."); await result.WriteAsync(buffer.AsMemory(0,count),ct); }
-        return result.ToArray();
+        var bytes=result.ToArray();
+        if(bytes.Length>0){var temporary=cached+"."+Guid.NewGuid().ToString("N")+".tmp";await File.WriteAllBytesAsync(temporary,bytes,ct);File.Move(temporary,cached,true);}
+        return bytes;
     }
 }

@@ -167,6 +167,9 @@ export async function createQuestionPlayback(
 ) {
   const ctx = getContext();
   const buffer = await ctx.decodeAudioData(await blob.arrayBuffer());
+  const samples=buffer.getChannelData(0), step=Math.max(1,Math.floor(buffer.sampleRate*0.02));
+  let onset=0;
+  for(let i=0;i<samples.length;i+=step){let power=0;for(let j=i;j<Math.min(i+step,samples.length);j++)power+=samples[j]*samples[j];if(Math.sqrt(power/step)>0.015){onset=Math.max(0,i/buffer.sampleRate-0.03);break;}}
   const gain = ctx.createGain();
   gain.gain.value = 0.85;
   gain.connect(ctx.destination);
@@ -188,10 +191,11 @@ export async function createQuestionPlayback(
       }
       if (disposed) return;
       const offset = Math.max(0, (Date.now() - startedAt) / 1000);
-      const duration = Math.min(buffer.duration - offset, (endsAt - Date.now()) / 1000);
+      const duration = (endsAt - Date.now()) / 1000;
       if (duration <= 0) { onEnded(); return; }
       const node = ctx.createBufferSource();
       node.buffer = buffer;
+      node.loop = true;node.loopStart=onset;node.loopEnd=buffer.duration;
       node.connect(gain);
       source = node;
       gain.gain.cancelScheduledValues(ctx.currentTime);
@@ -199,7 +203,7 @@ export async function createQuestionPlayback(
       gain.gain.setValueAtTime(0.85, ctx.currentTime + Math.max(0, duration - 0.25));
       gain.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
       node.onended = () => { if (source === node) { source = null; node.disconnect(); onEnded(); } };
-      node.start(0, offset, duration);
+      node.start(0, onset + offset % Math.max(0.01,buffer.duration-onset), duration);
     },
     pause,
     dispose() { disposed = true; pause(); gain.disconnect(); },

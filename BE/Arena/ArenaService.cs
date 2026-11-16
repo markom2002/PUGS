@@ -15,6 +15,7 @@ public class ArenaPlayer
 }
 public class ArenaRoom
 {
+    public bool Offline { get; set; }
     public bool HostParticipates { get; set; }
     public string Code { get; set; } = "";
     public List<ArenaPlayer> Players { get; } = new();
@@ -29,6 +30,8 @@ public class ArenaRoom
 }
 public class ArenaService
 {
+    readonly Dictionary<string,int> QuestionUses = new();
+    static int Duration(ArenaRoom r) => r.Seconds + (r.Index>=25?5:0);
     readonly TimeProvider clock;
     readonly string? savePath;
     readonly string? codesPath;
@@ -42,6 +45,7 @@ public class ArenaService
         {
             var directory = config["Arena:DataPath"] ?? Path.Combine(Directory.GetCurrentDirectory(), "arena-data");
             Directory.CreateDirectory(directory); savePath = Path.Combine(directory, "rooms.json");
+            if(File.Exists(savePath+".usage")) foreach(var entry in JsonSerializer.Deserialize<Dictionary<string,int>>(File.ReadAllText(savePath+".usage"))!)QuestionUses[entry.Key]=entry.Value;
             codesPath = Path.Combine(directory, "used-room-codes.json");
             if (File.Exists(codesPath)) foreach (var code in JsonSerializer.Deserialize<string[]>(File.ReadAllText(codesPath)) ?? Array.Empty<string>()) usedCodes.Add(code);
             if (File.Exists(savePath))
@@ -76,7 +80,7 @@ public class ArenaService
             return result;
         }
     }
-    public object Create(string name, int seconds)
+    public object Create(string name, int seconds, bool offline = false)
     {
         lock (gate)
         {
@@ -86,7 +90,7 @@ public class ArenaService
             string code;
             do { code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString(); } while (usedCodes.Contains(code));
             usedCodes.Add(code); codesDirty = true;
-            var room = new ArenaRoom { Code = code, Seconds = Math.Clamp(seconds, 10, 20) };
+            var room = new ArenaRoom { Code = code, Offline = offline, Seconds = Math.Clamp(seconds, 10, 20) };
             var player = new ArenaPlayer { Name = Name(name) };
             room.Touched = clock.GetUtcNow(); room.Players.Add(player); rooms.Add(code, room); Save();
             return new { code, token = player.Token };
@@ -145,7 +149,10 @@ public class ArenaService
         if (r.Music.Count != 5) throw new InvalidOperationException("Muzička runda nije automatski pripremljena. Provjeri da je pokrenuta najnovija verzija backenda.");
         if (r.Players.Where(x => IsCompetitor(r,x)).Any(x => x.Votes.Length != 4)) throw new InvalidOperationException("Sačekaj da svi igrači izaberu četiri oblasti.");
         r.Selected = QuestionBank.Categories.Keys.OrderByDescending(c => r.Players.Count(x => IsCompetitor(r,x) && x.Votes.Contains(c))).ThenBy(_ => Random.Shared.Next()).Take(4).ToArray();
-        r.Questions = QuestionBank.Chains[Random.Shared.Next(QuestionBank.Chains.Length)].Concat(r.Selected.SelectMany(c => QuestionBank.Categories[c].OrderBy(_ => Random.Shared.Next()))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
+        var chain=QuestionBank.NewChain(QuestionUses);
+        r.Questions = chain.Concat(r.Selected.SelectMany(c => QuestionBank.Categories[c].Where(q=>!chain.Any(ch=>QuestionBank.Normalize(ch.Text)==QuestionBank.Normalize(q.Text))).OrderBy(q => QuestionUses.GetValueOrDefault(QuestionBank.Normalize(q.Text))).ThenBy(_ => Random.Shared.Next()).Take(5))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
+        foreach(var q in r.Questions.Take(25)) { var key=QuestionBank.Normalize(q.Text);QuestionUses[key]=QuestionUses.GetValueOrDefault(key)+1; }
+        if(savePath!=null){File.WriteAllText(savePath+".usage.tmp",JsonSerializer.Serialize(QuestionUses));File.Move(savePath+".usage.tmp",savePath+".usage",true);}
         r.Phase = "countdown"; r.Deadline = clock.GetUtcNow().AddSeconds(4);
         return new { ok = true };
     });
@@ -156,7 +163,7 @@ public class ArenaService
         {
             if (r.Phase == "question") { r.Phase = "reveal"; r.Deadline = r.Deadline.AddSeconds(5); }
             else if (r.Index >= 29) r.Phase = "finished";
-            else { r.Index++; r.Phase = "question"; r.Deadline = r.Deadline.AddSeconds(r.Seconds); }
+            else { r.Index++; r.Phase = "question"; r.Deadline = r.Deadline.AddSeconds(Duration(r)); }
         }
     }
     public object Answer(string code, string token, int index, string answer) => With(code, token, (r, p) =>
@@ -166,8 +173,8 @@ public class ArenaService
         if (p.Answers.ContainsKey(index)) throw new InvalidOperationException("Odgovor je već poslat.");
         if (string.IsNullOrWhiteSpace(answer) || answer.Length > 160) throw new InvalidOperationException("Unesi odgovor do 160 znakova.");
         bool correct = r.Questions[index].Answers.Any(a => QuestionBank.Normalize(a) == QuestionBank.Normalize(answer));
-        int points = correct ? 100 + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / r.Seconds * 50, 0, 50) : 0;
-        p.ResponseTimesMs[index] = (int)Math.Clamp((clock.GetUtcNow() - r.Deadline.AddSeconds(-r.Seconds)).TotalMilliseconds, 0, r.Seconds * 1000);
+        int points = correct ? 100 + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / Duration(r) * 50, 0, 50) : r.Index>=25 && !string.IsNullOrWhiteSpace(r.Questions[index].Artist) && QuestionBank.Normalize(r.Questions[index].Artist!)==QuestionBank.Normalize(answer) ? 50 : 0;
+        p.ResponseTimesMs[index] = (int)Math.Clamp((clock.GetUtcNow() - r.Deadline.AddSeconds(-Duration(r))).TotalMilliseconds, 0, Duration(r) * 1000);
         p.Answers[index] = (answer.Trim(), points); p.Score += points; if (correct) p.Correct++;
         // Correctness is returned only during reveal, never while opponents can answer.
         return new { ok = true };
@@ -179,7 +186,7 @@ public class ArenaService
         var players=room.Players.Where(p=>IsCompetitor(room,p)).ToArray();if(players.Length==0)return null;
         int bestScore=players.Max(p=>p.Score);
         return players.Where(p=>p.Score==bestScore).SelectMany(p=>p.ResponseTimesMs
-            .Where(kv=>kv.Key>=25&&kv.Key<room.Questions.Length&&room.Questions[kv.Key].AudioUrl!=null&&p.Answers.TryGetValue(kv.Key,out var a)&&a.Points>0)
+            .Where(kv=>kv.Key>=25&&kv.Key<room.Questions.Length&&room.Questions[kv.Key].AudioUrl!=null&&p.Answers.TryGetValue(kv.Key,out var a)&&a.Points>0&&room.Questions[kv.Key].Answers.Any(title=>QuestionBank.Normalize(title)==QuestionBank.Normalize(a.Text)))
             .Select(kv=>new VictorySong(kv.Key,room.Questions[kv.Key].Answers[0],room.Questions[kv.Key].Artist,kv.Value,p.Name)))
             .OrderBy(s=>s.ResponseMs).ThenBy(s=>s.Index).ThenBy(s=>s.Player,StringComparer.Ordinal).FirstOrDefault();
     }    public object State(string code, string token) => With(code, token, (r, p) =>
@@ -200,7 +207,7 @@ public class ArenaService
         var fastestTime = competitors.Where(x=>x.ResponseTimesMs.ContainsKey(r.Index)).Select(x=>(int?)x.ResponseTimesMs[r.Index]).Min();
         p.Answers.TryGetValue(r.Index, out var mine);
         return new {
-            r.Code, r.Phase, r.Index, r.Seconds, serverNow = clock.GetUtcNow(), r.Deadline,
+            r.Code, r.Phase, r.Index, seconds=Duration(r), r.Offline, serverNow = clock.GetUtcNow(), r.Deadline,
             isHost = r.Players[0] == p, hostParticipates = r.HostParticipates, isPlaying = IsCompetitor(r,p), me = p.Name, votes = p.Votes, r.Selected,
             categories = QuestionBank.Categories.Keys, musicCount = r.Music.Count,
             music = r.Players[0] == p && !r.HostParticipates && r.Phase == "lobby" ? r.Music.Select(m => new { title = m.Answers[0], m.Artist }).ToArray() : null,
@@ -210,7 +217,7 @@ public class ArenaService
             players = r.Players.Where(x=>r.Phase!="finished"||IsCompetitor(r,x)).OrderBy(x=>!IsCompetitor(r,x)).ThenByDescending(VisibleScore).ThenBy(x=>AverageTime(x)??double.MaxValue).ThenBy(x=>x.Name).Select(x=>new {
                 x.Name, host=x==r.Players[0], participating=IsCompetitor(r,x), score=VisibleScore(x),
                 rank=!IsCompetitor(r,x)?(int?)null:Rank(x), rankChange=!IsCompetitor(r,x)?0:PreviousRank(x)-Rank(x),
-                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&PointsNow(x)>0?1:0),
+                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&PointsNow(x)>=100?1:0),
                 voted=x.Votes.Length==4, answered=x.Answers.ContainsKey(r.Index),
                 responseMs=x.ResponseTimesMs.TryGetValue(r.Index,out var ms)?(int?)ms:null,
                 averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,

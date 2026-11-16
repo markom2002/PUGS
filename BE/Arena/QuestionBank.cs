@@ -18,6 +18,23 @@ public static class QuestionBank
         ["Umjetnost"] = Pack("Umjetnost", "Ko je naslikao Mona Lizu?~Leonardo da Vinci|Leonardo da Vinči|Da Vinci", "Koji instrument ima crne i bijele dirke?~Klavir|piano", "Ko je napisao Hamleta?~William Shakespeare|Vilijam Šekspir|Šekspir|Shakespeare", "Kako se zove japanska umjetnost savijanja papira?~Origami", "Ko je naslikao Zvjezdanu noć?~Vincent van Gogh|Vinsent van Gog|Van Gogh|Van Gog"),
         ["Priroda"] = Pack("Priroda", "Koja je najveća životinja na Zemlji?~Plavi kit", "Koji proces biljkama omogućava stvaranje hrane uz svjetlost?~Fotosinteza", "Koliko nogu imaju insekti?~6|šest", "Koji je najtvrđi prirodni mineral?~Dijamant", "Kako se zove nauka o pticama?~Ornitologija")
     };
+    static QuestionBank() {
+        var path = Path.Combine(System.AppContext.BaseDirectory,"Arena","Data","questions.json");
+        if(!File.Exists(path)) path=Path.Combine(Directory.GetCurrentDirectory(),"Arena","Data","questions.json");
+        if(!File.Exists(path))path=Path.Combine(Directory.GetCurrentDirectory(),"BE","Arena","Data","questions.json");
+        var extra=System.Text.Json.JsonSerializer.Deserialize<ArenaQuestion[]>(File.ReadAllText(path),new System.Text.Json.JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;
+        foreach(var group in extra.GroupBy(q=>q.Category)) Categories[group.Key]=Categories[group.Key].Concat(group).DistinctBy(q=>Normalize(q.Text)).ToArray();
+    }
+    public static ArenaQuestion[] NewChain(IReadOnlyDictionary<string,int>? usage=null) {
+        var pool=Categories.Values.SelectMany(q=>q).OrderBy(q=>usage?.GetValueOrDefault(Normalize(q.Text))??0).ThenBy(_=>Random.Shared.Next()).ToArray();
+        bool Build(List<ArenaQuestion> chain) {
+            if(chain.Count==5)return true;
+            foreach(var q in pool.Where(q=>!chain.Contains(q)&&(chain.Count==0||Normalize(chain[^1].Answers[0])[^1]==Normalize(q.Answers[0])[0]))) {
+                chain.Add(q);if(Build(chain))return true;chain.RemoveAt(chain.Count-1);
+            }return false;
+        }
+        var chain=new List<ArenaQuestion>();return Build(chain)?chain.ToArray():Chains[Random.Shared.Next(Chains.Length)];
+    }
     public static readonly ArenaQuestion[][] Chains = {
         Pack("Kaladont", "Koja planeta je poznata po svojim prstenovima?~Saturn", "Koja rijeka protiče kroz Mostar?~Neretva", "Kako se zove kontinent na kojem je Egipat?~Afrika", "Kako se zove najveća prašuma na svijetu?~Amazonija", "Koji grčki bog je bog rata?~Ares"),
         Pack("Kaladont", "Koji je glavni grad Italije?~Rim", "Kako se zove crvena planeta?~Mars", "Koji je glavni grad Bosne i Hercegovine?~Sarajevo", "Kako se zove jezero na čijoj obali je grad Ohrid?~Ohridsko", "Kako se zove nauka o pticama?~Ornitologija"),

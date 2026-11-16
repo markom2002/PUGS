@@ -47,7 +47,7 @@ for (int i = 0; i < 30; i++)
     Check(!hidden.GetProperty("rankingLive").GetBoolean(),"Unanswered player cannot infer correctness "+i);
     Check(hidden.GetProperty("players")[0].GetProperty("questionPoints").ValueKind==JsonValueKind.Null,"Current gains hidden from unanswered player "+i);
     Reject(() => service.Answer(code, guestToken, i, correct), "Duplicate answer rejected " + i);
-    clock.Add(20); var reveal = J(service.State(code, guestToken));
+    clock.Add(i>=25?25:20); var reveal = J(service.State(code, guestToken));
     Check(reveal.GetProperty("phase").GetString() == "reveal", "Reveal phase " + i);
     Check(reveal.GetProperty("points").GetInt32() == 150, "Server computes points " + i);
     Reject(() => service.Answer(code, token, i, correct), "Late answer rejected " + i);
@@ -141,6 +141,14 @@ service=new ArenaService(clock,config);Check(J(service.State(pc,pt)).GetProperty
 service.With(pc,pt,(r,p)=>{r.Index=29;r.Phase="finished";p.Score=500;p.Answers[25]=("Host song",150);p.ResponseTimesMs[25]=500;return true;});
 var hostVictory=J(service.State(pc,pt));Check(hostVictory.GetProperty("victory").GetProperty("winnerNames")[0].GetString()=="Playing host","Playing host can win");
 Check(hostVictory.GetProperty("victory").GetProperty("song").GetProperty("player").GetString()=="Playing host","Host victory selects their fastest correct song");
+Check(QuestionBank.Categories.Values.Sum(x=>x.Length)>=275,"Expanded question bank loaded");
+for(int j=0;j<30;j++){var ch=QuestionBank.NewChain();Check(ch.Length==5&&ch.Zip(ch.Skip(1)).All(pair=>QuestionBank.Normalize(pair.First.Answers[0])[^1]==QuestionBank.Normalize(pair.Second.Answers[0])[0]),"Dynamic chain valid");}
+service.With(pc,pt,(r,p)=>{r.Phase="question";r.Index=26;r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(26);return true;});
+service.Answer(pc,pt,26,"Host song");
+Check(J(service.State(pc,pt)).GetProperty("seconds").GetInt32()==25,"Music adds five seconds");
+service.With(pc,pt,(r,p)=>{r.Index=27;r.Questions[27]=r.Questions[27] with {Artist="Test Artist"};r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(27);return true;});
+service.Answer(pc,pt,27,"Test Artist");
+Check(service.With(pc,pt,(r,p)=>p.Answers[27].Points)==50,"Artist-only answer earns fifty points");
 Console.WriteLine("All arena checks passed. Temporary test data: " + directory);
 
 class TestClock : TimeProvider

@@ -66,3 +66,15 @@ Pokretac sada automatski priprema i HTTPS tunel i otvara HTTPS aplikaciju za ins
 Muzicko pitanje samo pokrece zvuk koristeci audio kontekst otkljucan pri ulasku/glasovima. Snimak prati serverovo vrijeme i staje pola sekunde prije kraja pitanja, uz kratak fade. Povratak na pitanje ne resetuje snimak. Ako browser zahtijeva novi dodir nakon otvaranja ili povratka iz pozadine, postoji dugme Ukljuci zvuk. Kaladont vise ne salje niti prikazuje pocetno slovo odgovora.
 
 Aplikacija i Desktop pokretac sada otvaraju pocetnu stranicu. Admin u cekaonici iznad Rundi 02?05 bira Samo vodim partiju ili Igram sa ekipom. Samo takmicari glasaju i odgovaraju. Admin igrac nema privilegovan uvid u trenutnu tacnost protivnika, ulazi u bodovanje i moze pobijediti. Uloga se zakljucava pri startu. Promjena uloge brise adminove ranije glasove.
+
+## Lokalna igra bez interneta i desktop prozor
+
+`install-desktop-app.ps1` pravi Desktop precicu Skocko aplikacija: launcher pali lokalni server i otvara poseban Edge app prozor bez kartica. To je desktop web aplikacija, ne samostalni nativni EXE paket. Native PWA instalacija je i dalje dostupna kroz Instaliraj na HTTPS adresi.
+
+Prije izlaska pripremi muziku uz `node scripts/prepare-offline-music.mjs`. Lokalni previewi ostaju u ignorisanom BE/arena-data/audio-cache; ne salju se na GitHub. Za offline sobu ukljuci Lokalna igra bez interneta. Izbor pjesama se tada ogranicava na pripremljene snimke. Laptop i njegov SQL Server moraju ostati ukljuceni; povezi telefone i laptop na isti Wi-Fi ili hotspot. Koristi LAN pozivnicu, ne internet adresu instalirane PWA. Internet nije potreban za pitanja, bodove ni pripremljenu muziku. Telefon sam bez laptop/servera ne moze hostovati ovu verziju. Ako hotspot ne dozvoljava medjusobnu komunikaciju klijenata, koristi drugu lokalnu mrezu.
+
+Banka sadrzi dodatnih 240 autorskih pitanja u svih osam oblasti. Rotacija daje prednost najmanje koriscenim pitanjima, pamti upotrebu na serveru i sastavlja nove Kaladont lance; ogranicena banka se poslije iscrpljivanja ponavlja. Nema tvrdnje da su pitanja prepisana iz TV emisija. Pregledani formati: https://www.rts.rs/lat/rts/rts-predstavlja/slagalica/pravila-i-prijave/3622030/pravila-su-pravila.html i https://www.rts.rs/lat/tv/rts1/2159633/potera.html.
+
+Muzika traje dodatnih pet sekundi (10/15/20 postaje 15/20/25). Puni naslov zadrzava 100 osnovnih poena i bonus za brzinu; samo tacan izvodjac donosi 50 bez bonusa. Djelimican pogodak ne ulazi u izbor pobjednicke pjesme. Audio preskace tihi uvod i ponavlja kraci isjecak do kraja serverovog tajmera.
+
+Za pripremu bez komandi koristi dvoklik na Pripremi offline.cmd u folderu projekta dok si na internetu. Trenutno je lokalno pripremljeno 48 originalnih preview snimaka.

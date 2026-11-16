@@ -1,4 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
   <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /><Compile Include="../../BE/Arena/ArenaService.cs" Link="ArenaService.cs" /><Compile Include="../../BE/Arena/QuestionBank.cs" Link="QuestionBank.cs" /></ItemGroup>
-</Project>
+<ItemGroup><Content Include="../../BE/Arena/Data/questions.json" Link="Arena/Data/questions.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup></Project>

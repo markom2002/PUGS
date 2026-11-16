@@ -1,4 +1,4 @@
-﻿param([ValidateRange(1024,65535)][int]$Port = 5087)
+﻿param([ValidateRange(1024,65535)][int]$Port = 5087, [switch]$AppWindow, [switch]$LocalOnly)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $logDir = Join-Path $root '.qa'
@@ -68,14 +68,19 @@ try {
     }
     Write-Host 'Pripremam HTTPS link za telefon i instalaciju...'
     try {
+        if(-not $LocalOnly){
         & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'start-internet.ps1') -Port $Port
         if ($LASTEXITCODE -ne 0) { throw 'HTTPS veza nije dostupna.' }
         $connection = Invoke-RestMethod "$url/api/arena/connection" -TimeoutSec 5
+        }
     } catch { Write-Warning 'Internet link nije dostupan. Lokalna igra i dalje radi.' }
     $openUrl = "$url/"
-    if ($connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/" }
+    if (-not $LocalOnly -and $connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/" }
     Write-Host "Kviz je spreman: $openUrl"
-    Start-Process $openUrl
+    if($AppWindow){
+        $edge=Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe'
+        if(Test-Path $edge){Start-Process $edge -ArgumentList "--app=$openUrl"}else{Start-Process $openUrl}
+    }else{Start-Process $openUrl}
 } catch {
     $_ | Out-String | Set-Content -LiteralPath (Join-Path $logDir 'launcher-error.log')
     Write-Host "Pokretanje nije uspjelo: $($_.Exception.Message)" -ForegroundColor Red

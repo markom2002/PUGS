@@ -24,4 +24,5 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.1" />
   </ItemGroup>
 
+  <ItemGroup><Content Update="Arena\Data\questions.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
 </Project>

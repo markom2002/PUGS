@@ -116,3 +116,10 @@ test("late music does not play after the question deadline", async () => {
     player.dispose();
   } finally { now.mockRestore(); }
 });
+
+test("silent introduction is skipped and short preview loops until deadline", async () => {
+ const {audio,context,nodes}=harness();await audio.unlockVictoryAudio();
+ context.decodeAudioData.mockResolvedValue({duration:10,sampleRate:100,getChannelData:()=>Float32Array.from({length:1000},(_,i)=>i<300?0:0.3)});
+ const now=jest.spyOn(Date,"now").mockReturnValue(100000);
+ try {const player=await audio.createQuestionPlayback({arrayBuffer:async()=>new ArrayBuffer(4)},100000,125000,jest.fn());await player.play();expect(nodes[0].loop).toBe(true);expect(nodes[0].start).toHaveBeenCalledWith(0,2.97,25);player.dispose();}finally{now.mockRestore();}
+});

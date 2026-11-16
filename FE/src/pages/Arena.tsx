@@ -107,6 +107,7 @@ export default function Arena() {
   const [mode, setMode] = useState(params.has("code") ? "join" : "create");
   const [name, setName] = useState("");
   const [code, setCode] = useState(params.get("code") || "");
+  const [offline, setOffline] = useState(false);
   const [seconds, setSeconds] = useState(20);
   const [votes, setVotes] = useState<string[]>([]);
   const [answer, setAnswer] = useState("");
@@ -240,7 +241,7 @@ export default function Arena() {
         .then(async (blob) => {
           if (cancelled) return;
           rememberMusicPreview(session.code, session.token, index!, blob);
-          playback = await createQuestionPlayback(blob, deadline - questionSeconds * 1000, deadline - 500, () => { if (!cancelled) setPlaying(false); });
+          playback = await createQuestionPlayback(blob, deadline - questionSeconds * 1000, deadline, () => { if (!cancelled) setPlaying(false); });
           if (cancelled) { playback.dispose(); return; }
           audioRef.current = playback;
           try { await playback.play(); if (!cancelled) setPlaying(true); }
@@ -285,7 +286,7 @@ export default function Arena() {
       const next = await arenaRequest(
         mode === "create" ? "rooms" : `rooms/${code}/join`,
         null,
-        mode === "create" ? { name, seconds } : { name },
+        mode === "create" ? { name, seconds, offline } : { name },
       );
       rememberMatchSession(next);
       previousInvitation.current = next.code;
@@ -422,6 +423,7 @@ export default function Arena() {
                   </select>
                 </label>
               )}
+              {mode === "create" && <label className="offline-choice"><input type="checkbox" checked={offline} onChange={e=>setOffline(e.target.checked)} /> Lokalna igra bez interneta (pripremljena muzika)</label>}
               <button className="arena-primary" disabled={busy}>
                 {busy
                   ? "Povezivanje…"
@@ -665,6 +667,7 @@ export default function Arena() {
                     />
                   </div>
                   <h2>{state.question?.text}</h2>
+                  {hasAudio && <p className="music-scoring-note">MUZICKO FINALE +5 SEKUNDI / naslov: puni poeni / samo izvodjac: 50 poena</p>}
                   {hasAudio && (
                     <div className="audio-panel">
                       <div
@@ -789,7 +792,7 @@ export default function Arena() {
                     >
                       <span>
                         {state.points
-                          ? `TAČNO! +${state.points} POENA`
+                          ? state.points === 50 && hasAudio ? "IZVODJAC POGODJEN! +50 POENA" : `TAČNO! +${state.points} POENA`
                           : "TAČAN ODGOVOR"}
                       </span>
                       <h3>{state.answer}</h3>

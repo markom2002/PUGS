@@ -107,3 +107,7 @@ Domaćin prije početka može kliknuti „Isprazni čekaonicu”: svi gosti se u
 Otvaranje `/arena` bez PIN-a uvijek započinje novu prijavu. Povratak u postojeći meč preko sačuvane sesije dozvoljen je samo ako URL sadrži isti aktivni PIN. Nakon ulaska URL se usklađuje sa novim PIN-om.
 
 Za prosirenje narodne i kafanske biblioteke koristi `node scripts/seed-music.mjs --folk --per-artist=40`. Broj je ciljani maksimum razlicitih naslova po izvodjacu; postojeci unosi se cuvaju. Originalni izvodjac i dostupnost audio previewa provjeravaju se prije upisa, uz ogranicenu paralelnost. Ponovni uvoz ne dodaje iste naslove pod drugim ID-jevima za istog izvodjaca. Vesna Zmijanac, Halid Beslic, Saban Saulic i Serif Konjevic imaju po 40 pjesama.
+
+## Prosirena igra i offline audio
+
+Novija verzija ima dodatnih 240 autorskih pitanja u questions.json, uz prioritet najmanje koriscenim pitanjima i dinamicke Kaladont lance. U ovoj verziji raniji opis od pet pitanja po oblasti i tri fiksna lanca vise ne vazi. Muzicko finale ima dodatnih pet sekundi. Tacan izvodjac bez naslova donosi 50 poena. Backend sada cuva privatne preview isjecke u ignorisanom audio-cache folderu za offline LAN igru; raniji opis da se audio nikad ne cuva odnosi se na prethodnu verziju. Service worker i dalje ne kesira audio ni API. Priprema: node scripts/prepare-offline-music.mjs. Offline igra zahtijeva lokalni laptop/server i zajednicki hotspot/Wi-Fi; internet rezim ostaje dostupan.

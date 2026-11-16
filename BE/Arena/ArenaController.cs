@@ -6,7 +6,7 @@ namespace BE.Arena;
 public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfiguration config, MusicLibrary music) : ControllerBase
 {
     string AudioDirectory => config["Arena:DataPath"] ?? Path.Combine(env.ContentRootPath, "arena-data");
-    public record CreateRequest(string Name, int Seconds = 20);
+    public record CreateRequest(string Name, int Seconds = 20, bool Offline = false);
     public record JoinRequest(string Name);
     public record ParticipationRequest(bool Participates);
     public record VoteRequest(string[] Categories);
@@ -18,7 +18,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
         catch (UnauthorizedAccessException e) { return Unauthorized(new { error = e.Message }); }
         catch (InvalidOperationException e) { return BadRequest(new { error = e.Message }); }
     }
-    [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds));
+    [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds, req.Offline));
     [EnableRateLimiting("arena-join"), HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
     [HttpPost("rooms/{code}/reset-lobby")] public IActionResult ResetLobby(string code) => Run(() => arena.ResetLobby(code,Token));
@@ -33,7 +33,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
         try {
             var needsMusic = arena.With(code,Token,(r,p) => { ArenaService.Host(r,p); if(r.Phase!="lobby") throw new InvalidOperationException("Partija je već počela."); return r.Music.Count!=5; },persist:false);
             if(needsMusic) {
-                var selected=await music.PickAsync(ct);
+                var selected=await music.PickAsync(ct,arena.With(code,Token,(r,p)=>r.Offline,persist:false));
                 arena.With(code,Token,(r,p)=> { ArenaService.Host(r,p); if(r.Phase!="lobby") throw new InvalidOperationException("Partija je već počela."); r.Music.Clear(); r.Music.AddRange(selected); return true; });
             }
             return Run(()=>arena.Start(code,Token));
