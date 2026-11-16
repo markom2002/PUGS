@@ -85,3 +85,4 @@
     display: none;
   }
 }
+.navbar .pugs-brand{display:flex;align-items:center}.pugs-brand img{display:block;object-fit:contain}

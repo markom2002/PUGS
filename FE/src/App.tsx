@@ -1,15 +1,15 @@
-// src/App.tsx
+﻿// src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';   // dodaj import Navbar-a
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Quizzes from './pages/Quizzes';
+
 import TakeQuiz from './pages/TakeQuiz';
 import AdminDashboard from './pages/AdminDashboard';
 import QuizResult from './pages/QuizResult';
-import MyResults from './pages/MyResults';
+
 import ResultDetails from './pages/ResultDetails';
 import AdminQuizManager from './pages/AdminQuizManager';
 import QuizForm from './pages/QuizForm';
@@ -31,11 +31,11 @@ const App: React.FC = () => {
         <Route path='/' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/quizzes' element={<Quizzes />} />
+        <Route path='/quizzes' element={<Navigate to="/arena" replace />} />
         <Route path="/quiz/:id" element={<TakeQuiz />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path='/results' element={<QuizResult />} />
-        <Route path="/my-results" element={<MyResults />} />
+        <Route path="/my-results" element={<Navigate to="/arena" replace />} />
         <Route path="/result-details/:id" element={<ResultDetails />} />
 
         <Route path="/admin/quiz-manager" element={<AdminQuizManager />} />
@@ -55,3 +55,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+

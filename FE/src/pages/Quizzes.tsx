@@ -1,4 +1,4 @@
-// src/pages/Quizzes.tsx
+﻿// src/pages/Quizzes.tsx
 import React, { useEffect, useState } from 'react';
 import { getAllQuizzes } from '../services/QuizService';
 import { QuizDto } from '../models/Quiz';
@@ -68,7 +68,7 @@ const Quizzes: React.FC = () => {
   };
 
   const handleJoinLive = () => {
-    navigate('/join-live');
+    navigate('/arena?code=');
   };
 
   const handleViewLeaderboard = () => {
@@ -79,7 +79,7 @@ const Quizzes: React.FC = () => {
 
   return (
     <div className="quizzes-container">
-      <h2 className="quizzes-header">Dostupni kvizovi</h2>
+      <h2 className="quizzes-header">Trening zona</h2>
 
       <div className="top-buttons">
         <button className="results-button" onClick={handleViewMyResults}>
@@ -87,7 +87,7 @@ const Quizzes: React.FC = () => {
         </button>
 
         <button className="join-live-button" onClick={handleJoinLive}>
-          📡 Pridruži se Live Kvizu
+          📡 Arena uživo
         </button>
 
         <button className="leaderboard-button" onClick={handleViewLeaderboard}>
@@ -159,3 +159,4 @@ const Quizzes: React.FC = () => {
 };
 
 export default Quizzes;
+

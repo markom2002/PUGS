@@ -4,7 +4,7 @@
 
 Šest rundi, Kaladont, četiri oblasti po izboru ekipe i muzičko finale. Novi responsive UI za telefon i računar, QR/PIN ulazak, serverski tajmeri i bodovanje.
 
-Pokreni `.\start-arena.ps1` iz korijena projekta (.NET 8 SDK + Node.js). Arena: `http://localhost:5087/arena`. Ne zahtijeva SQL Server; baza je potrebna za ranije klasične kvizove.
+Pokreni `.\start-arena.ps1` iz korijena projekta (.NET 8 SDK + Node.js). Arena: `http://localhost:5087/arena`. Muzička biblioteka koristi postojeći SQL Server QuizAppDB i automatski puni tabelu dbo.MusicTracks.
 
 Detaljna pravila, muzika, razvoj i povezivanje telefona: [docs/ARENA.md](docs/ARENA.md).
 

@@ -1,7 +1,8 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import "./css/Arena.css";
+import WinnerCelebration, { Victory } from "../components/WinnerCelebration";
 
 const API = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
 type Session = { code: string; token: string };
@@ -12,6 +13,7 @@ type Player = {
   correct: number | null;
   voted: boolean;
   answered: boolean;
+  rank?: number; rankChange?: number; responseMs?: number | null; averageMs?: number | null; questionPoints?: number | null; fastest?: boolean;
 };
 type State = {
   code: string;
@@ -26,6 +28,8 @@ type State = {
   selected: string[];
   categories: string[];
   musicCount: number;
+  victory?: Victory | null;
+  rankingLive?: boolean; answeredCount?: number; competitorCount?: number;
   music: { title: string; artist: string }[] | null;
   players: Player[];
   question: {
@@ -36,6 +40,7 @@ type State = {
   } | null;
   answer: string | null;
   artist: string | null;
+  musicSourceUrl?: string | null;
   submitted: boolean;
   myAnswer: string | null;
   points: number | null;
@@ -86,9 +91,6 @@ export default function Arena() {
   const [busy, setBusy] = useState(false);
   const [online, setOnline] = useState(true);
   const [remaining, setRemaining] = useState(0);
-  const [title, setTitle] = useState("");
-  const [artist, setArtist] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [copied, setCopied] = useState(false);
   const [audioError, setAudioError] = useState("");
   const [playing, setPlaying] = useState(false);
@@ -246,7 +248,7 @@ export default function Arena() {
     <main className="arena-shell">
       <div className="arena-topline">
         <Link to="/">
-          PUGS <span>/ ARENA</span>
+          <img src="/skocko.svg" alt="Skočko" width="38" height="44" /> <span>/ ARENA</span>
         </Link>
         <span className="live-label">
           <i className={online ? "" : "offline"} />
@@ -368,7 +370,7 @@ export default function Arena() {
             <div className="entry-note">
               Bez registracije. Telefon ili računar. Do 32 igrača.
               <br />
-              Domaćin dodaje 5 svojih domaćih muzičkih isečaka.
+              Pet domaćih hitova bira se automatski iz biblioteke.
             </div>
           </section>
         </div>
@@ -494,90 +496,13 @@ export default function Arena() {
                     <section className="arena-panel">
                       <span className="eyebrow">RUNDA 06 / DOMAĆA MUZIKA</span>
                       <h2>Pet pjesama. Prepoznaj hit.</h2>
-                      <p>
-                        Dodaj pet domaćih audio isečaka koje imaš pravo da
-                        koristiš. Pripremi isečke dužine do 8 sekundi;
-                        reprodukcija počinje od početka fajla. Domaćin zna
-                        odgovore i treba da vodi igru van konkurencije.
-                      </p>
-                      <ol className="music-list">
-                        {state.music?.map((m, i) => (
-                          <li key={i}>
-                            <span>♫</span>
-                            <div>
-                              {m.title}
-                              <small>{m.artist}</small>
-                            </div>
-                            <b>Spremno ✓</b>
-                          </li>
-                        ))}
-                      </ol>
-                      {state.musicCount < 5 && (
-                        <form
-                          className="music-form"
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            action(async () => {
-                              if (!file) throw new Error("Izaberi audio fajl.");
-                              const body = new FormData();
-                              body.append("file", file);
-                              body.append("title", title);
-                              body.append("artist", artist);
-                              await arenaRequest(
-                                `rooms/${state.code}/music`,
-                                session,
-                                body,
-                              );
-                              setTitle("");
-                              setArtist("");
-                              setFile(null);
-                              await refresh();
-                            });
-                          }}
-                        >
-                          <label>
-                            Naziv pjesme
-                            <input
-                              required
-                              value={title}
-                              maxLength={120}
-                              onChange={(e) => setTitle(e.target.value)}
-                              placeholder="Naziv | alternativni naziv"
-                            />
-                          </label>
-                          <label>
-                            Izvođač
-                            <input
-                              required
-                              maxLength={120}
-                              value={artist}
-                              onChange={(e) => setArtist(e.target.value)}
-                              placeholder="Ime izvođača"
-                            />
-                          </label>
-                          <label>
-                            Audio isečak · do 8 MB
-                            <input
-                              key={state.musicCount}
-                              required
-                              type="file"
-                              accept=".mp3,.ogg,.wav,.m4a"
-                              onChange={(e) =>
-                                setFile(e.target.files?.[0] || null)
-                              }
-                            />
-                          </label>
-                          <button className="arena-secondary" disabled={busy}>
-                            Dodaj isečak ({state.musicCount}/5)
-                          </button>
-                        </form>
-                      )}
+                      <p>Aplikacija automatski bira pet domaćih hitova iz baze, uz različite žanrove: narodna, kafanska, pop-folk, pop/rock, rep i moderna muzika. Slušate originalne izvođače preko Deezer preview isečaka. Nema dodavanja fajlova — potrebna je internet veza.</p>
                       <button
                         className="arena-primary"
                         disabled={
                           busy ||
                           state.players.length < 2 ||
-                          state.musicCount !== 5 ||
+                          
                           state.players.some((p) => !p.voted)
                         }
                         onClick={() =>
@@ -591,11 +516,11 @@ export default function Arena() {
                           })
                         }
                       >
-                        Pokreni partiju →
+                        {busy ? "Pripremamo pjesme…" : "Pokreni partiju →"}
                       </button>
                       <p className="entry-note">
-                        Start se otključava kada svi glasaju i svih pet pjesama
-                        bude spremno.
+                        Start se otključava kada svi glasaju. Pjesme se automatski
+                        biraju pri pokretanju.
                       </p>
                     </section>
                   )}
@@ -608,29 +533,7 @@ export default function Arena() {
                   <p>{state.selected.join(" / ")}</p>
                 </section>
               ) : state.phase === "finished" ? (
-                <section className="arena-panel finale">
-                  <span className="eyebrow">VELIKO FINALE</span>
-                  <div className="trophy">♛</div>
-                  <h2>{state.players[0]?.name}</h2>
-                  <p>Prvo mjesto · {state.players[0]?.score} poena</p>
-                  <div className="podium">
-                    {state.players.slice(0, 3).map((p, i) => (
-                      <div key={p.name}>
-                        <span>0{i + 1}</span>
-                        <strong>{p.name}</strong>
-                        <b>{p.score} pts</b>
-                      </div>
-                    ))}
-                  </div>
-                  <p>
-                    Tvoj rezultat:{" "}
-                    {state.players.find((p) => p.name === state.me)?.correct}/30
-                    tačnih odgovora.
-                  </p>
-                  <button className="arena-primary" onClick={leave}>
-                    Nova ekipa, nova partija ↗
-                  </button>
-                </section>
+                <WinnerCelebration victory={state.victory || {winnerNames:state.players.filter(p=>p.score===state.players[0]?.score).map(p=>p.name),score:state.players[0]?.score||0,song:null}} players={state.players} me={state.me} host={state.isHost} code={state.code} token={session.token} onAgain={leave}/>
               ) : (
                 <section className="question-card" key={state.index}>
                   <div className="question-meta">
@@ -794,6 +697,7 @@ export default function Arena() {
                       </span>
                       <h3>{state.answer}</h3>
                       {state.artist && <p>{state.artist}</p>}
+                        {state.musicSourceUrl && <a href={state.musicSourceUrl} target="_blank" rel="noreferrer">Originalna pjesma na Deezeru ↗</a>}
                       <p>
                         Tvoj odgovor: {state.myAnswer || "Nije poslat"} ·
                         Sljedeće pitanje za {remaining}s
@@ -804,49 +708,26 @@ export default function Arena() {
               )}
             </div>
             <aside className="arena-sidebar">
-              <section className="arena-panel">
-                <div className="section-heading">
-                  <h2>{state.phase === "lobby" ? "Ekipa" : "Rang-lista"}</h2>
-                  <span className="pill">{state.players.length}/32</span>
-                </div>
+              <section className="arena-panel live-ranking">
+                <div className="section-heading"><h2>{state.phase === "lobby" ? "Ekipa" : state.phase === "finished" ? "Konačan poredak" : "Poredak uživo"}</h2><span className={online ? "ranking-live" : "ranking-live disconnected"}>● {online ? "LIVE" : "VEZA…"}</span></div>
+                {state.phase !== "lobby" && state.phase !== "finished" && <>
+                  <div className="ranking-summary"><strong>{state.answeredCount ?? state.players.filter(p=>!p.host&&p.answered).length}<small>/{state.competitorCount ?? state.players.filter(p=>!p.host).length}</small></strong><span>igrača je odgovorilo</span></div>
+                  <div className="ranking-progress"><i style={{width:`${(state.answeredCount || 0) / Math.max(1,state.competitorCount || 1)*100}%`}} /></div>
+                  <p className="ranking-hint">{state.rankingLive ? "Poeni se osvježavaju uživo." : "Zaključaj odgovor da pratiš poene ovog pitanja uživo."}</p>
+                </>}
                 <div className="player-list">
-                  {state.players.map((p, i) => (
-                    <div
-                      key={p.name}
-                      className={p.name === state.me ? "me" : ""}
-                    >
-                      <span className="player-avatar">
-                        {p.name.slice(0, 1).toUpperCase()}
-                      </span>
-                      <div>
-                        <strong>
-                          {p.name}
-                          {p.name === state.me && <small> TI</small>}
-                        </strong>
-                        <small>
-                          {p.host
-                            ? "Domaćin · van konkurencije"
-                            : state.phase === "lobby"
-                              ? p.voted
-                                ? "Izbor potvrđen"
-                                : "Bira oblasti…"
-                              : questionActive
-                                ? p.answered
-                                  ? "Odgovor zaključan"
-                                  : "Razmišlja…"
-                                : `${p.correct || 0} tačnih`}
-                        </small>
-                      </div>
-                      <b>
-                        {state.phase === "lobby"
-                          ? p.voted
-                            ? "✓"
-                            : "·"
-                          : (p.score ?? "—")}
-                      </b>
+                  {state.players.map(p=><div key={p.name} className={`${p.name===state.me?"me":""} ${p.fastest&&p.answered?"fastest-player":""}`}>
+                    <span className="ranking-position">{p.host ? "◇" : state.phase === "lobby" ? "·" : String(p.rank ?? "—").padStart(2,"0")}</span>
+                    <div className="ranking-player-info"><strong>{p.name}{p.name===state.me&&<small> TI</small>}</strong>
+                      <small>{p.host ? "Domaćin · van konkurencije" : state.phase==="lobby" ? p.voted?"Izbor potvrđen":"Bira oblasti…" : state.phase==="finished" ? "Partija završena" : p.answered ? `${p.responseMs!=null?(p.responseMs/1000).toFixed(2)+" s":"Poslato"}${p.fastest?" · ⚡ najbrži":""}` : "Razmišlja…"}</small>
+                      {!p.host&&state.phase!=="lobby"&&p.averageMs!=null&&<small className="ranking-average">Prosjek {(p.averageMs/1000).toFixed(2)} s · {p.correct ?? 0} tačnih</small>}
                     </div>
-                  ))}
+                    <div className="ranking-score"><b>{state.phase==="lobby" ? p.voted?"✓":"·" : p.host?"—":p.score??0}</b>
+                      {state.phase!=="lobby"&&!p.host&&<><small>poena</small><span className={`rank-movement ${(p.rankChange||0)>0?"up":(p.rankChange||0)<0?"down":""}`}>{(p.rankChange||0)>0?`↑ ${p.rankChange}`:(p.rankChange||0)<0?`↓ ${Math.abs(p.rankChange!)}`:"—"}</span>{p.questionPoints!=null&&p.answered&&state.phase!=="finished"&&<span className={p.questionPoints>0?"ranking-gain":"ranking-zero"}>+{p.questionPoints}</span>}</>}
+                    </div>
+                  </div>)}
                 </div>
+                {state.phase!=="lobby"&&state.phase!=="finished"&&<p className="ranking-footnote">⚡ Najbrži označava prvi poslat odgovor, bez obzira na tačnost. Izjednačeni poeni dijele poziciju.</p>}
               </section>
               <section className="arena-panel round-list">
                 <span className="eyebrow">PUT DO PODIJUMA</span>
@@ -875,9 +756,11 @@ export default function Arena() {
         </>
       )}
       <footer className="arena-footer">
-        <span>PUGS / IGRA ZA ZNATIŽELJNE.</span>
+        <span>Skočko / IGRA ZA ZNATIŽELJNE.</span>
         <span>Dobro društvo. Dobra pitanja.</span>
       </footer>
     </main>
   );
 }
+
+

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BE.Arena;
 
 [ApiController, Route("api/arena")]
-public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfiguration config) : ControllerBase
+public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfiguration config, MusicLibrary music) : ControllerBase
 {
     string AudioDirectory => config["Arena:DataPath"] ?? Path.Combine(env.ContentRootPath, "arena-data");
     public record CreateRequest(string Name, int Seconds = 20);
@@ -20,7 +20,21 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
     [HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
-    [HttpPost("rooms/{code}/start")] public IActionResult Start(string code) => Run(() => arena.Start(code, Token));
+    [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());
+    [HttpPost("rooms/{code}/start")]
+    public async Task<IActionResult> Start(string code, CancellationToken ct)
+    {
+        try {
+            var needsMusic = arena.With(code,Token,(r,p) => { ArenaService.Host(r,p); if(r.Phase!="lobby") throw new InvalidOperationException("Partija je već počela."); return r.Music.Count!=5; },persist:false);
+            if(needsMusic) {
+                var selected=await music.PickAsync(ct);
+                arena.With(code,Token,(r,p)=> { ArenaService.Host(r,p); if(r.Phase!="lobby") throw new InvalidOperationException("Partija je već počela."); r.Music.Clear(); r.Music.AddRange(selected); return true; });
+            }
+            return Run(()=>arena.Start(code,Token));
+        } catch(UnauthorizedAccessException e) { return Unauthorized(new {error=e.Message}); }
+          catch(InvalidOperationException e) { return BadRequest(new {error=e.Message}); }
+          catch(Exception e) when(e is HttpRequestException or TaskCanceledException) { return StatusCode(503,new {error="Muzički servis trenutno nije dostupan. Pokušaj ponovo."}); }
+    }
     [HttpPost("rooms/{code}/answer")] public IActionResult Answer(string code, AnswerRequest req) => Run(() => arena.Answer(code, Token, req.Index, req.Answer));
 
     [HttpPost("rooms/{code}/music"), RequestSizeLimit(8 * 1024 * 1024)]
@@ -44,16 +58,33 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
         return result;
     }
     [HttpGet("rooms/{code}/audio/{index:int}")]
-    public IActionResult Audio(string code, int index)
+    public async Task<IActionResult> Audio(string code, int index, CancellationToken ct)
     {
         try {
-            string id = arena.With(code, Token, (r, p) => {
-                if (r.Index != index || r.Phase != "question" || r.Questions[index].AudioUrl is not string audio) throw new InvalidOperationException("Isečak trenutno nije dostupan.");
-                return audio;
-            });
-            var path = Path.Combine(AudioDirectory, id);
-            string mime = Path.GetExtension(id) switch { ".mp3" => "audio/mpeg", ".wav" => "audio/wav", ".ogg" => "audio/ogg", _ => "audio/mp4" };
-            return PhysicalFile(path, mime, enableRangeProcessing: true);
-        } catch (Exception e) when (e is InvalidOperationException or UnauthorizedAccessException) { return NotFound(); }
+            string id=arena.With(code,Token,(r,p)=> {
+                if(r.Index!=index||r.Phase!="question"||r.Questions[index].AudioUrl is not string audio)throw new InvalidOperationException("Isečak trenutno nije dostupan.");return audio;
+            },persist:false);
+            return await StreamClipAsync(id,ct);
+        }catch(Exception e)when(e is InvalidOperationException or UnauthorizedAccessException){return NotFound();}
+         catch(Exception e)when(e is HttpRequestException or TaskCanceledException){return StatusCode(503);}
+    }
+    [HttpGet("rooms/{code}/victory-audio")]
+    public async Task<IActionResult> VictoryAudio(string code,CancellationToken ct)
+    {
+        try {
+            var id=arena.With(code,Token,(r,p)=> {
+                var song=ArenaService.GetVictorySong(r)??throw new InvalidOperationException("Nema pobjedničke pjesme.");
+                return r.Questions[song.Index].AudioUrl!;
+            },persist:false);
+            return await StreamClipAsync(id,ct);
+        }catch(Exception e)when(e is InvalidOperationException or UnauthorizedAccessException){return NotFound();}
+         catch(Exception e)when(e is HttpRequestException or TaskCanceledException){return StatusCode(503);}
+    }
+    async Task<IActionResult> StreamClipAsync(string id,CancellationToken ct)
+    {
+        Response.Headers.CacheControl="no-store";
+        if(id.StartsWith("deezer:")&&long.TryParse(id[7..],out var trackId))return File(await music.AudioAsync(trackId,ct),"audio/mpeg");
+        var mime=Path.GetExtension(id) switch {".mp3"=>"audio/mpeg",".wav"=>"audio/wav",".ogg"=>"audio/ogg",_=>"audio/mp4"};
+        return PhysicalFile(Path.Combine(AudioDirectory,id),mime,enableRangeProcessing:true);
     }
 }

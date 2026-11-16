@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./css/Home.css";
 const Home: React.FC = () => (
@@ -39,7 +39,7 @@ const Home: React.FC = () => (
         <div className="floating-chip chip-one">✦ ZNANJE JE TIMSKI SPORT</div>
         <div className="visual-card">
           <div className="visual-card-top">
-            <span>PUGS / ARENA</span>
+            <span>Skočko / ARENA</span>
             <span className="visual-live">● UŽIVO</span>
           </div>
           <div className="visual-round">01 / KALADONT</div>
@@ -149,7 +149,7 @@ const Home: React.FC = () => (
           <br />
           Više igre.
         </h2>
-        <p>Domaćin pripremi pet muzičkih isečaka, a ostalo prepustite areni.</p>
+        <p>Arena sama bira pet domaćih hitova. Vi samo okupite ekipu.</p>
       </div>
       <ol>
         <li>
@@ -188,11 +188,13 @@ const Home: React.FC = () => (
     </section>
     <footer className="home-footer">
       <strong>
-        PUGS<span> / ARENA</span>
+        Skočko<span> / ARENA</span>
       </strong>
       <span>DOBRO DRUŠTVO. DOBRA PITANJA.</span>
-      <Link to="/quizzes">Klasični kvizovi ↗</Link>
+      <Link to="/arena">Arena uživo ↗</Link>
     </footer>
   </main>
 );
 export default Home;
+
+

@@ -10,6 +10,7 @@ public class ArenaPlayer
     public int Score { get; set; }
     public int Correct { get; set; }
     public string[] Votes { get; set; } = Array.Empty<string>();
+    public Dictionary<int, int> ResponseTimesMs { get; } = new();
     public Dictionary<int, (string Text, int Points)> Answers { get; } = new();
 }
 public class ArenaRoom
@@ -105,7 +106,7 @@ public class ArenaService
         Host(r, p);
         if (r.Phase != "lobby") throw new InvalidOperationException("Partija je već počela.");
         if (r.Players.Count < 2) throw new InvalidOperationException("Pozovi bar jednog igrača. Domaćin vodi partiju van konkurencije.");
-        if (r.Music.Count != 5) throw new InvalidOperationException("Dodaj pet audio isečaka za završnu rundu.");
+        if (r.Music.Count != 5) throw new InvalidOperationException("Muzička runda nije automatski pripremljena. Provjeri da je pokrenuta najnovija verzija backenda.");
         if (r.Players.Any(x => x.Votes.Length != 4)) throw new InvalidOperationException("Sačekaj da svi igrači izaberu četiri oblasti.");
         r.Selected = QuestionBank.Categories.Keys.OrderByDescending(c => r.Players.Count(x => x.Votes.Contains(c))).ThenBy(_ => Random.Shared.Next()).Take(4).ToArray();
         r.Questions = QuestionBank.Chains[Random.Shared.Next(QuestionBank.Chains.Length)].Concat(r.Selected.SelectMany(c => QuestionBank.Categories[c].OrderBy(_ => Random.Shared.Next()))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
@@ -130,24 +131,58 @@ public class ArenaService
         if (string.IsNullOrWhiteSpace(answer) || answer.Length > 160) throw new InvalidOperationException("Unesi odgovor do 160 znakova.");
         bool correct = r.Questions[index].Answers.Any(a => QuestionBank.Normalize(a) == QuestionBank.Normalize(answer));
         int points = correct ? 100 + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / r.Seconds * 50, 0, 50) : 0;
+        p.ResponseTimesMs[index] = (int)Math.Clamp((clock.GetUtcNow() - r.Deadline.AddSeconds(-r.Seconds)).TotalMilliseconds, 0, r.Seconds * 1000);
         p.Answers[index] = (answer.Trim(), points); p.Score += points; if (correct) p.Correct++;
         // Correctness is returned only during reveal, never while opponents can answer.
         return new { ok = true };
     });
-    public object State(string code, string token) => With(code, token, (r, p) =>
+    public record VictorySong(int Index, string Title, string? Artist, int ResponseMs, string Player);
+    public static VictorySong? GetVictorySong(ArenaRoom room)
+    {
+        if(room.Phase!="finished")return null;
+        var players=room.Players.Skip(1).ToArray();if(players.Length==0)return null;
+        int bestScore=players.Max(p=>p.Score);
+        return players.Where(p=>p.Score==bestScore).SelectMany(p=>p.ResponseTimesMs
+            .Where(kv=>kv.Key>=25&&kv.Key<room.Questions.Length&&room.Questions[kv.Key].AudioUrl!=null&&p.Answers.TryGetValue(kv.Key,out var a)&&a.Points>0)
+            .Select(kv=>new VictorySong(kv.Key,room.Questions[kv.Key].Answers[0],room.Questions[kv.Key].Artist,kv.Value,p.Name)))
+            .OrderBy(s=>s.ResponseMs).ThenBy(s=>s.Index).ThenBy(s=>s.Player,StringComparer.Ordinal).FirstOrDefault();
+    }    public object State(string code, string token) => With(code, token, (r, p) =>
     {
         var q = r.Index >= 0 ? r.Questions[r.Index] : null;
         var reveal = r.Phase == "reveal" || r.Phase == "finished";
-        int VisibleScore(ArenaPlayer player) => player.Score - (!reveal && r.Phase == "question" && player.Answers.TryGetValue(r.Index, out var current) ? current.Points : 0);
+        var canSeeCurrent = reveal || r.Players[0] == p || p.Answers.ContainsKey(r.Index);
+        var competitors = r.Players.Skip(1).ToArray();
+        int PointsNow(ArenaPlayer player) => player.Answers.TryGetValue(r.Index,out var a) ? a.Points : 0;
+        int VisibleScore(ArenaPlayer player) => player.Score - (!canSeeCurrent && r.Phase=="question" ? PointsNow(player) : 0);
+        int PreviousScore(ArenaPlayer player) => player.Score - PointsNow(player);
+        int Rank(ArenaPlayer player) => 1 + competitors.Count(other => VisibleScore(other)>VisibleScore(player));
+        int PreviousRank(ArenaPlayer player) => 1 + competitors.Count(other => PreviousScore(other)>PreviousScore(player));
+        double? AverageTime(ArenaPlayer player) {
+            var times=player.ResponseTimesMs.Where(kv=>canSeeCurrent||kv.Key!=r.Index).Select(kv=>(double)kv.Value).ToArray();
+            return times.Length==0?null:Math.Round(times.Average());
+        }
+        var fastestTime = competitors.Where(x=>x.ResponseTimesMs.ContainsKey(r.Index)).Select(x=>(int?)x.ResponseTimesMs[r.Index]).Min();
         p.Answers.TryGetValue(r.Index, out var mine);
         return new {
             r.Code, r.Phase, r.Index, r.Seconds, serverNow = clock.GetUtcNow(), r.Deadline,
             isHost = r.Players[0] == p, me = p.Name, votes = p.Votes, r.Selected,
             categories = QuestionBank.Categories.Keys, musicCount = r.Music.Count,
             music = r.Players[0] == p && r.Phase == "lobby" ? r.Music.Select(m => new { title = m.Answers[0], m.Artist }).ToArray() : null,
-            players = r.Players.Where(x => r.Phase != "finished" || x != r.Players[0]).OrderBy(x => x == r.Players[0]).ThenByDescending(VisibleScore).ThenBy(x => x.Name).Select(x => new { x.Name, host = x == r.Players[0], score = VisibleScore(x), correct = reveal ? x.Correct : (int?)null, voted = x.Votes.Length == 4, answered = x.Answers.ContainsKey(r.Index) }),
+            victory = r.Phase=="finished" ? new { winnerNames=competitors.Where(x=>x.Score==competitors.Max(y=>y.Score)).Select(x=>x.Name).ToArray(), score=competitors.Length==0?0:competitors.Max(x=>x.Score), song=GetVictorySong(r) } : null,
+            rankingLive = canSeeCurrent,
+            answeredCount = competitors.Count(x=>x.Answers.ContainsKey(r.Index)), competitorCount = competitors.Length,
+            players = r.Players.Where(x=>r.Phase!="finished"||x!=r.Players[0]).OrderBy(x=>x==r.Players[0]).ThenByDescending(VisibleScore).ThenBy(x=>AverageTime(x)??double.MaxValue).ThenBy(x=>x.Name).Select(x=>new {
+                x.Name, host=x==r.Players[0], score=VisibleScore(x),
+                rank=x==r.Players[0]?(int?)null:Rank(x), rankChange=x==r.Players[0]?0:PreviousRank(x)-Rank(x),
+                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&PointsNow(x)>0?1:0),
+                voted=x.Votes.Length==4, answered=x.Answers.ContainsKey(r.Index),
+                responseMs=x.ResponseTimesMs.TryGetValue(r.Index,out var ms)?(int?)ms:null,
+                averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,
+                fastest=x!=r.Players[0]&&fastestTime!=null&&x.ResponseTimesMs.TryGetValue(r.Index,out var time)&&time==fastestTime
+            }),
             question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, initial = r.Index < 5 ? q.Answers[0][..1] : null },
             answer = reveal ? q?.Answers[0] : null, artist = reveal ? q?.Artist : null,
+            musicSourceUrl = reveal && q?.AudioUrl?.StartsWith("deezer:") == true ? "https://www.deezer.com/track/" + q.AudioUrl[7..] : null,
             submitted = p.Answers.ContainsKey(r.Index), myAnswer = mine.Text, points = reveal ? mine.Points : (int?)null
         };
     }, persist: false);

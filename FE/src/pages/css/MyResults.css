@@ -54,3 +54,5 @@
   font-weight: bold;
   text-align: right;
 }
+/* Kliker: saved solo results; Arena sessions remain separate. */
+.results-container{background:#100f16;color:#f6f3ff;max-width:1200px;margin:32px auto;padding:30px 24px;border-radius:18px;overflow-x:auto}.results-title{color:#f6f3ff;text-align:left;font-size:36px;letter-spacing:-1px}.results-table{background:#1b1925;box-shadow:none;border-radius:12px;overflow:hidden;min-width:620px}.results-table th{background:#292335;color:#cbb5ff;font-size:12px;text-align:left}.results-table td{color:#ddd7e8;text-align:left;font-size:14px}.results-table th,.results-table td{border:1px solid #ffffff12;padding:18px}.results-table tr:nth-child(even){background:#211d2c}.results-link{color:#d2ff65}.total-points{color:#d2ff65}.results-table tbody tr:hover{background:#ab8cff12}@media(max-width:700px){.results-container{padding:24px 16px;margin:15px auto}.results-title{font-size:29px}.results-table th,.results-table td{padding:12px}}

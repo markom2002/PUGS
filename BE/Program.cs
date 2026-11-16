@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using BE;  // tvoji namespace-ovi
 using BE.Services;
@@ -94,6 +94,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<LiveQuizManager>();
 builder.Services.AddSingleton<BE.Arena.ArenaService>();
+builder.Services.AddHttpClient("music", client => client.Timeout = TimeSpan.FromSeconds(12));
+builder.Services.AddSingleton<BE.Arena.MusicLibrary>();
 builder.Services.AddSingleton(TimeProvider.System);
 
 
@@ -135,6 +137,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+app.Services.GetRequiredService<BE.Arena.MusicLibrary>();
 
 
 app.UseStaticFiles();

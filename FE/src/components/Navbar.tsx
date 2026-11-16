@@ -9,14 +9,14 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <Link className="pugs-brand" to="/">
-        PUGS<span>✳</span>
+        <img src="/skocko.svg" alt="Skočko" width="48" height="54" />
       </Link>
       <div className="navbar-links">
         <Link to="/arena">Arena uživo</Link>
-        <Link to="/quizzes">Kvizovi</Link>
+        
         {token ? (
           <>
-            <Link to="/my-results">Moji rezultati</Link>
+            
             <button
               onClick={() => {
                 localStorage.removeItem("token");
@@ -39,3 +39,5 @@ const Navbar: React.FC = () => {
   );
 };
 export default Navbar;
+
+

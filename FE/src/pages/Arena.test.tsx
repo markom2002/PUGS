@@ -96,3 +96,23 @@ test("joining stores a private session and resumes state polling", async () => {
   );
   view.unmount();
 });
+
+test('live ranking shows scores, response speed and rank changes', async () => {
+  sessionStorage.setItem('pugs-arena',JSON.stringify({code:'123456',token:'secret'}));
+  global.fetch=jest.fn().mockResolvedValue({ok:true,json:async()=>({
+    code:'123456',phase:'question',index:0,seconds:20,deadline:new Date(Date.now()+20000).toISOString(),serverNow:new Date().toISOString(),
+    me:'Ana',isHost:false,votes:[],selected:['Sport','Nauka','Priroda','Istorija'],categories:[],musicCount:5,
+    question:{text:'Koji je glavni grad Italije?',category:'Kaladont',initial:'R',audioUrl:null},submitted:true,myAnswer:'Rim',
+    rankingLive:true,answeredCount:1,competitorCount:2,players:[
+      {name:'Ana',host:false,score:145,rank:1,rankChange:1,responseMs:2000,averageMs:2000,questionPoints:145,fastest:true,correct:1,answered:true,voted:true},
+      {name:'Boris',host:false,score:0,rank:2,rankChange:-1,responseMs:null,averageMs:null,questionPoints:0,fastest:false,correct:0,answered:false,voted:true}
+    ]
+  })});
+  const view=render(<MemoryRouter initialEntries={['/arena']}><Arena/></MemoryRouter>);
+  expect(await screen.findByRole('heading',{name:'Poredak uživo'})).toBeInTheDocument();
+  expect(screen.getByText('2.00 s · ⚡ najbrži')).toBeInTheDocument();
+  expect(screen.getByText('+145')).toBeInTheDocument();
+  expect(screen.getByText('↑ 1')).toBeInTheDocument();
+  expect(screen.getByText('↓ 1')).toBeInTheDocument();
+  view.unmount();
+});
