@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
-const API = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
+import {arenaFetch} from '../utils/arenaApi';
+import {InviteConnection,inviteOrigin,remoteOrigin,loopbackHost} from '../utils/inviteAddress';
 export default function RoomInvite({ code }: { code: string }) {
-  const [connection, setConnection] = useState<{
-    publicUrl?: string | null;
-    lanUrls?: string[];
-  }>({});
+  const [connection, setConnection] = useState<InviteConnection>({});
+  const [loading,setLoading]=useState(true);
+  const manualMode=useRef(false);
   const [mode, setMode] = useState<"local" | "internet">(() =>
     window.location.protocol === "https:" &&
-    !["localhost", "127.0.0.1"].includes(window.location.hostname)
+    !loopbackHost(window.location.hostname)
       ? "internet"
       : "local",
   );
@@ -16,39 +16,34 @@ export default function RoomInvite({ code }: { code: string }) {
   const [note, setNote] = useState("");
   useEffect(() => {
     let active = true;
+    let timer:ReturnType<typeof setTimeout>;
     const controller = new AbortController();
-    fetch(`${API}/api/arena/connection`, { signal: controller.signal })
+    const poll=()=>arenaFetch('connection', { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : {}))
-      .then((data: { publicUrl?: string | null; lanUrls?: string[] }) => {
+      .then((data: InviteConnection) => {
         if (active) {
           setConnection(data);
-          if (data.publicUrl) setMode("internet");
+          if(!manualMode.current)setMode(data.publicUrl||remoteOrigin(window.location)?'internet':'local');
         }
       })
-      .catch(() => {});
+      .catch(() => {if(active)setConnection({});})
+      .finally(()=>{if(active){setLoading(false);timer=setTimeout(poll,15000);}});
+    void poll();
     return () => {
       active = false;
+      clearTimeout(timer);
       controller.abort();
     };
   }, []);
-  const remoteOrigin =
-    window.location.protocol === "https:" &&
-    !["localhost", "127.0.0.1"].includes(window.location.hostname)
-      ? window.location.origin
-      : null;
-  const internet = connection.publicUrl || remoteOrigin;
-  const origin =
-    mode === "internet" && internet
-      ? internet
-      : ["localhost", "127.0.0.1"].includes(window.location.hostname)
-        ? connection.lanUrls?.[0] || window.location.origin
-        : window.location.origin;
-  const link = `${origin}/arena?code=${code}`;
+  const internet = remoteOrigin(window.location)||connection.publicUrl;
+  const origin = inviteOrigin(window.location,connection,mode);
+  const link = origin?`${origin}/arena?code=${code}`:'';
   useEffect(() => {
     setCopied(false);
     setNote("");
   }, [link]);
   async function copy() {
+    if(!link)return;
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(link);
@@ -69,6 +64,7 @@ export default function RoomInvite({ code }: { code: string }) {
     }
   }
   async function share() {
+    if(!link)return;
     try {
       if (navigator.share) {
         await navigator.share({
@@ -90,32 +86,30 @@ export default function RoomInvite({ code }: { code: string }) {
             {code.slice(0, 3)} {code.slice(3)}
           </strong>
           <div className="invite-actions">
-            <button className="text-button" onClick={copy}>
+            <button className="text-button" onClick={copy} disabled={!link}>
               {copied ? "✓ Link kopiran" : "Kopiraj pozivnicu ↗"}
             </button>
-            <button className="text-button" onClick={share}>
+            <button className="text-button" onClick={share} disabled={!link}>
               Podijeli ↗
             </button>
           </div>
         </div>
-        <QRCodeSVG
+        {link?<QRCodeSVG
           value={link}
           size={112}
           bgColor="#fff"
           fgColor="#101320"
           title="Skeniraj da uđeš u partiju"
-        />
+        />:<p role="status">{loading?'Pripremam pozivnicu…':'Nema dostupne adrese za telefon.'}</p>}
       </div>
       <div className="invite-mode">
         <button
           disabled={
-            !["localhost", "127.0.0.1"].includes(window.location.hostname) &&
-            connection.lanUrls?.length === 0 &&
-            Boolean(remoteOrigin)
+            !inviteOrigin(window.location,connection,'local')
           }
           aria-pressed={mode === "local"}
           className={mode === "local" ? "active" : ""}
-          onClick={() => setMode("local")}
+          onClick={() => {manualMode.current=true;setMode("local");}}
         >
           Ista Wi-Fi mreža
         </button>
@@ -123,7 +117,7 @@ export default function RoomInvite({ code }: { code: string }) {
           aria-pressed={mode === "internet"}
           disabled={!internet}
           className={mode === "internet" ? "active" : ""}
-          onClick={() => setMode("internet")}
+          onClick={() => {manualMode.current=true;setMode("internet");}}
         >
           Preko interneta
         </button>
@@ -134,6 +128,7 @@ export default function RoomInvite({ code }: { code: string }) {
           aria-label="Link pozivnice"
           readOnly
           value={link}
+          placeholder={loading?'Pripremam adresu…':'Poveži računar na mrežu i ponovo pokreni aplikaciju.'}
           onFocus={(e) => e.target.select()}
         />
       </label>

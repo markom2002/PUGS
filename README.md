@@ -1,52 +1,38 @@
-# Skočko Arena (PUGS)
+# Skočko Arena
 
-Multiplayer kviz za računar i telefon: šest rundi, po pet pitanja, PIN/QR ulazak, serverski tajmer i poredak uživo.
-
-- Kaladont opšteg znanja, četiri oblasti po glasanju ekipe i domaće muzičko finale.
-- Katalog od 813 pjesama u SQL Server tabeli `QuizAppDB.dbo.MusicTracks`; pet žanrova se bira automatski po partiji.
-- Proglašenje pobjednika sa animacijama i soundtrackom njegovog najbržeg tačnog muzičkog pogotka.
+Aktuelni multiplayer kviz za računar i telefon: PIN/QR ulazak, glasanje za najmanje dve oblasti, Kaladont, mapa sveta i muzičko finale. Baza sadrži 2.250 tekstualnih pitanja u devet oblasti (uključujući Igrice), 50 lokacija za mapu i muzički katalog. Sve potvrđene oblasti ulaze u partiju, a mapa ide pre muzike.
 
 ## Pokretanje
 
-Potrebni su .NET 8 SDK, Node.js 20+ i SQL Server. U `BE/appsettings.json` podesi `ConnectionStrings:DefaultConnection` za postojeću bazu `QuizAppDB`. Muzička tabela se automatski kreira i puni bez izmjene postojećih podataka.
+Na ovom računaru koristi desktop aplikaciju **Skocko**. Za ponovno pravljenje prečice pokreni `install-desktop-app.ps1` ili `Vrati precicu.cmd`. Pokretač proverava SQL Express, ažurira build po potrebi, pokreće server i priprema internet pozivnicu. Telefon otvara najnoviji QR/link iz sobe. Za LAN igru oba uređaja koriste istu Wi-Fi mrežu. Za internet igru računar ostaje uključen; privremena HTTPS adresa može se promeniti.
 
-Iz korijena projekta:
+Potrebni su .NET 8 SDK, Node.js 20+ i SQL Server sa konekcijom `ConnectionStrings:DefaultConnection` u `BE/appsettings.json`.
 
 ```powershell
-.\start-arena.ps1
+.\open-arena.ps1 -AppWindow
+# Samo lokalna mreža:
+.\open-arena.ps1 -AppWindow -LocalOnly
 ```
 
-Otvori `http://localhost:5087/arena`. Za drugi port koristi `.\start-arena.ps1 -Port 5099`. Telefon mora biti na istoj mreži; otvori `http://IP-RACUNARA:5087/arena`. Ako dijeliš QR/pozivnicu, i na računaru otvori tu LAN adresu.
+Direktna igra telefonima bez servera dostupna je kroz **Napolju bez interneta / samo telefoni**. Paket pitanja i muzike sačuvaj unapred. Detalji: [aplikacija i povezivanje](docs/APP.md).
 
-Muzički katalog čuva podatke i odgovore. Originalni Deezer preview isečci se dobavljaju preko interneta, pa audio zahtijeva mrežnu vezu i dostupnost izvora.
+## Razvoj i provere
 
-## Instalacija i internet igra
-
-Aplikacija se može dodati na telefon/laptop preko HTTPS linka. Za lokalno igranje koristi postojeću LAN adresu. Za prijatelje na drugim mrežama pokreni `start-arena.ps1 -Public`, pa `start-internet.ps1`. Privremeni link radi dok je tvoj računar uključen. Detalji: [docs/APP.md](docs/APP.md).
-
-## Razvoj i provjere
-
-Pokreni `dotnet run --launch-profile http` iz `BE`, a `npm ci` i `npm start` iz `FE`. Frontend na portu 3000 preko proxy-ja koristi backend na portu 5087.
+Za razvoj: `dotnet run --launch-profile http` iz `BE`, pa `npm ci` i `npm start` iz `FE`.
 
 ```powershell
-dotnet run --project tests/ArenaChecks
 dotnet build BE/BE.csproj
+dotnet run --project tests/ArenaChecks
+dotnet run --project tests/MapChecks
+dotnet run --project tests/ConnectionChecks
+python scripts/check-question-bank.py
 cd FE
 npm test -- --watchAll=false --runInBand
 npm run build
 ```
 
-`tests/music-library-http.mjs`, `tests/arena-http.mjs` i `tests/arena-browser.mjs` su dodatne provjere za razvojni server; koriste `ARENA_TEST_URL`. HTTP provjere prave probne sobe. Browser provjera koristi lokalno instaliran Edge na Windowsu.
+Browser test `tests/phone-join-browser.mjs` koristi pokrenut server i Edge; `ARENA_TEST_URL` bira LAN ili aktuelnu internet adresu.
 
-## Fajlovi
+U projektu ostaju samo sadašnji početni ekran, Arena i offline igra. Stare stranice naloga, administracije i ranijeg kviza, njihovi API-ji i zavisnosti su uklonjeni. Nepostojeće frontend adrese vode na početni ekran. SQL modeli i migracije čuvaju istoriju postojeće baze; stari podaci se ne brišu i nisu dostupni kroz API. `BE/arena-data/`, buildovi i lokalni alati nisu deo Gita.
 
-- `FE/`: React/TypeScript interfejs.
-- `BE/Arena/`: nova Arena, bodovanje, muzička biblioteka i početni katalog.
-- `BE/Migrations/`: istorija postojeće SQL baze; ne brisati.
-- `BE/arena-data/`: lokalno stanje partija i tokeni; nije u Gitu.
-- `scripts/seed-music.mjs`: obnavljanje početnog kataloga pjesama.
-- `pugs.ncp`: originalni dijagram modela projekta.
-
-Raniji nalozi, administracija i preostale klasične rute ostaju u projektu. Stranice Kvizovi i Moji rezultati su uklonjene, a njihove stare adrese preusmjeravaju u Arenu.
-
-Detaljna pravila, ograničenja i planirane funkcije: [docs/ARENA.md](docs/ARENA.md).
+Izvori pitanja: [QUESTION_SOURCES.md](docs/QUESTION_SOURCES.md).

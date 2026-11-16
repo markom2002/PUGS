@@ -141,7 +141,21 @@ service=new ArenaService(clock,config);Check(J(service.State(pc,pt)).GetProperty
 service.With(pc,pt,(r,p)=>{r.Index=29;r.Phase="finished";p.Score=500;p.Answers[25]=("Host song",150);p.ResponseTimesMs[25]=500;return true;});
 var hostVictory=J(service.State(pc,pt));Check(hostVictory.GetProperty("victory").GetProperty("winnerNames")[0].GetString()=="Playing host","Playing host can win");
 Check(hostVictory.GetProperty("victory").GetProperty("song").GetProperty("player").GetString()=="Playing host","Host victory selects their fastest correct song");
-Check(QuestionBank.Categories.Values.Sum(x=>x.Length)>=275,"Expanded question bank loaded");
+Check(QuestionBank.Categories.Values.Sum(x=>x.Length)>=2000,"Expanded bank of at least 2000 questions loaded");
+foreach(var (category,bank) in QuestionBank.Categories) {
+    Check(bank.Length>=250,category+" has at least 250 questions");
+    Check(bank.All(q=>!string.IsNullOrWhiteSpace(q.Topic)&&q.Answers.Length>0&&q.Answers.All(a=>!string.IsNullOrWhiteSpace(a))&&QuestionBank.Normalize(q.Answers[0]).Length>0),category+" has topics and valid answers for chains");
+    Check(bank.Select(q=>QuestionBank.Normalize(q.Text)).Distinct().Count()==bank.Length,category+" has no identical questions");
+    for(int level=1;level<=5;level++)Check(bank.Count(q=>q.Difficulty==level)>=50,category+" has broad coverage at difficulty "+level);
+}
+ArenaQuestion Editorial(string text,int level,string topic,params string[] answers)=>new(text,answers.Length>0?answers:new[]{text},"Test",Difficulty:level,Topic:topic);
+var editorialPool=new[]{Editorial("First",1,"Rules"),Editorial("Same subject",2,"Rules"),Editorial("History",2,"History"),Editorial("Nature",3,"Nature"),Editorial("Science",4,"Science"),Editorial("Art",5,"Art")};
+var editorialUsage=new Dictionary<string,int>{{QuestionBank.Normalize("History"),100}};
+for(int draw=0;draw<30;draw++)Check(QuestionBank.PickProgressive(editorialPool,editorialUsage)[1].Text=="History","New topic preferred over a repeated template even if used more often");
+var aliasPool=new[]{Editorial("First",1,"A","Đus","deuce"),Editorial("Repeat",2,"B","DEUCE"),Editorial("New answer",2,"C"),Editorial("Third",3,"D"),Editorial("Fourth",4,"E"),Editorial("Fifth",5,"F")};
+Check(QuestionBank.PickProgressive(aliasPool)[1].Text=="New answer","Repeated answer aliases avoided across different topics");
+var fallbackPool=Enumerable.Range(1,5).Select(i=>Editorial("Question "+i,i,"Only topic")).ToArray();
+Check(QuestionBank.PickProgressive(fallbackPool).Select(q=>q.Difficulty).SequenceEqual(Enumerable.Range(1,5)),"Difficulty progression preserved when topics must repeat");
 for(int j=0;j<30;j++){var ch=QuestionBank.NewChain();Check(ch.Length==5&&ch.Zip(ch.Skip(1)).All(pair=>QuestionBank.Normalize(pair.First.Answers[0])[^1]==QuestionBank.Normalize(pair.Second.Answers[0])[0]),"Dynamic chain valid");}
 service.With(pc,pt,(r,p)=>{r.Phase="question";r.Index=26;r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(26);return true;});
 service.Answer(pc,pt,26,"Host song");

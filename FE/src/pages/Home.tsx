@@ -17,8 +17,8 @@ const Home: React.FC = () => (
           <span>Pokidaj kviz.</span>
         </h1>
         <p>
-          Veliko znanje. Brzi prsti. Domaći hitovi. Pretvori običnu večer u šest
-          rundi koje će se prepričavati.
+          Veliko znanje. Domaći hitovi. Mapa sveta. Pretvori običnu večer u
+          runde koje će se prepričavati.
         </p>
         <div className="hero-actions">
           <Link className="hero-primary" to="/arena">
@@ -84,12 +84,12 @@ const Home: React.FC = () => (
     </section>
     <section className="home-number-strip">
       <div>
-        <b>06</b>
-        <span>rundi za pamćenje</span>
+        <b>02+</b>
+        <span>oblasti po izboru ekipe</span>
       </div>
       <div>
-        <b>30</b>
-        <span>pitanja do podijuma</span>
+        <b>05</b>
+        <span>pitanja po izabranoj oblasti</span>
       </div>
       <div>
         <b>813</b>
@@ -105,7 +105,7 @@ const Home: React.FC = () => (
         <div>
           <span className="home-eyebrow">OVDJE SVAKO IMA SVOJ TRENUTAK.</span>
           <h2>
-            Šest rundi.
+            Znanje. Muzika. Mapa.
             <br />
             <em>Nula dosadnih minuta.</em>
           </h2>
@@ -134,7 +134,7 @@ const Home: React.FC = () => (
         </article>
         <article className="home-round-card choice">
           <div className="round-card-top">
-            <span>02—05 / VAŠ TEREN</span>
+            <span>VAŠ IZBOR / VAŠ TEREN</span>
             <b>↗</b>
           </div>
           <div className="round-topics">
@@ -145,14 +145,14 @@ const Home: React.FC = () => (
           </div>
           <h3>Vaša igra. Vaša pravila.</h3>
           <p>
-            Neko živi za sport. Neko zna svaki film. Izglasajte četiri oblasti i
-            pustite da svako zablista.
+            Neko živi za sport. Neko zna svaki film ili igricu. Izaberite najmanje
+            dve oblasti, uključite mapu ako želite i pustite da svako zablista.
           </p>
-          <small>4 IZGLASANE OBLASTI / 20 PITANJA</small>
+          <small>NAJMANJE 2 OBLASTI / PO 5 PITANJA</small>
         </article>
         <article className="home-round-card music">
           <div className="round-card-top">
-            <span>06 / ZADNJI REFREN</span>
+            <span>FINALE / ZADNJI REFREN</span>
             <b>↗</b>
           </div>
           <div className="music-art">

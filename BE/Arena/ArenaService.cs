@@ -12,11 +12,13 @@ public class ArenaPlayer
     public string[] Votes { get; set; } = Array.Empty<string>();
     public Dictionary<int, int> ResponseTimesMs { get; } = new();
     public Dictionary<int, (string Text, int Points)> Answers { get; } = new();
+    public Dictionary<int, GeoPoint> MapGuesses { get; } = new();
 }
 public class ArenaRoom
 {
     public bool Offline { get; set; }
     public bool HostParticipates { get; set; }
+    public bool MapEnabled { get; set; }
     public string Code { get; set; } = "";
     public List<ArenaPlayer> Players { get; } = new();
     public List<ArenaQuestion> Music { get; } = new();
@@ -31,7 +33,8 @@ public class ArenaRoom
 public class ArenaService
 {
     readonly Dictionary<string,int> QuestionUses = new();
-    static int Duration(ArenaRoom r) => r.Seconds + (r.Index>=25?5:0);
+    static int Duration(ArenaRoom r) => r.Index>=0 && r.Index<r.Questions.Length && r.Questions[r.Index].Map!=null
+        ? Math.Max(30,r.Seconds) : r.Seconds + (r.Index>=0 && r.Index<r.Questions.Length && r.Questions[r.Index].AudioUrl!=null?5:0);
     readonly TimeProvider clock;
     readonly string? savePath;
     readonly string? codesPath;
@@ -80,7 +83,7 @@ public class ArenaService
             return result;
         }
     }
-    public object Create(string name, int seconds, bool offline = false)
+    public object Create(string name, int seconds, bool offline = false, bool mapEnabled = false)
     {
         lock (gate)
         {
@@ -90,7 +93,7 @@ public class ArenaService
             string code;
             do { code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString(); } while (usedCodes.Contains(code));
             usedCodes.Add(code); codesDirty = true;
-            var room = new ArenaRoom { Code = code, Offline = offline, Seconds = Math.Clamp(seconds, 10, 20) };
+            var room = new ArenaRoom { Code = code, Offline = offline, MapEnabled = mapEnabled, Seconds = Math.Clamp(seconds, 10, 20) };
             var player = new ArenaPlayer { Name = Name(name) };
             room.Touched = clock.GetUtcNow(); room.Players.Add(player); rooms.Add(code, room); Save();
             return new { code, token = player.Token };
@@ -114,7 +117,7 @@ public class ArenaService
         Host(r,p);
         if(r.Phase!="lobby")throw new InvalidOperationException("Čekaonica se može isprazniti samo prije početka partije.");
         int removed=r.Players.Count-1;r.Players.RemoveRange(1,removed);
-        p.Votes=Array.Empty<string>();p.Score=0;p.Correct=0;p.Answers.Clear();p.ResponseTimesMs.Clear();
+        p.Votes=Array.Empty<string>();p.Score=0;p.Correct=0;p.Answers.Clear();p.MapGuesses.Clear();p.ResponseTimesMs.Clear();
         r.Music.Clear();r.Questions=Array.Empty<ArenaQuestion>();r.Selected=Array.Empty<string>();r.Index=-1;
         return new {ok=true,removed};
     });
@@ -138,8 +141,8 @@ public class ArenaService
     public object Vote(string code, string token, string[] votes) => With(code, token, (r, p) =>
     {
         if (!IsCompetitor(r,p)) throw new InvalidOperationException("Voditelj ne bira oblasti. Uključi učešće u igri.");
-        if (r.Phase != "lobby" || votes.Length != 4 || votes.Distinct().Count() != 4 || votes.Any(v => !QuestionBank.Categories.ContainsKey(v))) throw new InvalidOperationException("Izaberi četiri različite oblasti prije početka.");
-        p.Votes = votes; return new { ok = true };
+        if (r.Phase != "lobby" || !QuestionBank.ValidVotes(votes)) throw new InvalidOperationException("Izaberi najmanje dve različite oblasti prije početka.");
+        p.Votes = votes.ToArray(); return new { ok = true };
     });
     public object Start(string code, string token) => With(code, token, (r, p) =>
     {
@@ -147,11 +150,18 @@ public class ArenaService
         if (r.Phase != "lobby") throw new InvalidOperationException("Partija je već počela.");
         if (r.Players.Count < 2) throw new InvalidOperationException("Pozovi bar jednog igrača. Domaćin vodi partiju van konkurencije.");
         if (r.Music.Count != 5) throw new InvalidOperationException("Muzička runda nije automatski pripremljena. Provjeri da je pokrenuta najnovija verzija backenda.");
-        if (r.Players.Where(x => IsCompetitor(r,x)).Any(x => x.Votes.Length != 4)) throw new InvalidOperationException("Sačekaj da svi igrači izaberu četiri oblasti.");
-        r.Selected = QuestionBank.Categories.Keys.OrderByDescending(c => r.Players.Count(x => IsCompetitor(r,x) && x.Votes.Contains(c))).ThenBy(_ => Random.Shared.Next()).Take(4).ToArray();
+        if (r.Players.Where(x => IsCompetitor(r,x)).Any(x => !QuestionBank.ValidVotes(x.Votes))) throw new InvalidOperationException("Sačekaj da svi igrači potvrde najmanje dve oblasti.");
+        // Keep the legacy create flag compatible; new clients choose the map in the category grid.
+        r.Selected = QuestionBank.AvailableCategories
+            .Where(c=>r.Players.Any(x=>IsCompetitor(r,x)&&x.Votes.Contains(c))||(c==QuestionBank.MapCategory&&r.MapEnabled))
+            .OrderByDescending(c=>r.Players.Count(x=>IsCompetitor(r,x)&&x.Votes.Contains(c)))
+            .ThenBy(_=>Random.Shared.Next()).OrderBy(c=>c==QuestionBank.MapCategory?1:0).ToArray();
+        r.MapEnabled=r.Selected.Contains(QuestionBank.MapCategory);
         var chain=QuestionBank.NewChain(QuestionUses);
-        r.Questions = chain.Concat(r.Selected.SelectMany(c => QuestionBank.PickProgressive(QuestionBank.Categories[c].Where(q=>!chain.Any(ch=>QuestionBank.Normalize(ch.Text)==QuestionBank.Normalize(q.Text))),QuestionUses))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
-        foreach(var q in r.Questions.Take(25)) { var key=QuestionBank.Normalize(q.Text);QuestionUses[key]=QuestionUses.GetValueOrDefault(key)+1; }
+        r.Questions = chain.Concat(r.Selected.SelectMany(c => QuestionBank.PickProgressive(
+                c==QuestionBank.MapCategory ? MapRound.Questions : QuestionBank.Categories[c].Where(q=>!chain.Any(ch=>QuestionBank.Normalize(ch.Text)==QuestionBank.Normalize(q.Text))),QuestionUses)))
+            .Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
+        foreach(var q in r.Questions.Where(q=>q.AudioUrl==null)) { var key=QuestionBank.Normalize(q.Text);QuestionUses[key]=QuestionUses.GetValueOrDefault(key)+1; }
         if(savePath!=null){File.WriteAllText(savePath+".usage.tmp",JsonSerializer.Serialize(QuestionUses));File.Move(savePath+".usage.tmp",savePath+".usage",true);}
         r.Phase = "countdown"; r.Deadline = clock.GetUtcNow().AddSeconds(4);
         return new { ok = true };
@@ -162,7 +172,7 @@ public class ArenaService
         while (r.Phase != "lobby" && r.Phase != "finished" && now >= r.Deadline)
         {
             if (r.Phase == "question") { r.Phase = "reveal"; r.Deadline = r.Deadline.AddSeconds(5); }
-            else if (r.Index >= 29) r.Phase = "finished";
+            else if (r.Index >= r.Questions.Length-1) r.Phase = "finished";
             else { r.Index++; r.Phase = "question"; r.Deadline = r.Deadline.AddSeconds(Duration(r)); }
         }
     }
@@ -171,13 +181,28 @@ public class ArenaService
         if (!IsCompetitor(r,p)) throw new InvalidOperationException("Domaćin vodi partiju van konkurencije.");
         if (r.Phase != "question" || index != r.Index) throw new InvalidOperationException("Vrijeme za ovo pitanje je isteklo.");
         if (p.Answers.ContainsKey(index)) throw new InvalidOperationException("Odgovor je već poslat.");
+        if (r.Questions[index].Map != null) throw new InvalidOperationException("Za ovo pitanje označi lokaciju na mapi.");
         if (string.IsNullOrWhiteSpace(answer) || answer.Length > 160) throw new InvalidOperationException("Unesi odgovor do 160 znakova.");
         bool correct = r.Questions[index].Answers.Any(a => QuestionBank.Normalize(a) == QuestionBank.Normalize(answer));
-        int points = correct ? (r.Index>=25?50:100) + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / Duration(r) * 50, 0, 50) : r.Index>=25 && (QuestionBank.PartialTitle(r.Questions[index],answer)||!string.IsNullOrWhiteSpace(r.Questions[index].Artist) && QuestionBank.Normalize(r.Questions[index].Artist!)==QuestionBank.Normalize(answer)) ? 50 : 0;
+        bool music = r.Questions[index].AudioUrl != null;
+        int points = correct ? (music?50:100) + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / Duration(r) * 50, 0, 50) : music && (QuestionBank.PartialTitle(r.Questions[index],answer)||!string.IsNullOrWhiteSpace(r.Questions[index].Artist) && QuestionBank.Normalize(r.Questions[index].Artist!)==QuestionBank.Normalize(answer)) ? 50 : 0;
         p.ResponseTimesMs[index] = (int)Math.Clamp((clock.GetUtcNow() - r.Deadline.AddSeconds(-Duration(r))).TotalMilliseconds, 0, Duration(r) * 1000);
         p.Answers[index] = (answer.Trim(), points); p.Score += points; if (correct) p.Correct++;
         // Correctness is returned only during reveal, never while opponents can answer.
         return new { ok = true };
+    });
+    public object AnswerMap(string code, string token, int index, double latitude, double longitude) => With(code,token,(r,p)=> {
+        if (!IsCompetitor(r,p)) throw new InvalidOperationException("Domaćin vodi partiju van konkurencije.");
+        if (r.Phase!="question" || index!=r.Index) throw new InvalidOperationException("Vrijeme za ovo pitanje je isteklo.");
+        if (p.Answers.ContainsKey(index)) throw new InvalidOperationException("Odgovor je već poslat.");
+        var target=r.Questions[index].Map ?? throw new InvalidOperationException("Ovo pitanje ne koristi mapu.");
+        var guess=new GeoPoint(latitude,longitude);
+        if(!MapRound.Valid(guess))throw new InvalidOperationException("Označi važeće mesto na mapi.");
+        var distance=MapRound.Distance(target,guess);var points=MapRound.Points(distance);
+        p.MapGuesses[index]=guess;
+        p.Answers[index]=("Oznaka na mapi",points);p.Score+=points;if(distance<=50)p.Correct++;
+        p.ResponseTimesMs[index]=(int)Math.Clamp((clock.GetUtcNow()-r.Deadline.AddSeconds(-Duration(r))).TotalMilliseconds,0,Duration(r)*1000);
+        return new {ok=true};
     });
     public record VictorySong(int Index, string Title, string? Artist, int ResponseMs, string Player);
     public static VictorySong? GetVictorySong(ArenaRoom room)
@@ -186,7 +211,7 @@ public class ArenaService
         var players=room.Players.Where(p=>IsCompetitor(room,p)).ToArray();if(players.Length==0)return null;
         int bestScore=players.Max(p=>p.Score);
         return players.Where(p=>p.Score==bestScore).SelectMany(p=>p.ResponseTimesMs
-            .Where(kv=>kv.Key>=25&&kv.Key<room.Questions.Length&&room.Questions[kv.Key].AudioUrl!=null&&p.Answers.TryGetValue(kv.Key,out var a)&&a.Points>0&&room.Questions[kv.Key].Answers.Any(title=>QuestionBank.Normalize(title)==QuestionBank.Normalize(a.Text)))
+            .Where(kv=>kv.Key>=0&&kv.Key<room.Questions.Length&&room.Questions[kv.Key].AudioUrl!=null&&p.Answers.TryGetValue(kv.Key,out var a)&&a.Points>0&&room.Questions[kv.Key].Answers.Any(title=>QuestionBank.Normalize(title)==QuestionBank.Normalize(a.Text)))
             .Select(kv=>new VictorySong(kv.Key,room.Questions[kv.Key].Answers[0],room.Questions[kv.Key].Artist,kv.Value,p.Name)))
             .OrderBy(s=>s.ResponseMs).ThenBy(s=>s.Index).ThenBy(s=>s.Player,StringComparer.Ordinal).FirstOrDefault();
     }    public object State(string code, string token) => With(code, token, (r, p) =>
@@ -206,10 +231,14 @@ public class ArenaService
         }
         var fastestTime = competitors.Where(x=>x.ResponseTimesMs.ContainsKey(r.Index)).Select(x=>(int?)x.ResponseTimesMs[r.Index]).Min();
         p.Answers.TryGetValue(r.Index, out var mine);
+        p.MapGuesses.TryGetValue(r.Index,out var myGuess);
+        bool CurrentCorrect(ArenaPlayer player) => q?.Map is MapLocation target
+            ? player.MapGuesses.TryGetValue(r.Index,out var guess)&&MapRound.Distance(target,guess)<=50
+            : q!=null&&player.Answers.TryGetValue(r.Index,out var value)&&q.Answers.Any(a=>QuestionBank.Normalize(a)==QuestionBank.Normalize(value.Text));
         return new {
-            r.Code, r.Phase, r.Index, seconds=Duration(r), r.Offline, serverNow = clock.GetUtcNow(), r.Deadline,
+            r.Code, r.Phase, r.Index, seconds=Duration(r), r.Offline, r.MapEnabled, totalQuestions=r.Questions.Length, serverNow = clock.GetUtcNow(), r.Deadline,
             isHost = r.Players[0] == p, hostParticipates = r.HostParticipates, isPlaying = IsCompetitor(r,p), me = p.Name, votes = p.Votes, r.Selected,
-            categories = QuestionBank.Categories.Keys, musicCount = r.Music.Count,
+            categories = QuestionBank.AvailableCategories, musicCount = r.Music.Count,
             music = r.Players[0] == p && !r.HostParticipates && r.Phase == "lobby" ? r.Music.Select(m => new { title = m.Answers[0], m.Artist }).ToArray() : null,
             victory = r.Phase=="finished" ? new { winnerNames=competitors.Where(x=>x.Score==competitors.Max(y=>y.Score)).Select(x=>x.Name).ToArray(), score=competitors.Length==0?0:competitors.Max(x=>x.Score), song=GetVictorySong(r) } : null,
             rankingLive = canSeeCurrent,
@@ -217,13 +246,21 @@ public class ArenaService
             players = r.Players.Where(x=>r.Phase!="finished"||IsCompetitor(r,x)).OrderBy(x=>!IsCompetitor(r,x)).ThenByDescending(VisibleScore).ThenBy(x=>AverageTime(x)??double.MaxValue).ThenBy(x=>x.Name).Select(x=>new {
                 x.Name, host=x==r.Players[0], participating=IsCompetitor(r,x), score=VisibleScore(x),
                 rank=!IsCompetitor(r,x)?(int?)null:Rank(x), rankChange=!IsCompetitor(r,x)?0:PreviousRank(x)-Rank(x),
-                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&x.Answers.TryGetValue(r.Index,out var currentAnswer)&&r.Questions[r.Index].Answers.Any(title=>QuestionBank.Normalize(title)==QuestionBank.Normalize(currentAnswer.Text))?1:0),
-                voted=x.Votes.Length==4, answered=x.Answers.ContainsKey(r.Index),
+                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&CurrentCorrect(x)?1:0),
+                voted=QuestionBank.ValidVotes(x.Votes), answered=x.Answers.ContainsKey(r.Index),
                 responseMs=x.ResponseTimesMs.TryGetValue(r.Index,out var ms)?(int?)ms:null,
                 averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,
                 fastest=IsCompetitor(r,x)&&fastestTime!=null&&x.ResponseTimesMs.TryGetValue(r.Index,out var time)&&time==fastestTime
             }),
-            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, q.Difficulty },
+            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, q.Difficulty, isMap=q.Map!=null },
+            map = q?.Map==null ? null : new {
+                target=reveal?q.Map:null, guess=myGuess,
+                distanceKm=reveal&&myGuess!=null?(double?)Math.Round(MapRound.Distance(q.Map,myGuess),1):null,
+                guesses=reveal?competitors.Where(x=>x.MapGuesses.ContainsKey(r.Index)).Select(x=>new {
+                    name=x.Name, latitude=x.MapGuesses[r.Index].Latitude,longitude=x.MapGuesses[r.Index].Longitude,
+                    distanceKm=Math.Round(MapRound.Distance(q.Map,x.MapGuesses[r.Index]),1),points=PointsNow(x)
+                }).ToArray():null
+            },
             answer = reveal ? q?.Answers[0] : null, artist = reveal ? q?.Artist : null,
             musicSourceUrl = reveal && q?.AudioUrl?.StartsWith("deezer:") == true ? "https://www.deezer.com/track/" + q.AudioUrl[7..] : null,
             submitted = p.Answers.ContainsKey(r.Index), myAnswer = mine.Text, points = reveal ? mine.Points : (int?)null

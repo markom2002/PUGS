@@ -6,11 +6,12 @@ namespace BE.Arena;
 public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfiguration config, MusicLibrary music) : ControllerBase
 {
     string AudioDirectory => config["Arena:DataPath"] ?? Path.Combine(env.ContentRootPath, "arena-data");
-    public record CreateRequest(string Name, int Seconds = 20, bool Offline = false);
+    public record CreateRequest(string Name, int Seconds = 20, bool Offline = false, bool MapEnabled = false);
     public record JoinRequest(string Name);
     public record ParticipationRequest(bool Participates);
     public record VoteRequest(string[] Categories);
     public record AnswerRequest(int Index, string Answer);
+    public record MapAnswerRequest(int Index, double? Latitude, double? Longitude);
     string Token => Request.Headers["X-Player-Token"].ToString();
     IActionResult Run(Func<object> action)
     {
@@ -18,14 +19,17 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
         catch (UnauthorizedAccessException e) { return Unauthorized(new { error = e.Message }); }
         catch (InvalidOperationException e) { return BadRequest(new { error = e.Message }); }
     }
-    [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds, req.Offline));
+    [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds, req.Offline, req.MapEnabled));
     [EnableRateLimiting("arena-join"), HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
     [HttpPost("rooms/{code}/reset-lobby")] public IActionResult ResetLobby(string code) => Run(() => arena.ResetLobby(code,Token));
     [HttpPost("rooms/{code}/leave")] public IActionResult Leave(string code) => Run(() => arena.Leave(code,Token));
     [HttpPost("rooms/{code}/participation")] public IActionResult Participation(string code, ParticipationRequest req) => Run(() => arena.Participation(code, Token, req.Participates));
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
-    [HttpGet("connection")] public IActionResult Connection([FromServices] ArenaConnectionInfo connection) => Ok(connection.Describe(Request));
+    [HttpGet("health"),ResponseCache(NoStore=true,Location=ResponseCacheLocation.None)]
+    public IActionResult Health([FromServices] ArenaConnectionInfo connection) => Ok(new {ok=true,instanceId=connection.InstanceId});
+    [HttpGet("connection"),ResponseCache(NoStore=true,Location=ResponseCacheLocation.None)]
+    public async Task<IActionResult> Connection([FromServices] ArenaConnectionInfo connection,CancellationToken ct) => Ok(await connection.DescribeAsync(Request,ct));
     [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());
     [EnableRateLimiting("arena-create"), HttpGet("offline-pack")]
     public async Task<IActionResult> OfflinePack(CancellationToken ct) {
@@ -33,7 +37,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
             var selected=await music.PickAsync(ct,true);
             var songs=new List<object>();
             foreach(var q in selected) songs.Add(new {id=q.AudioUrl,title=q.Answers[0],answers=q.Answers,artist=q.Artist,audio=Convert.ToBase64String(await music.AudioAsync(long.Parse(q.AudioUrl![7..]),ct))});
-            return Ok(new {questions=QuestionBank.Categories.Values.SelectMany(q=>q),songs});
+            return Ok(new {questions=QuestionBank.Categories.Values.SelectMany(q=>q),mapQuestions=MapRound.Questions,songs});
         }catch(InvalidOperationException e){return BadRequest(new{error=e.Message});}
     }
     [HttpPost("rooms/{code}/start")]
@@ -51,6 +55,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
           catch(Exception e) when(e is HttpRequestException or TaskCanceledException) { return StatusCode(503,new {error="Muzički servis trenutno nije dostupan. Pokušaj ponovo."}); }
     }
     [HttpPost("rooms/{code}/answer")] public IActionResult Answer(string code, AnswerRequest req) => Run(() => arena.Answer(code, Token, req.Index, req.Answer));
+    [HttpPost("rooms/{code}/map-answer")] public IActionResult MapAnswer(string code, MapAnswerRequest req) => Run(() => arena.AnswerMap(code,Token,req.Index,req.Latitude??double.NaN,req.Longitude??double.NaN));
 
     [HttpPost("rooms/{code}/music"), RequestSizeLimit(8 * 1024 * 1024)]
     public async Task<IActionResult> Music(string code, [FromForm] IFormFile file, [FromForm] string title, [FromForm] string artist)

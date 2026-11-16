@@ -14,8 +14,11 @@ import {
 import "./css/Arena.css";
 import { InstallButton } from "../components/Pwa";
 import WinnerCelebration, { Victory } from "../components/WinnerCelebration";
+import MapQuestion from "../components/map/MapQuestion";
+import {MapSnapshot} from "../utils/mapRound";
+import {categoryIcon,validCategories} from "../utils/categorySelection";
+import {ARENA_API as API,arenaFetch,connectionMessage} from "../utils/arenaApi";
 
-const API = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
 type Session = { code: string; token: string };
 type Player = {
   name: string;
@@ -37,6 +40,9 @@ type State = {
   phase: string;
   index: number;
   seconds: number;
+  mapEnabled?: boolean;
+  totalQuestions?: number;
+  map?: MapSnapshot|null;
   deadline: string;
   serverNow: string;
   isHost: boolean;
@@ -58,6 +64,7 @@ type State = {
     audioUrl: string | null;
     initial: string | null;
     difficulty?: number;
+    isMap?: boolean;
   } | null;
   answer: string | null;
   artist: string | null;
@@ -71,7 +78,7 @@ export async function arenaRequest(
   session: Session | null,
   body?: unknown,
 ) {
-  const response = await fetch(`${API}/api/arena/${path}`, {
+  const response = await arenaFetch(path, {
     method: body === undefined ? "GET" : "POST",
     headers: {
       ...(body instanceof FormData
@@ -86,7 +93,10 @@ export async function arenaRequest(
           ? body
           : JSON.stringify(body),
   });
-  const data = await response.json();
+  let data;
+  try{data=await response.json();}catch{
+    throw Object.assign(new Error(connectionMessage),{status:response.status>=500?503:0});
+  }
   if (!response.ok)
     throw Object.assign(
       new Error(data.error || "Zahtjev nije uspio. Pokušaj ponovo."),
@@ -94,7 +104,6 @@ export async function arenaRequest(
     );
   return data;
 }
-const icons = ["↗", "◈", "◎", "⚡", "◷", "⌘", "✳", "❋"];
 export default function Arena() {
   const [params, setParams] = useSearchParams();
   useEffect(() => installVictoryAudioUnlock(), []);
@@ -300,7 +309,7 @@ export default function Arena() {
     "Kaladont",
     ...(state?.selected.length
       ? state.selected
-      : ["Vaš izbor", "Vaš izbor", "Vaš izbor", "Vaš izbor"]),
+      : ["Vaš izbor", "Vaš izbor"]),
     "Muzičko finale",
   ];
   const round = state ? Math.max(0, Math.floor(state.index / 5)) : 0;
@@ -338,7 +347,7 @@ export default function Arena() {
               <em>Ekipa je bolja.</em>
             </h1>
             <p>
-              Šest rundi. Trideset pitanja. Jedna ekipa koja misli da zna sve.
+              Znanje, muzika i mapa sveta. Jedna ekipa koja misli da zna sve.
               Vrijeme je da to provjerimo.
             </p>
             <div className="entry-stats">
@@ -346,7 +355,7 @@ export default function Arena() {
                 <strong>06</strong>rundi
               </div>
               <div>
-                <strong>30</strong>pitanja
+                <strong>5</strong>pitanja po oblasti
               </div>
               <div>
                 <strong>20s</strong>za odgovor
@@ -497,14 +506,14 @@ export default function Arena() {
                   <section className="arena-panel">
                     <div className="section-heading">
                       <div>
-                        <span className="eyebrow">RUNDE 02—05</span>
+                        <span className="eyebrow">SASTAVITE SVOJU PARTIJU</span>
                         <h2>Vaša igra. Vaše oblasti.</h2>
                       </div>
-                      <span className="pill">{votes.length}/4</span>
+                      <span className="pill">Izabrano {votes.length} · min. 2</span>
                     </div>
                     <p>
-                      Svako bira četiri oblasti. Četiri sa najviše glasova ulaze
-                      u partiju; izjednačene bira žrijeb.
+                      Izaberi najmanje dve oblasti. Sve oblasti koje ekipa potvrdi ulaze
+                      u partiju, sa po pet pitanja. Više glasova određuje redosled; mapa je pre muzičkog finala.
                     </p>
                     {state.isHost && !state.hostParticipates && <p className="host-spectator-note">Vodiš partiju van konkurencije. Oblasti biraju igrači; za glasanje uključi „Igram sa ekipom“.</p>}
                     <div className="category-grid" aria-disabled={state.isHost && !state.hostParticipates}>
@@ -518,13 +527,11 @@ export default function Arena() {
                             setVotes((v) =>
                               v.includes(c)
                                 ? v.filter((x) => x !== c)
-                                : v.length < 4
-                                  ? [...v, c]
-                                  : v,
+                                : [...v, c],
                             )
                           }
                         >
-                          <span>{icons[i]}</span>
+                          <span>{categoryIcon(c,i)}</span>
                           {c}
                           <b>{votes.includes(c) ? "✓" : "+"}</b>
                         </button>
@@ -532,7 +539,7 @@ export default function Arena() {
                     </div>
                     <button
                       className="arena-primary"
-                      disabled={busy || votes.length !== 4 || (state.isHost && !state.hostParticipates)}
+                      disabled={busy || !validCategories(votes,state.categories) || (state.isHost && !state.hostParticipates)}
                       onClick={() =>
                         action(async () => {
                           await arenaRequest(
@@ -544,11 +551,11 @@ export default function Arena() {
                         })
                       }
                     >
-                      {state.votes.length === 4
+                      {state.votes.length >= 2
                         ? "Ažuriraj izbor oblasti"
-                        : "Potvrdi svoje četiri oblasti"}
+                        : "Potvrdi izabrane oblasti"}
                     </button>
-                    {state.votes.length === 4 && (
+                    {state.votes.length >= 2 && (
                       <p className="success-text">
                         ✓ Sačuvano: {state.votes.join(" · ")}
                       </p>
@@ -556,7 +563,7 @@ export default function Arena() {
                   </section>
                   {state.isHost && (
                     <section className="arena-panel">
-                      <span className="eyebrow">RUNDA 06 / DOMAĆA MUZIKA</span>
+                      <span className="eyebrow">FINALE / DOMAĆA MUZIKA</span>
                       <div className="lobby-reset">
                         <div>
                           <strong>Novi meč, svježa ekipa.</strong>
@@ -645,10 +652,10 @@ export default function Arena() {
                 />
               ) : (
                 <section className={`question-card ${hasAudio ? "music-question" : ""} ${questionActive && remaining <= 5 ? "final-seconds" : ""}`} key={state.index}>
-                  <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / 6</span><span>{hasAudio ? "PREPOZNAJ HIT" : "BRZINA × ZNANJE"}</span></div>
+                  <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / {rounds.length}</span><span>{state.question?.isMap ? "KOLIKO SI BLIZU?" : hasAudio ? "PREPOZNAJ HIT" : "BRZINA × ZNANJE"}</span></div>
                   <div className="question-meta">
                     <span className="pill">{state.question?.category}</span>
-                    <span>PITANJE {(state.index % 5) + 1} / 5 {state.index >= 5 && state.index < 25 ? ` / NIVO ${state.question?.difficulty || 1}` : ""}</span>
+                    <span>PITANJE {(state.index % 5) + 1} / 5 {state.index >= 5 && !hasAudio ? ` / NIVO ${state.question?.difficulty || 1}` : ""}</span>
                     <div
                       className={
                         remaining <= 5 && questionActive
@@ -718,7 +725,15 @@ export default function Arena() {
                       {audioError && <p role="alert">{audioError}</p>}
                     </div>
                   )}
-                  {questionActive && state.isHost && !state.hostParticipates ? (
+                  {state.question?.isMap ? (
+                    <MapQuestion snapshot={state.map} submitted={state.submitted} revealed={!questionActive}
+                      disabled={!online || (questionActive && remaining===0)} busy={busy} me={state.me} points={state.points}
+                      spectator={state.isHost&&!state.hostParticipates}
+                      onSubmit={point=>action(async()=>{
+                        await arenaRequest(`rooms/${state.code}/map-answer`,session,{index:state.index,...point});
+                        await refresh();
+                      })}/>
+                  ) : questionActive && state.isHost && !state.hostParticipates ? (
                     <div className="answer-reveal">
                       <span>REŽIJA PARTIJE</span>
                       <h3>Ekipa je na potezu.</h3>
@@ -970,6 +985,7 @@ export default function Arena() {
                 100 poena za tačan odgovor.
                 <br />
                 Do 50 bonus poena za brzinu.
+                {state.mapEnabled && <><br />Na mapi: do 150 poena za preciznost.</>}
                 <br />
                 Odgovori se provjeravaju na serveru.
               </p>

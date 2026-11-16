@@ -31,7 +31,7 @@ type Props = {
   token: string;
   onAgain: () => void;
 };
-const API = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
+const API = process.env.NODE_ENV==='development'?(process.env.REACT_APP_API_URL||'').replace(/\/$/,''):'';
 export default function WinnerCelebration({
   victory,
   players,

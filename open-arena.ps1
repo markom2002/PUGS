@@ -1,4 +1,4 @@
-﻿param([ValidateRange(1024,65535)][int]$Port = 5087, [switch]$AppWindow, [switch]$LocalOnly)
+param([ValidateRange(1024,65535)][int]$Port = 5087, [switch]$AppWindow, [switch]$LocalOnly, [switch]$NoOpen)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $logDir = Join-Path $root '.qa'
@@ -28,8 +28,29 @@ try {
         $sql.WaitForStatus('Running', [TimeSpan]::FromSeconds(30))
     }
     $url = "http://localhost:$Port"
+    $exe = Join-Path $root 'BE\bin\Debug\net8.0\BE.exe'
+    $frontIndex=Join-Path $root 'FE\build\index.html'
+    $frontSources=@(Get-ChildItem (Join-Path $root 'FE\src'),(Join-Path $root 'FE\public'),(Join-Path $root 'FE\scripts') -File -Recurse|Where-Object Name -NotMatch '\.(test|spec)\.';Get-Item (Join-Path $root 'FE\package.json'),(Join-Path $root 'FE\package-lock.json'))
+    $backSources=@(Get-ChildItem (Join-Path $root 'BE\Arena') -File -Recurse;Get-Item (Join-Path $root 'BE\Program.cs'),(Join-Path $root 'BE\BE.csproj'))
+    $frontStale=!(Test-Path $frontIndex)
+    if(!$frontStale){$frontStale=@($frontSources|Where-Object LastWriteTimeUtc -gt (Get-Item $frontIndex).LastWriteTimeUtc).Count -gt 0}
+    $backStale=!(Test-Path $exe)
+    if(!$backStale){$backStale=@($backSources|Where-Object LastWriteTimeUtc -gt (Get-Item $exe).LastWriteTimeUtc).Count -gt 0}
+    if($frontStale){
+        Push-Location (Join-Path $root 'FE')
+        try{
+            if(!(Test-Path node_modules)){& cmd.exe /d /c "npm.cmd ci > `"$(Join-Path $logDir 'launcher-install.log')`" 2>&1";if($LASTEXITCODE -ne 0){throw 'Instalacija nije uspjela.'}}
+            & cmd.exe /d /c "npm.cmd run build > `"$(Join-Path $logDir 'launcher-frontend.log')`" 2>&1"
+            if($LASTEXITCODE -ne 0){throw 'Frontend build nije uspio.'}
+        }finally{Pop-Location}
+    }
+    if($backStale){
+        Get-Process -Name BE -ErrorAction SilentlyContinue|Where-Object {$_.Path -and [string]::Equals($_.Path,$exe,[StringComparison]::OrdinalIgnoreCase)}|Stop-Process
+        & dotnet build (Join-Path $root 'BE\BE.csproj') *> (Join-Path $logDir 'launcher-build.log')
+        if($LASTEXITCODE -ne 0){throw 'Backend build nije uspio.'}
+    }
     $ready = $false
-    try { $connection = Invoke-RestMethod "$url/api/arena/connection" -TimeoutSec 3; $ready = $true } catch {}
+    try { $null = Invoke-RestMethod "$url/api/arena/health" -TimeoutSec 5; $ready = $true } catch {}
     if (-not $ready) {
         Write-Host 'Pokrecem server. Prvo pokretanje moze potrajati nekoliko minuta...'
         $exe = Join-Path $root 'BE\bin\Debug\net8.0\BE.exe'
@@ -38,8 +59,8 @@ try {
             if (-not (Test-Path (Join-Path $root 'FE\build\index.html')) -or -not (Test-Path $exe)) {
                 Push-Location (Join-Path $root 'FE')
                 try {
-                    if (-not (Test-Path 'node_modules')) { & npm.cmd ci *> (Join-Path $logDir 'launcher-install.log'); if ($LASTEXITCODE -ne 0) { throw 'Instalacija frontenda nije uspjela.' } }
-                    & npm.cmd run build *> (Join-Path $logDir 'launcher-frontend.log')
+                    if (-not (Test-Path 'node_modules')) { & cmd.exe /d /c "npm.cmd ci > `"$(Join-Path $logDir 'launcher-install.log')`" 2>&1"; if ($LASTEXITCODE -ne 0) { throw 'Instalacija frontenda nije uspjela.' } }
+                    & cmd.exe /d /c "npm.cmd run build > `"$(Join-Path $logDir 'launcher-frontend.log')`" 2>&1"
                     if ($LASTEXITCODE -ne 0) { throw 'Frontend build nije uspio.' }
                 } finally { Pop-Location }
                 & dotnet build (Join-Path $root 'BE\BE.csproj') *> (Join-Path $logDir 'launcher-build.log')
@@ -61,7 +82,7 @@ try {
         }
         $deadline = [DateTime]::UtcNow.AddSeconds(180)
         do {
-            try { $connection = Invoke-RestMethod "$url/api/arena/connection" -TimeoutSec 2; $ready = $true } catch { Start-Sleep -Milliseconds 700 }
+            try { $null = Invoke-RestMethod "$url/api/arena/health" -TimeoutSec 5; $ready = $true } catch { Start-Sleep -Milliseconds 700 }
             if ($server -and $server.HasExited) { throw 'Backend se ugasio. Detalji: .qa\launcher-server-error.log' }
         } until ($ready -or [DateTime]::UtcNow -ge $deadline)
         if (-not $ready) { throw 'Server nije spreman nakon 180 sekundi. Provjeri .qa logove.' }
@@ -75,8 +96,9 @@ try {
         }
     } catch { Write-Warning 'Internet link nije dostupan. Lokalna igra i dalje radi.' }
     $openUrl = "$url/"
-    if (-not $LocalOnly -and $connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/" }
+    if (-not $AppWindow -and -not $LocalOnly -and $connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/" }
     Write-Host "Kviz je spreman: $openUrl"
+    if($NoOpen){return}
     if($AppWindow){
         $edge=Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe'
         if(Test-Path $edge){Start-Process $edge -ArgumentList "--app=$openUrl"}else{Start-Process $openUrl}

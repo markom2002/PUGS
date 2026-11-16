@@ -1,3 +1,3 @@
-@echo off
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0install-desktop-shortcut.ps1"
-if errorlevel 1 pause
+@echo off
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0install-desktop-app.ps1"
+if errorlevel 1 pause

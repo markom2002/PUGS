@@ -1,0 +1,752 @@
+[
+  {
+    "text": "Pronađi na mapi: Pariz. Gde se nalazi?",
+    "answers": [
+      "Pariz"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Francuska",
+    "map": {
+      "label": "Pariz",
+      "country": "Francuska",
+      "latitude": 48.8566,
+      "longitude": 2.3522
+    }
+  },
+  {
+    "text": "Pronađi na mapi: London. Gde se nalazi?",
+    "answers": [
+      "London"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Ujedinjeno Kraljevstvo",
+    "map": {
+      "label": "London",
+      "country": "Ujedinjeno Kraljevstvo",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Rim. Gde se nalazi?",
+    "answers": [
+      "Rim"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Italija",
+    "map": {
+      "label": "Rim",
+      "country": "Italija",
+      "latitude": 41.9028,
+      "longitude": 12.4964
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Beograd. Gde se nalazi?",
+    "answers": [
+      "Beograd"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Srbija",
+    "map": {
+      "label": "Beograd",
+      "country": "Srbija",
+      "latitude": 44.8176,
+      "longitude": 20.4633
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Njujork. Gde se nalazi?",
+    "answers": [
+      "Njujork"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "SAD",
+    "map": {
+      "label": "Njujork",
+      "country": "SAD",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Tokio. Gde se nalazi?",
+    "answers": [
+      "Tokio"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Japan",
+    "map": {
+      "label": "Tokio",
+      "country": "Japan",
+      "latitude": 35.6762,
+      "longitude": 139.6503
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Sidnej. Gde se nalazi?",
+    "answers": [
+      "Sidnej"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Australija",
+    "map": {
+      "label": "Sidnej",
+      "country": "Australija",
+      "latitude": -33.8688,
+      "longitude": 151.2093
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Rio de Žaneiro. Gde se nalazi?",
+    "answers": [
+      "Rio de Žaneiro"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Brazil",
+    "map": {
+      "label": "Rio de Žaneiro",
+      "country": "Brazil",
+      "latitude": -22.9068,
+      "longitude": -43.1729
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Kairo. Gde se nalazi?",
+    "answers": [
+      "Kairo"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Egipat",
+    "map": {
+      "label": "Kairo",
+      "country": "Egipat",
+      "latitude": 30.0444,
+      "longitude": 31.2357
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Moskva. Gde se nalazi?",
+    "answers": [
+      "Moskva"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 1,
+    "topic": "Rusija",
+    "map": {
+      "label": "Moskva",
+      "country": "Rusija",
+      "latitude": 55.7558,
+      "longitude": 37.6173
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Barselona. Gde se nalazi?",
+    "answers": [
+      "Barselona"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Španija",
+    "map": {
+      "label": "Barselona",
+      "country": "Španija",
+      "latitude": 41.3874,
+      "longitude": 2.1686
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Istanbul. Gde se nalazi?",
+    "answers": [
+      "Istanbul"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Turska",
+    "map": {
+      "label": "Istanbul",
+      "country": "Turska",
+      "latitude": 41.0082,
+      "longitude": 28.9784
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Sarajevo. Gde se nalazi?",
+    "answers": [
+      "Sarajevo"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Bosna i Hercegovina",
+    "map": {
+      "label": "Sarajevo",
+      "country": "Bosna i Hercegovina",
+      "latitude": 43.8563,
+      "longitude": 18.4131
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Atina. Gde se nalazi?",
+    "answers": [
+      "Atina"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Grčka",
+    "map": {
+      "label": "Atina",
+      "country": "Grčka",
+      "latitude": 37.9838,
+      "longitude": 23.7275
+    }
+  },
+  {
+    "text": "Pronađi na mapi: San Francisko. Gde se nalazi?",
+    "answers": [
+      "San Francisko"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "SAD",
+    "map": {
+      "label": "San Francisko",
+      "country": "SAD",
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Peking. Gde se nalazi?",
+    "answers": [
+      "Peking"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Kina",
+    "map": {
+      "label": "Peking",
+      "country": "Kina",
+      "latitude": 39.9042,
+      "longitude": 116.4074
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Kejptaun. Gde se nalazi?",
+    "answers": [
+      "Kejptaun"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Južnoafrička Republika",
+    "map": {
+      "label": "Kejptaun",
+      "country": "Južnoafrička Republika",
+      "latitude": -33.9249,
+      "longitude": 18.4241
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Buenos Ajres. Gde se nalazi?",
+    "answers": [
+      "Buenos Ajres"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Argentina",
+    "map": {
+      "label": "Buenos Ajres",
+      "country": "Argentina",
+      "latitude": -34.6037,
+      "longitude": -58.3816
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Mumbaj. Gde se nalazi?",
+    "answers": [
+      "Mumbaj"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Indija",
+    "map": {
+      "label": "Mumbaj",
+      "country": "Indija",
+      "latitude": 19.076,
+      "longitude": 72.8777
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Dubai. Gde se nalazi?",
+    "answers": [
+      "Dubai"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 2,
+    "topic": "Ujedinjeni Arapski Emirati",
+    "map": {
+      "label": "Dubai",
+      "country": "Ujedinjeni Arapski Emirati",
+      "latitude": 25.2048,
+      "longitude": 55.2708
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Petra. Gde se nalazi?",
+    "answers": [
+      "Petra"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Jordan",
+    "map": {
+      "label": "Petra",
+      "country": "Jordan",
+      "latitude": 30.3285,
+      "longitude": 35.4444
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Maču Pikču. Gde se nalazi?",
+    "answers": [
+      "Maču Pikču"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Peru",
+    "map": {
+      "label": "Maču Pikču",
+      "country": "Peru",
+      "latitude": -13.1631,
+      "longitude": -72.545
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Rejkjavik. Gde se nalazi?",
+    "answers": [
+      "Rejkjavik"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Island",
+    "map": {
+      "label": "Rejkjavik",
+      "country": "Island",
+      "latitude": 64.1466,
+      "longitude": -21.9426
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Marakeš. Gde se nalazi?",
+    "answers": [
+      "Marakeš"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Maroko",
+    "map": {
+      "label": "Marakeš",
+      "country": "Maroko",
+      "latitude": 31.6295,
+      "longitude": -7.9811
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Bangkok. Gde se nalazi?",
+    "answers": [
+      "Bangkok"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Tajland",
+    "map": {
+      "label": "Bangkok",
+      "country": "Tajland",
+      "latitude": 13.7563,
+      "longitude": 100.5018
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Havana. Gde se nalazi?",
+    "answers": [
+      "Havana"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Kuba",
+    "map": {
+      "label": "Havana",
+      "country": "Kuba",
+      "latitude": 23.1136,
+      "longitude": -82.3666
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Najrobi. Gde se nalazi?",
+    "answers": [
+      "Najrobi"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Kenija",
+    "map": {
+      "label": "Najrobi",
+      "country": "Kenija",
+      "latitude": -1.2921,
+      "longitude": 36.8219
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Dubrovnik. Gde se nalazi?",
+    "answers": [
+      "Dubrovnik"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Hrvatska",
+    "map": {
+      "label": "Dubrovnik",
+      "country": "Hrvatska",
+      "latitude": 42.6507,
+      "longitude": 18.0944
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Vankuver. Gde se nalazi?",
+    "answers": [
+      "Vankuver"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Kanada",
+    "map": {
+      "label": "Vankuver",
+      "country": "Kanada",
+      "latitude": 49.2827,
+      "longitude": -123.1207
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Santjago. Gde se nalazi?",
+    "answers": [
+      "Santjago"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 3,
+    "topic": "Čile",
+    "map": {
+      "label": "Santjago",
+      "country": "Čile",
+      "latitude": -33.4489,
+      "longitude": -70.6693
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Angkor Vat. Gde se nalazi?",
+    "answers": [
+      "Angkor Vat"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Kambodža",
+    "map": {
+      "label": "Angkor Vat",
+      "country": "Kambodža",
+      "latitude": 13.4125,
+      "longitude": 103.867
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Timbuktu. Gde se nalazi?",
+    "answers": [
+      "Timbuktu"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Mali",
+    "map": {
+      "label": "Timbuktu",
+      "country": "Mali",
+      "latitude": 16.7666,
+      "longitude": -3.0026
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Samarkand. Gde se nalazi?",
+    "answers": [
+      "Samarkand"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Uzbekistan",
+    "map": {
+      "label": "Samarkand",
+      "country": "Uzbekistan",
+      "latitude": 39.6542,
+      "longitude": 66.9597
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Katmandu. Gde se nalazi?",
+    "answers": [
+      "Katmandu"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Nepal",
+    "map": {
+      "label": "Katmandu",
+      "country": "Nepal",
+      "latitude": 27.7172,
+      "longitude": 85.324
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Ulan Bator. Gde se nalazi?",
+    "answers": [
+      "Ulan Bator"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Mongolija",
+    "map": {
+      "label": "Ulan Bator",
+      "country": "Mongolija",
+      "latitude": 47.8864,
+      "longitude": 106.9057
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Kito. Gde se nalazi?",
+    "answers": [
+      "Kito"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Ekvador",
+    "map": {
+      "label": "Kito",
+      "country": "Ekvador",
+      "latitude": -0.1807,
+      "longitude": -78.4678
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Vindhuk. Gde se nalazi?",
+    "answers": [
+      "Vindhuk"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Namibija",
+    "map": {
+      "label": "Vindhuk",
+      "country": "Namibija",
+      "latitude": -22.5609,
+      "longitude": 17.0658
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Medina. Gde se nalazi?",
+    "answers": [
+      "Medina"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Saudijska Arabija",
+    "map": {
+      "label": "Medina",
+      "country": "Saudijska Arabija",
+      "latitude": 24.5247,
+      "longitude": 39.5692
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Dunedin. Gde se nalazi?",
+    "answers": [
+      "Dunedin"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Novi Zeland",
+    "map": {
+      "label": "Dunedin",
+      "country": "Novi Zeland",
+      "latitude": -45.8788,
+      "longitude": 170.5028
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Bergen. Gde se nalazi?",
+    "answers": [
+      "Bergen"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 4,
+    "topic": "Norveška",
+    "map": {
+      "label": "Bergen",
+      "country": "Norveška",
+      "latitude": 60.3913,
+      "longitude": 5.3221
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Uskršnje ostrvo — Hanga Roa. Gde se nalazi?",
+    "answers": [
+      "Uskršnje ostrvo — Hanga Roa"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Čile",
+    "map": {
+      "label": "Uskršnje ostrvo — Hanga Roa",
+      "country": "Čile",
+      "latitude": -27.1127,
+      "longitude": -109.3497
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Lasa. Gde se nalazi?",
+    "answers": [
+      "Lasa"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Kina",
+    "map": {
+      "label": "Lasa",
+      "country": "Kina",
+      "latitude": 29.652,
+      "longitude": 91.1721
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Nuuk. Gde se nalazi?",
+    "answers": [
+      "Nuuk"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Grenland",
+    "map": {
+      "label": "Nuuk",
+      "country": "Grenland",
+      "latitude": 64.1835,
+      "longitude": -51.7216
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Darvin. Gde se nalazi?",
+    "answers": [
+      "Darvin"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Australija",
+    "map": {
+      "label": "Darvin",
+      "country": "Australija",
+      "latitude": -12.4634,
+      "longitude": 130.8456
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Luang Prabang. Gde se nalazi?",
+    "answers": [
+      "Luang Prabang"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Laos",
+    "map": {
+      "label": "Luang Prabang",
+      "country": "Laos",
+      "latitude": 19.8833,
+      "longitude": 102.1333
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Antananarivo. Gde se nalazi?",
+    "answers": [
+      "Antananarivo"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Madagaskar",
+    "map": {
+      "label": "Antananarivo",
+      "country": "Madagaskar",
+      "latitude": -18.8792,
+      "longitude": 47.5079
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Buhara. Gde se nalazi?",
+    "answers": [
+      "Buhara"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Uzbekistan",
+    "map": {
+      "label": "Buhara",
+      "country": "Uzbekistan",
+      "latitude": 39.7681,
+      "longitude": 64.4556
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Ušuaija. Gde se nalazi?",
+    "answers": [
+      "Ušuaija"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Argentina",
+    "map": {
+      "label": "Ušuaija",
+      "country": "Argentina",
+      "latitude": -54.8019,
+      "longitude": -68.303
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Lalibela. Gde se nalazi?",
+    "answers": [
+      "Lalibela"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Etiopija",
+    "map": {
+      "label": "Lalibela",
+      "country": "Etiopija",
+      "latitude": 12.0317,
+      "longitude": 39.047
+    }
+  },
+  {
+    "text": "Pronađi na mapi: Longjirbijen. Gde se nalazi?",
+    "answers": [
+      "Longjirbijen"
+    ],
+    "category": "Pronađi na mapi",
+    "difficulty": 5,
+    "topic": "Norveška",
+    "map": {
+      "label": "Longjirbijen",
+      "country": "Norveška",
+      "latitude": 78.2232,
+      "longitude": 15.6267
+    }
+  }
+]

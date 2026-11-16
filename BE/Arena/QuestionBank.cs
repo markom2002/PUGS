@@ -2,9 +2,14 @@ using System.Globalization;
 using System.Text;
 namespace BE.Arena;
 
-public record ArenaQuestion(string Text, string[] Answers, string Category, string? AudioUrl = null, string? Artist = null, int Difficulty = 1);
+public record ArenaQuestion(string Text, string[] Answers, string Category, string? AudioUrl = null, string? Artist = null, int Difficulty = 1, string? Topic = null, MapLocation? Map = null);
 public static class QuestionBank
 {
+    public const string MapCategory = "Pronađi na mapi";
+    public static string[] AvailableCategories => Categories.Keys.Append(MapCategory).ToArray();
+    public static bool ValidVotes(string[]? votes) => votes is { Length: >= 2 }
+        && votes.Length <= AvailableCategories.Length && votes.Distinct().Count()==votes.Length
+        && votes.All(c=>AvailableCategories.Contains(c));
     public static string Normalize(string text) => string.Concat(text.Trim().ToLowerInvariant().Replace("đ", "dj").Normalize(NormalizationForm.FormD).Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark && char.IsLetterOrDigit(c)));
     public static bool PartialTitle(ArenaQuestion q,string answer) {
         var tokens=answer.Split(new[]{' ','-','.',',','!','?'},StringSplitOptions.RemoveEmptyEntries).Select(Normalize).Where(s=>s.Length>0).ToArray();
@@ -22,9 +27,22 @@ public static class QuestionBank
         ["Istorija"] = Pack("Istorija", "Koje godine je pao Berlinski zid?~1989", "Koji grad je bio središte Rimskog carstva?~Rim", "Koji moreplovac je 1492. stigao do Amerike?~Kristofor Kolumbo|Kolumbo|Christopher Columbus", "Koje godine je završen Drugi svjetski rat?~1945", "Kako se zove drevno pismo sa znacima u obliku klina?~Klinasto|klinasto pismo"),
         ["Tehnologija"] = Pack("Tehnologija", "Koji brojni sistem koristi samo 0 i 1?~Binarni|binarni sistem", "Kako se zove fizički dio računara?~Hardver|hardware", "Koji jezik daje strukturu web stranici?~HTML", "Koja kompanija pravi PlayStation?~Sony|Soni", "Koja skraćenica označava centralni procesor?~CPU"),
         ["Umjetnost"] = Pack("Umjetnost", "Ko je naslikao Mona Lizu?~Leonardo da Vinci|Leonardo da Vinči|Da Vinci", "Koji instrument ima crne i bijele dirke?~Klavir|piano", "Ko je napisao Hamleta?~William Shakespeare|Vilijam Šekspir|Šekspir|Shakespeare", "Kako se zove japanska umjetnost savijanja papira?~Origami", "Ko je naslikao Zvjezdanu noć?~Vincent van Gogh|Vinsent van Gog|Van Gogh|Van Gog"),
-        ["Priroda"] = Pack("Priroda", "Koja je najveća životinja na Zemlji?~Plavi kit", "Koji proces biljkama omogućava stvaranje hrane uz svjetlost?~Fotosinteza", "Koliko nogu imaju insekti?~6|šest", "Koji je najtvrđi prirodni mineral?~Dijamant", "Kako se zove nauka o pticama?~Ornitologija")
+        ["Priroda"] = Pack("Priroda", "Koja je najveća životinja na Zemlji?~Plavi kit", "Koji proces biljkama omogućava stvaranje hrane uz svjetlost?~Fotosinteza", "Koliko nogu imaju insekti?~6|šest", "Koji je najtvrđi prirodni mineral?~Dijamant", "Kako se zove nauka o pticama?~Ornitologija"),
+        ["Igrice"] = Array.Empty<ArenaQuestion>()
     };
     static QuestionBank() {
+        var seedTopics = new Dictionary<string,string[]> {
+            ["Geografija"] = new[] { "Države", "Države", "Vode", "Kontinenti", "Okeani" },
+            ["Sport"] = new[] { "Fudbal", "Tenis", "Zimski sportovi", "Olimpijske igre", "Fudbal" },
+            ["Film i serije"] = new[] { "Filmski junaci", "Režija", "Filmski svetovi", "Filmske nagrade", "Filmski junaci" },
+            ["Nauka"] = new[] { "Astronomija", "Hemija", "Anatomija", "Mehanika", "Hemija" },
+            ["Istorija"] = new[] { "Hladni rat", "Rim", "Moreplovstvo", "Ratovi", "Kulturna istorija" },
+            ["Tehnologija"] = new[] { "Programiranje", "Uređaji", "Programiranje", "Istorija tehnologije", "Uređaji" },
+            ["Umjetnost"] = new[] { "Slikarstvo", "Muzika", "Pozorište", "Primenjena umetnost", "Slikarstvo" },
+            ["Priroda"] = new[] { "Mora", "Biljke", "Insekti", "Geologija", "Ptice" }
+        };
+        foreach(var (category,topics) in seedTopics)
+            Categories[category]=Categories[category].Select((q,i)=>q with { Topic=topics[i] }).ToArray();
         var path = Path.Combine(System.AppContext.BaseDirectory,"Arena","Data","questions.json");
         if(!File.Exists(path)) path=Path.Combine(Directory.GetCurrentDirectory(),"Arena","Data","questions.json");
         if(!File.Exists(path))path=Path.Combine(Directory.GetCurrentDirectory(),"BE","Arena","Data","questions.json");
@@ -33,9 +51,16 @@ public static class QuestionBank
     }
     public static ArenaQuestion[] PickProgressive(IEnumerable<ArenaQuestion> source,IReadOnlyDictionary<string,int>? usage=null) {
         var pool=source.ToList();var selected=new List<ArenaQuestion>();
+        var topics=new HashSet<string>();var answers=new HashSet<string>();
         for(int level=1;level<=5;level++) {
-            var q=pool.OrderBy(q=>Math.Abs(q.Difficulty-level)).ThenBy(q=>usage?.GetValueOrDefault(Normalize(q.Text))??0).ThenBy(_=>Random.Shared.Next()).First();
+            var q=pool.OrderBy(q=>Math.Abs(q.Difficulty-level))
+                .ThenBy(q=>topics.Contains(Normalize(q.Topic??q.Text)))
+                .ThenBy(q=>q.Answers.Select(Normalize).Any(answers.Contains))
+                .ThenBy(q=>usage?.GetValueOrDefault(Normalize(q.Text))??0)
+                .ThenBy(_=>Random.Shared.Next()).First();
             selected.Add(q);pool.Remove(q);
+            topics.Add(Normalize(q.Topic??q.Text));
+            foreach(var answer in q.Answers.Select(Normalize).Where(a=>a.Length>0))answers.Add(answer);
         }
         return selected.OrderBy(q=>q.Difficulty).ToArray();
     }

@@ -1,9 +1,9 @@
-﻿$ErrorActionPreference='Stop'
+$ErrorActionPreference='Stop'
 $desktop=[Environment]::GetFolderPath('Desktop')
 $shell=New-Object -ComObject WScript.Shell
-$link=$shell.CreateShortcut((Join-Path $desktop 'Skočko.lnk'))
+$link=$shell.CreateShortcut((Join-Path $desktop 'Skocko.lnk'))
 $link.TargetPath=Join-Path $env:WINDIR 'System32\cmd.exe'
-$link.Arguments='/c powershell.exe -NoProfile -ExecutionPolicy Bypass -File "'+(Join-Path $PSScriptRoot 'open-arena.ps1')+'" -AppWindow -LocalOnly'
+$link.Arguments='/c powershell.exe -NoProfile -ExecutionPolicy Bypass -File "'+(Join-Path $PSScriptRoot 'open-arena.ps1')+'" -AppWindow'
 $link.WorkingDirectory=$PSScriptRoot
 $link.WindowStyle=7
 $link.Description='Skocko desktop aplikacija - lokalna i internet igra'
