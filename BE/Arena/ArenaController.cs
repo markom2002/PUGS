@@ -27,6 +27,15 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
     [HttpGet("connection")] public IActionResult Connection([FromServices] ArenaConnectionInfo connection) => Ok(connection.Describe(Request));
     [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());
+    [EnableRateLimiting("arena-create"), HttpGet("offline-pack")]
+    public async Task<IActionResult> OfflinePack(CancellationToken ct) {
+        try {
+            var selected=await music.PickAsync(ct,true);
+            var songs=new List<object>();
+            foreach(var q in selected) songs.Add(new {id=q.AudioUrl,title=q.Answers[0],answers=q.Answers,artist=q.Artist,audio=Convert.ToBase64String(await music.AudioAsync(long.Parse(q.AudioUrl![7..]),ct))});
+            return Ok(new {questions=QuestionBank.Categories.Values.SelectMany(q=>q),songs});
+        }catch(InvalidOperationException e){return BadRequest(new{error=e.Message});}
+    }
     [HttpPost("rooms/{code}/start")]
     public async Task<IActionResult> Start(string code, CancellationToken ct)
     {

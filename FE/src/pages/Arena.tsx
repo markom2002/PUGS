@@ -57,6 +57,7 @@ type State = {
     category: string;
     audioUrl: string | null;
     initial: string | null;
+    difficulty?: number;
   } | null;
   answer: string | null;
   artist: string | null;
@@ -647,7 +648,7 @@ export default function Arena() {
                   <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / 6</span><span>{hasAudio ? "PREPOZNAJ HIT" : "BRZINA × ZNANJE"}</span></div>
                   <div className="question-meta">
                     <span className="pill">{state.question?.category}</span>
-                    <span>PITANJE {(state.index % 5) + 1} / 5</span>
+                    <span>PITANJE {(state.index % 5) + 1} / 5 {state.index >= 5 && state.index < 25 ? ` / NIVO ${state.question?.difficulty || 1}` : ""}</span>
                     <div
                       className={
                         remaining <= 5 && questionActive

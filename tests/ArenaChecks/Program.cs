@@ -149,6 +149,7 @@ Check(J(service.State(pc,pt)).GetProperty("seconds").GetInt32()==25,"Music adds 
 service.With(pc,pt,(r,p)=>{r.Index=27;r.Questions[27]=r.Questions[27] with {Artist="Test Artist"};r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(27);return true;});
 service.Answer(pc,pt,27,"Test Artist");
 Check(service.With(pc,pt,(r,p)=>p.Answers[27].Points)==50,"Artist-only answer earns fifty points");
+foreach(var category in QuestionBank.Categories.Values){for(int draw=0;draw<20;draw++){var selected=QuestionBank.PickProgressive(category);Check(selected.Length==5&&selected.Zip(selected.Skip(1)).All(pair=>pair.First.Difficulty<=pair.Second.Difficulty),"Five progressively harder questions");}}
 Console.WriteLine("All arena checks passed. Temporary test data: " + directory);
 
 class TestClock : TimeProvider

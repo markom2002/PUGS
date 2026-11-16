@@ -78,3 +78,15 @@ Banka sadrzi dodatnih 240 autorskih pitanja u svih osam oblasti. Rotacija daje p
 Muzika traje dodatnih pet sekundi (10/15/20 postaje 15/20/25). Puni naslov zadrzava 100 osnovnih poena i bonus za brzinu; samo tacan izvodjac donosi 50 bez bonusa. Djelimican pogodak ne ulazi u izbor pobjednicke pjesme. Audio preskace tihi uvod i ponavlja kraci isjecak do kraja serverovog tajmera.
 
 Za pripremu bez komandi koristi dvoklik na Pripremi offline.cmd u folderu projekta dok si na internetu. Trenutno je lokalno pripremljeno 48 originalnih preview snimaka.
+
+## Direktna igra samo sa telefonima
+
+Otvorite /offline (dugme Napolju na pocetnoj). Dok ste na internetu, domacin koristi Sacuvaj pitanja i muziku; paket ostaje u IndexedDB na tom telefonu. Svi ranije instaliraju aplikaciju i otvore /offline da provjere da je verzija spremna. Za igru bez interneta ukljucite zajednicki hotspot/Wi-Fi bez izolacije klijenata. Nisu potrebni laptop, SQL ili javni server tokom partije.
+
+Domacin pravi QR za pojedinog gosta. Gost skenira ponudu i pokaze povratni QR; domacin skenira taj odgovor. SDP se razmjenjuje rucno, kompresovano; WebRTC koristi samo lokalne ICE kandidate (bez STUN/TURN servera). Nakon povezivanja i nadimaka, svi glasaju za cetiri oblasti. Muzika se prenosi direktno gostima i potvrda prijema je uslov za start. Domacin vodi sat, odgovore, poene i zavrsetak partije. Oba ekrana prikazuju istu partiju. Zadrzite aplikaciju domacina u prvom planu; prekid ili zatvaranje domacina prekida partiju. Ovaj rezim ne migrira domacina niti automatski obnavlja izgubljene veze.
+
+Ako kamera nije dostupna, kodovi se mogu prenijeti rucno iz polja Tvoj kod za povezivanje. Maksimalno osam telefona. Na nekim hotspotima i browserima direktna WebRTC veza nece uspjeti zbog ogranicenja mreze; aplikacija prikazuje gresku, tada koristite drugu lokalnu mrezu ili internet Arenu. Offline PWA i kamera zahtijevaju prethodno instaliranu HTTPS verziju; obican LAN HTTP nije dovoljan na telefonima.
+
+Pitanja u rundama 2-5 imaju urednicke nivoe 1-5. Svaka runda bira po jedno pitanje blisko svakom nivou, bez duplikata, i sortira ih rastuce. Rotacija najmanje koriscenih pitanja i dalje vazi unutar odgovarajuceg nivoa. Kaladont zadrzava slovnu vezu.
+
+Automatski test tests/phone-offline-browser.mjs proverava dva browser klijenta: uparivanje, glasanje, potvrdu prenosa muzike, svih 30 pitanja, bodove gosta i pobjednika dok su HTTP/HTTPS zahtjevi blokirani. Ovaj test nije zamjena za fizicku probu kombinacije Android/iPhone i konkretnog hotspota.

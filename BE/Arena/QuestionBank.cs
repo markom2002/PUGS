@@ -2,11 +2,11 @@ using System.Globalization;
 using System.Text;
 namespace BE.Arena;
 
-public record ArenaQuestion(string Text, string[] Answers, string Category, string? AudioUrl = null, string? Artist = null);
+public record ArenaQuestion(string Text, string[] Answers, string Category, string? AudioUrl = null, string? Artist = null, int Difficulty = 1);
 public static class QuestionBank
 {
     public static string Normalize(string text) => string.Concat(text.Trim().ToLowerInvariant().Replace("đ", "dj").Normalize(NormalizationForm.FormD).Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark && char.IsLetterOrDigit(c)));
-    static ArenaQuestion[] Pack(string category, params string[] rows) => rows.Select(row => { var parts = row.Split('~'); return new ArenaQuestion(parts[0], parts[1].Split('|'), category); }).ToArray();
+    static ArenaQuestion[] Pack(string category, params string[] rows) => rows.Select((row,index) => { var parts = row.Split('~'); return new ArenaQuestion(parts[0], parts[1].Split('|'), category, Difficulty:Math.Min(5,index+1)); }).ToArray();
     public static readonly Dictionary<string, ArenaQuestion[]> Categories = new()
     {
         ["Geografija"] = Pack("Geografija", "Koji je glavni grad Portugala?~Lisabon", "Koja je najveća država po površini?~Rusija", "Koja rijeka protiče kroz Mostar?~Neretva", "Na kom kontinentu je Argentina?~Južna Amerika", "Koji okean je najveći?~Tihi okean|Pacifik"),
@@ -24,6 +24,14 @@ public static class QuestionBank
         if(!File.Exists(path))path=Path.Combine(Directory.GetCurrentDirectory(),"BE","Arena","Data","questions.json");
         var extra=System.Text.Json.JsonSerializer.Deserialize<ArenaQuestion[]>(File.ReadAllText(path),new System.Text.Json.JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;
         foreach(var group in extra.GroupBy(q=>q.Category)) Categories[group.Key]=Categories[group.Key].Concat(group).DistinctBy(q=>Normalize(q.Text)).ToArray();
+    }
+    public static ArenaQuestion[] PickProgressive(IEnumerable<ArenaQuestion> source,IReadOnlyDictionary<string,int>? usage=null) {
+        var pool=source.ToList();var selected=new List<ArenaQuestion>();
+        for(int level=1;level<=5;level++) {
+            var q=pool.OrderBy(q=>Math.Abs(q.Difficulty-level)).ThenBy(q=>usage?.GetValueOrDefault(Normalize(q.Text))??0).ThenBy(_=>Random.Shared.Next()).First();
+            selected.Add(q);pool.Remove(q);
+        }
+        return selected.OrderBy(q=>q.Difficulty).ToArray();
     }
     public static ArenaQuestion[] NewChain(IReadOnlyDictionary<string,int>? usage=null) {
         var pool=Categories.Values.SelectMany(q=>q).OrderBy(q=>usage?.GetValueOrDefault(Normalize(q.Text))??0).ThenBy(_=>Random.Shared.Next()).ToArray();

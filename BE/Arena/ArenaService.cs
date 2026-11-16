@@ -150,7 +150,7 @@ public class ArenaService
         if (r.Players.Where(x => IsCompetitor(r,x)).Any(x => x.Votes.Length != 4)) throw new InvalidOperationException("Sačekaj da svi igrači izaberu četiri oblasti.");
         r.Selected = QuestionBank.Categories.Keys.OrderByDescending(c => r.Players.Count(x => IsCompetitor(r,x) && x.Votes.Contains(c))).ThenBy(_ => Random.Shared.Next()).Take(4).ToArray();
         var chain=QuestionBank.NewChain(QuestionUses);
-        r.Questions = chain.Concat(r.Selected.SelectMany(c => QuestionBank.Categories[c].Where(q=>!chain.Any(ch=>QuestionBank.Normalize(ch.Text)==QuestionBank.Normalize(q.Text))).OrderBy(q => QuestionUses.GetValueOrDefault(QuestionBank.Normalize(q.Text))).ThenBy(_ => Random.Shared.Next()).Take(5))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
+        r.Questions = chain.Concat(r.Selected.SelectMany(c => QuestionBank.PickProgressive(QuestionBank.Categories[c].Where(q=>!chain.Any(ch=>QuestionBank.Normalize(ch.Text)==QuestionBank.Normalize(q.Text))),QuestionUses))).Concat(r.Music.OrderBy(_ => Random.Shared.Next())).ToArray();
         foreach(var q in r.Questions.Take(25)) { var key=QuestionBank.Normalize(q.Text);QuestionUses[key]=QuestionUses.GetValueOrDefault(key)+1; }
         if(savePath!=null){File.WriteAllText(savePath+".usage.tmp",JsonSerializer.Serialize(QuestionUses));File.Move(savePath+".usage.tmp",savePath+".usage",true);}
         r.Phase = "countdown"; r.Deadline = clock.GetUtcNow().AddSeconds(4);
@@ -223,7 +223,7 @@ public class ArenaService
                 averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,
                 fastest=IsCompetitor(r,x)&&fastestTime!=null&&x.ResponseTimesMs.TryGetValue(r.Index,out var time)&&time==fastestTime
             }),
-            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl },
+            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, q.Difficulty },
             answer = reveal ? q?.Answers[0] : null, artist = reveal ? q?.Artist : null,
             musicSourceUrl = reveal && q?.AudioUrl?.StartsWith("deezer:") == true ? "https://www.deezer.com/track/" + q.AudioUrl[7..] : null,
             submitted = p.Answers.ContainsKey(r.Index), myAnswer = mine.Text, points = reveal ? mine.Points : (int?)null

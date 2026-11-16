@@ -4,35 +4,40 @@
     "answers": [
       "Lisabon"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Spanija?",
     "answers": [
       "Madrid"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Francuska?",
     "answers": [
       "Pariz"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Italija?",
     "answers": [
       "Rim"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Norveska?",
     "answers": [
       "Oslo"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Svedska?",
@@ -40,161 +45,184 @@
       "Stokholm",
       "Stockholm"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Finska?",
     "answers": [
       "Helsinki"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Danska?",
     "answers": [
       "Kopenhagen"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Island?",
     "answers": [
       "Rejkjavik"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Irska?",
     "answers": [
       "Dablin"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 1
   },
   {
     "text": "Koji je glavni grad drzave Poljska?",
     "answers": [
       "Varsava"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Ceska?",
     "answers": [
       "Prag"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Slovacka?",
     "answers": [
       "Bratislava"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Austrija?",
     "answers": [
       "Bec"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Madjarska?",
     "answers": [
       "Budimpesta"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Rumunija?",
     "answers": [
       "Bukurest"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Bugarska?",
     "answers": [
       "Sofija"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Grcka?",
     "answers": [
       "Atina"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Albanija?",
     "answers": [
       "Tirana"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Srbija?",
     "answers": [
       "Beograd"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 2
   },
   {
     "text": "Koji je glavni grad drzave Crna Gora?",
     "answers": [
       "Podgorica"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Hrvatska?",
     "answers": [
       "Zagreb"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Slovenija?",
     "answers": [
       "Ljubljana"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Bosna i Hercegovina?",
     "answers": [
       "Sarajevo"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Sjeverna Makedonija?",
     "answers": [
       "Skoplje"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Turska?",
     "answers": [
       "Ankara"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Japan?",
     "answers": [
       "Tokio"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Kina?",
     "answers": [
       "Peking"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Indija?",
@@ -202,7 +230,8 @@
       "Nju Delhi",
       "New Delhi"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Australija?",
@@ -210,7 +239,8 @@
       "Kanbera",
       "Canberra"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 3
   },
   {
     "text": "Koji je glavni grad drzave Kanada?",
@@ -218,7 +248,8 @@
       "Otava",
       "Ottawa"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Brazil?",
@@ -226,7 +257,8 @@
       "Brazilija",
       "Brasilia"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Argentina?",
@@ -234,14 +266,16 @@
       "Buenos Ajres",
       "Buenos Aires"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Peru?",
     "answers": [
       "Lima"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Cile?",
@@ -249,14 +283,16 @@
       "Santjago",
       "Santiago"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Egipat?",
     "answers": [
       "Kairo"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Kenija?",
@@ -264,28 +300,32 @@
       "Najrobi",
       "Nairobi"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Maroko?",
     "answers": [
       "Rabat"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Tunis?",
     "answers": [
       "Tunis"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Senegal?",
     "answers": [
       "Dakar"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 4
   },
   {
     "text": "Koji je glavni grad drzave Nigerija?",
@@ -293,71 +333,80 @@
       "Abudza",
       "Abuja"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Etiopija?",
     "answers": [
       "Adis Abeba"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Iran?",
     "answers": [
       "Teheran"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Irak?",
     "answers": [
       "Bagdad"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Jordan?",
     "answers": [
       "Aman"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Liban?",
     "answers": [
       "Bejrut"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Nepal?",
     "answers": [
       "Katmandu"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Tajland?",
     "answers": [
       "Bangkok"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji je glavni grad drzave Vijetnam?",
     "answers": [
       "Hanoj"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
-    "text": "Koji je glavni grad drzave Indonezija?",
+    "text": "Koji je glavni grad drzave Kuba?",
     "answers": [
-      "Dzakarta",
-      "Jakarta"
+      "Havana"
     ],
-    "category": "Geografija"
+    "category": "Geografija",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol H?",
@@ -365,7 +414,8 @@
       "Vodonik",
       "Vodik"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol He?",
@@ -373,7 +423,8 @@
       "Helijum",
       "Helij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol Li?",
@@ -381,7 +432,8 @@
       "Litijum",
       "Litij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol Be?",
@@ -389,21 +441,24 @@
       "Berilijum",
       "Berilij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol B?",
     "answers": [
       "Bor"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol C?",
     "answers": [
       "Ugljenik"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 1
   },
   {
     "text": "Koji hemijski element ima simbol N?",
@@ -411,21 +466,24 @@
       "Azot",
       "Dusik"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol F?",
     "answers": [
       "Fluor"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol Ne?",
     "answers": [
       "Neon"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol Na?",
@@ -433,7 +491,8 @@
       "Natrijum",
       "Natrij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol Mg?",
@@ -441,7 +500,8 @@
       "Magnezijum",
       "Magnezij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol Al?",
@@ -449,7 +509,8 @@
       "Aluminijum",
       "Aluminij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 2
   },
   {
     "text": "Koji hemijski element ima simbol Si?",
@@ -457,21 +518,24 @@
       "Silicijum",
       "Silicij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol P?",
     "answers": [
       "Fosfor"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol S?",
     "answers": [
       "Sumpor"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol Cl?",
@@ -479,14 +543,16 @@
       "Hlor",
       "Klor"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol Ar?",
     "answers": [
       "Argon"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol K?",
@@ -494,7 +560,8 @@
       "Kalijum",
       "Kalij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 3
   },
   {
     "text": "Koji hemijski element ima simbol Ca?",
@@ -502,7 +569,8 @@
       "Kalcijum",
       "Kalcij"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Fe?",
@@ -510,49 +578,56 @@
       "Gvozdje",
       "Zeljezo"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Cu?",
     "answers": [
       "Bakar"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Zn?",
     "answers": [
       "Cink"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Ag?",
     "answers": [
       "Srebro"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Au?",
     "answers": [
       "Zlato"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 4
   },
   {
     "text": "Koji hemijski element ima simbol Hg?",
     "answers": [
       "Ziva"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol Pb?",
     "answers": [
       "Olovo"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol Sn?",
@@ -560,21 +635,24 @@
       "Kalaj",
       "Kositar"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol W?",
     "answers": [
       "Volfram"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol Pt?",
     "answers": [
       "Platina"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koji hemijski element ima simbol U?",
@@ -582,147 +660,168 @@
       "Uranijum",
       "Uran"
     ],
-    "category": "Nauka"
+    "category": "Nauka",
+    "difficulty": 5
   },
   {
     "text": "Koje godine se dogodilo: pocetak Prvog svjetskog rata?",
     "answers": [
       "1914"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 1
   },
   {
     "text": "Koje godine se dogodilo: pocetak Drugog svjetskog rata?",
     "answers": [
       "1939"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 1
   },
   {
     "text": "Koje godine se dogodilo: Kosovska bitka?",
     "answers": [
       "1389"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 1
   },
   {
     "text": "Koje godine se dogodilo: Prvi srpski ustanak?",
     "answers": [
       "1804"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 1
   },
   {
     "text": "Koje godine se dogodilo: Drugi srpski ustanak?",
     "answers": [
       "1815"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 2
   },
   {
     "text": "Koje godine se dogodilo: Francuska revolucija?",
     "answers": [
       "1789"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 2
   },
   {
     "text": "Koje godine se dogodilo: Oktobarska revolucija?",
     "answers": [
       "1917"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 2
   },
   {
     "text": "Koje godine se dogodilo: pad Carigrada pod Osmanlije?",
     "answers": [
       "1453"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 2
   },
   {
     "text": "Koje godine se dogodilo: Magna karta?",
     "answers": [
       "1215"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 3
   },
   {
     "text": "Koje godine se dogodilo: Deklaracija nezavisnosti SAD?",
     "answers": [
       "1776"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 3
   },
   {
     "text": "Koje godine se dogodilo: bitka kod Vaterloa?",
     "answers": [
       "1815"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 3
   },
   {
     "text": "Koje godine se dogodilo: Berlinski kongres?",
     "answers": [
       "1878"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 3
   },
   {
     "text": "Koje godine se dogodilo: Sarajevski atentat?",
     "answers": [
       "1914"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 4
   },
   {
     "text": "Koje godine se dogodilo: prvo slijetanje covjeka na Mjesec?",
     "answers": [
       "1969"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 4
   },
   {
     "text": "Koje godine se dogodilo: potonuce Titanika?",
     "answers": [
       "1912"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 4
   },
   {
     "text": "Koje godine se dogodilo: erupcija Vezuva koja je zatrpala Pompeju?",
     "answers": [
       "79"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 4
   },
   {
     "text": "Koje godine se dogodilo: Kolumbovo prvo putovanje do Amerike?",
     "answers": [
       "1492"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 5
   },
   {
     "text": "Koje godine se dogodilo: utemeljenje Ujedinjenih nacija?",
     "answers": [
       "1945"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 5
   },
   {
     "text": "Koje godine se dogodilo: kraj Prvog svjetskog rata?",
     "answers": [
       "1918"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 5
   },
   {
     "text": "Koje godine se dogodilo: ujedinjenje Njemacke u 19. vijeku?",
     "answers": [
       "1871"
     ],
-    "category": "Istorija"
+    "category": "Istorija",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Na Drini cuprija?",
@@ -730,7 +829,8 @@
       "Ivo Andric",
       "Andric"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Prokleta avlija?",
@@ -738,7 +838,8 @@
       "Ivo Andric",
       "Andric"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Dervis i smrt?",
@@ -746,7 +847,8 @@
       "Mesa Selimovic",
       "Selimovic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Tvrdjava?",
@@ -754,7 +856,8 @@
       "Mesa Selimovic",
       "Selimovic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Gorski vijenac?",
@@ -762,7 +865,8 @@
       "Petar II Petrovic Njegos",
       "Njegos"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Zlocin i kazna?",
@@ -770,7 +874,8 @@
       "Fjodor Dostojevski",
       "Dostojevski"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 1
   },
   {
     "text": "Ko je autor djela Braca Karamazovi?",
@@ -778,7 +883,8 @@
       "Fjodor Dostojevski",
       "Dostojevski"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Rat i mir?",
@@ -786,7 +892,8 @@
       "Lav Tolstoj",
       "Tolstoj"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Ana Karenjina?",
@@ -794,7 +901,8 @@
       "Lav Tolstoj",
       "Tolstoj"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Don Kihot?",
@@ -803,7 +911,8 @@
       "Servantes",
       "Cervantes"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Mali princ?",
@@ -812,7 +921,8 @@
       "Saint Exupery",
       "Egziperi"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Proces?",
@@ -820,7 +930,8 @@
       "Franc Kafka",
       "Kafka"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 2
   },
   {
     "text": "Ko je autor djela Preobrazaj?",
@@ -828,7 +939,8 @@
       "Franc Kafka",
       "Kafka"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Bozanstvena komedija?",
@@ -836,7 +948,8 @@
       "Dante Aligijeri",
       "Dante"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Faust?",
@@ -845,21 +958,24 @@
       "Gete",
       "Goethe"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Ilijada?",
     "answers": [
       "Homer"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Odiseja?",
     "answers": [
       "Homer"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Romeo i Julija?",
@@ -869,7 +985,8 @@
       "William Shakespeare",
       "Shakespeare"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 3
   },
   {
     "text": "Ko je autor djela Otelo?",
@@ -879,7 +996,8 @@
       "William Shakespeare",
       "Shakespeare"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela Starac i more?",
@@ -888,7 +1006,8 @@
       "Hemingway",
       "Hemingvej"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela Sto godina samoce?",
@@ -897,7 +1016,8 @@
       "Markes",
       "Gabriel Garcia Marquez"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela Stranac?",
@@ -906,7 +1026,8 @@
       "Kami",
       "Albert Camus"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela 1984?",
@@ -915,7 +1036,8 @@
       "Orvel",
       "George Orwell"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela Zivotinjska farma?",
@@ -924,7 +1046,8 @@
       "Orvel",
       "George Orwell"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 4
   },
   {
     "text": "Ko je autor djela Majstor i Margarita?",
@@ -932,7 +1055,8 @@
       "Mihail Bulgakov",
       "Bulgakov"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Bjesnilo?",
@@ -940,7 +1064,8 @@
       "Borislav Pekic",
       "Pekic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Seobe?",
@@ -948,7 +1073,8 @@
       "Milos Crnjanski",
       "Crnjanski"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Koreni?",
@@ -956,7 +1082,8 @@
       "Dobrica Cosic",
       "Cosic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Orlovi rano lete?",
@@ -964,7 +1091,8 @@
       "Branko Copic",
       "Copic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Ko je autor djela Jezeva kucica?",
@@ -972,7 +1100,8 @@
       "Branko Copic",
       "Copic"
     ],
-    "category": "Umjetnost"
+    "category": "Umjetnost",
+    "difficulty": 5
   },
   {
     "text": "Koji glumac tumaci lik Mr Bina?",
@@ -981,7 +1110,8 @@
       "Rowan Atkinson",
       "Atkinson"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 1
   },
   {
     "text": "Koji glumac tumaci lik Dzeka Speroua u Piratima s Kariba?",
@@ -990,7 +1120,8 @@
       "Johnny Depp",
       "Dep"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 1
   },
   {
     "text": "Koji glumac tumaci lik Foresta Gampa?",
@@ -999,7 +1130,8 @@
       "Tom Hanks",
       "Hanks"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 1
   },
   {
     "text": "Koji glumac tumaci lik Tonija Starka u Marvelovim filmovima?",
@@ -1008,7 +1140,8 @@
       "Robert Downey Jr",
       "Robert Downey"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 1
   },
   {
     "text": "Koji glumac tumaci lik Harija Potera u filmskom serijalu?",
@@ -1016,7 +1149,8 @@
       "Danijel Redklif",
       "Daniel Radcliffe"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 2
   },
   {
     "text": "Koji glumac tumaci lik Voltera Vajta u Breaking Bad?",
@@ -1024,7 +1158,8 @@
       "Brajan Krenston",
       "Bryan Cranston"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 2
   },
   {
     "text": "Koji glumac tumaci lik Tiriona Lanistera u Igri prijestola?",
@@ -1032,7 +1167,8 @@
       "Piter Dinkladz",
       "Peter Dinklage"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 2
   },
   {
     "text": "Koji glumac tumaci lik Dzokera u Mracnom vitezu iz 2008?",
@@ -1040,7 +1176,8 @@
       "Hit Ledzer",
       "Heath Ledger"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 2
   },
   {
     "text": "Koji glumac tumaci lik Dzek iz Titanika iz 1997?",
@@ -1048,7 +1185,8 @@
       "Leonardo Dikaprio",
       "Leonardo DiCaprio"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 3
   },
   {
     "text": "Koji glumac tumaci lik Neo u Matriksu?",
@@ -1056,7 +1194,8 @@
       "Kijanu Rivs",
       "Keanu Reeves"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 3
   },
   {
     "text": "Koji glumac tumaci lik Roki Balboa?",
@@ -1064,7 +1203,8 @@
       "Silvester Stalone",
       "Sylvester Stallone"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 3
   },
   {
     "text": "Koji glumac tumaci lik Terminator u filmu iz 1984?",
@@ -1072,7 +1212,8 @@
       "Arnold Svarceneger",
       "Arnold Schwarzenegger"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 3
   },
   {
     "text": "Koji glumac tumaci lik Indijana Dzons u filmu Otimaci izgubljenog kovcega?",
@@ -1080,7 +1221,8 @@
       "Harison Ford",
       "Harrison Ford"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 4
   },
   {
     "text": "Koji glumac tumaci lik Gandalf u Gospodaru prstenova?",
@@ -1088,28 +1230,35 @@
       "Ijan Mekelen",
       "Ian McKellen"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 4
   },
   {
-    "text": "Koji glumac tumaci lik Fleks u filmu Munje?",
+    "text": "Ko je rezirao film Munje iz 2001. godine?",
     "answers": [
-      "Sergej Trifunovic"
+      "Radivoje Andric",
+      "Andric"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 4
   },
   {
-    "text": "Koji glumac tumaci lik Pop u filmu Munje?",
+    "text": "Koji glumac igra Gojka u filmu Munje?",
     "answers": [
-      "Nikola Djuricko"
+      "Nikola Djuricko",
+      "Djuricko"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 4
   },
   {
-    "text": "Koji glumac tumaci lik Crni u filmu Crna macka beli macor?",
+    "text": "Ko je rezirao film Crna macka beli macor?",
     "answers": [
-      "Bajram Severdzan"
+      "Emir Kusturica",
+      "Kusturica"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 5
   },
   {
     "text": "Koji glumac tumaci lik Ilija Cvorovic u Balkanskom spijunu?",
@@ -1118,14 +1267,16 @@
       "Danilo Stojkovic",
       "Bata Stojkovic"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 5
   },
   {
     "text": "Koji glumac tumaci lik Mita Pantic u Tesnoj kozi?",
     "answers": [
       "Nikola Simic"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 5
   },
   {
     "text": "Koji glumac tumaci lik Srecko Sojic u Tesnoj kozi?",
@@ -1134,427 +1285,488 @@
       "Milan Gutovic",
       "Lane Gutovic"
     ],
-    "category": "Film i serije"
+    "category": "Film i serije",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: centralna procesorska jedinica?",
     "answers": [
       "CPU"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: graficka procesorska jedinica?",
     "answers": [
       "GPU"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: memorija sa nasumicnim pristupom?",
     "answers": [
       "RAM"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: memorija samo za citanje?",
     "answers": [
       "ROM"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: univerzalna serijska magistrala?",
     "answers": [
       "USB"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: protokol prenosa hiperteksta?",
     "answers": [
       "HTTP"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 1
   },
   {
     "text": "Koja skracenica odgovara opisu: sigurni protokol prenosa hiperteksta?",
     "answers": [
       "HTTPS"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: sistem naziva domena?",
     "answers": [
       "DNS"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: adresa internet protokola?",
     "answers": [
       "IP"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: lokalna racunarska mreza?",
     "answers": [
       "LAN"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: bezicna lokalna mreza?",
     "answers": [
       "WLAN"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: globalna navigacija satelitima?",
     "answers": [
       "GPS"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 2
   },
   {
     "text": "Koja skracenica odgovara opisu: prenos datoteka putem posebnog protokola?",
     "answers": [
       "FTP"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: virtuelna privatna mreza?",
     "answers": [
       "VPN"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: strukturirani upitni jezik za baze?",
     "answers": [
       "SQL"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: aplikacioni programski interfejs?",
     "answers": [
       "API"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: graficki korisnicki interfejs?",
     "answers": [
       "GUI"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: kaskadni stilovi web stranica?",
     "answers": [
       "CSS"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 3
   },
   {
     "text": "Koja skracenica odgovara opisu: prosirivi jezik oznacavanja?",
     "answers": [
       "XML"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: prenosivi format dokumenta?",
     "answers": [
       "PDF"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: jednokratna lozinka?",
     "answers": [
       "OTP"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: solid state disk?",
     "answers": [
       "SSD"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: uredjaj za cuvanje na tvrdim diskovima?",
     "answers": [
       "HDD"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: radiofrekventna identifikacija?",
     "answers": [
       "RFID"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 4
   },
   {
     "text": "Koja skracenica odgovara opisu: komunikacija bliskog polja?",
     "answers": [
       "NFC"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: kompakt disk?",
     "answers": [
       "CD"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: operativni sistem?",
     "answers": [
       "OS"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: vjestacka inteligencija na engleskom?",
     "answers": [
       "AI"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: internet stvari na engleskom?",
     "answers": [
       "IoT"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Koja skracenica odgovara opisu: slika visoke dinamike opsega?",
     "answers": [
       "HDR"
     ],
-    "category": "Tehnologija"
+    "category": "Tehnologija",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava biljke?",
     "answers": [
       "Botanika"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava zivotinje?",
     "answers": [
       "Zoologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava gljive?",
     "answers": [
       "Mikologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava insekte?",
     "answers": [
       "Entomologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava ribe?",
     "answers": [
       "Ihtiologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava gmizavce i vodozemce?",
     "answers": [
       "Herpetologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 1
   },
   {
     "text": "Kako se zove nauka koja proucava sisare?",
     "answers": [
       "Mamalogija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava nasljedjivanje osobina?",
     "answers": [
       "Genetika"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava odnose organizama i okoline?",
     "answers": [
       "Ekologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava fosile?",
     "answers": [
       "Paleontologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava gradju organizama?",
     "answers": [
       "Anatomija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava funkcije organizama?",
     "answers": [
       "Fiziologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 2
   },
   {
     "text": "Kako se zove nauka koja proucava celije?",
     "answers": [
       "Citologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava tkiva?",
     "answers": [
       "Histologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava mikroorganizme?",
     "answers": [
       "Mikrobiologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava viruse?",
     "answers": [
       "Virologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava bakterije?",
     "answers": [
       "Bakteriologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava embrionalni razvoj?",
     "answers": [
       "Embriologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 3
   },
   {
     "text": "Kako se zove nauka koja proucava ponasanje zivotinja?",
     "answers": [
       "Etologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava parazite?",
     "answers": [
       "Parazitologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava mora i okeane?",
     "answers": [
       "Okeanografija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava slatkovodne ekosisteme?",
     "answers": [
       "Limnologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava zemljiste?",
     "answers": [
       "Pedologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava stijene?",
     "answers": [
       "Petrologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 4
   },
   {
     "text": "Kako se zove nauka koja proucava minerale?",
     "answers": [
       "Mineralogija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava vrijeme i atmosferu?",
     "answers": [
       "Meteorologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava klimu?",
     "answers": [
       "Klimatologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava zemljotrese?",
     "answers": [
       "Seizmologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava vulkane?",
     "answers": [
       "Vulkanologija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "Kako se zove nauka koja proucava rasprostranjenost organizama?",
     "answers": [
       "Biogeografija"
     ],
-    "category": "Priroda"
+    "category": "Priroda",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: ipon?",
@@ -1562,7 +1774,8 @@
       "Dzudo",
       "Judo"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: tatami i bacanja u olimpijskom borilackom sportu?",
@@ -1570,7 +1783,8 @@
       "Dzudo",
       "Judo"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: slem u kartaskoj igri sa licitacijom?",
@@ -1578,35 +1792,40 @@
       "Bridz",
       "Bridge"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: ofsajd i penal na velikom zelenom terenu?",
     "answers": [
       "Fudbal"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: zakucavanje u kos?",
     "answers": [
       "Kosarka"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: libero i smec?",
     "answers": [
       "Odbojka"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 1
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: sedmerac i golmanski prostor od sest metara?",
     "answers": [
       "Rukomet"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: bully i pak?",
@@ -1614,21 +1833,24 @@
       "Hokej na ledu",
       "Hokej"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: snatch i clean and jerk?",
     "answers": [
       "Dizanje tegova"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: birdie i eagle?",
     "answers": [
       "Golf"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: strike i spare?",
@@ -1636,77 +1858,88 @@
       "Kuglanje",
       "Bowling"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: floret?",
     "answers": [
       "Macevanje"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 2
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: motka za preskakanje visine?",
     "answers": [
       "Atletika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: disk za bacanje na stadionu?",
     "answers": [
       "Atletika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: stafetna palica?",
     "answers": [
       "Atletika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: skok udalj?",
     "answers": [
       "Atletika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: leptir i kraul?",
     "answers": [
       "Plivanje"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: reket i pernata loptica?",
     "answers": [
       "Badminton"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 3
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: servis i tie break?",
     "answers": [
       "Tenis"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: pogonsko veslo i skif?",
     "answers": [
       "Veslanje"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: vaterpolska kapica?",
     "answers": [
       "Vaterpolo"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: kamen i metla na ledu?",
@@ -1714,14 +1947,16 @@
       "Karling",
       "Curling"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: prstenovi i razboj?",
     "answers": [
       "Gimnastika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: dresurni konj?",
@@ -1729,48 +1964,55 @@
       "Konjicki sport",
       "Jahanje"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 4
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: slalom na snijegu?",
     "answers": [
       "Skijanje"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: velodrom?",
     "answers": [
       "Biciklizam"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: table za skokove u bazen?",
     "answers": [
       "Skokovi u vodu"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: tri discipline plivanje biciklizam trcanje?",
     "answers": [
       "Triatlon"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: maraton?",
     "answers": [
       "Atletika"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   },
   {
     "text": "U kom sportu se koristi izraz ili rekvizit: knockout u ringu sa rukavicama?",
     "answers": [
       "Boks"
     ],
-    "category": "Sport"
+    "category": "Sport",
+    "difficulty": 5
   }
 ]

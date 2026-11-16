@@ -28,6 +28,7 @@ const Home: React.FC = () => (
             Pridruži se →
           </Link>
         </div>
+        <Link className="hero-secondary" to="/offline">Napolju bez interneta / samo telefoni</Link>
         <div className="hero-caption">
           <span>◉ Telefon + laptop</span>
           <span>Bez registracije</span>
