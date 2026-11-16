@@ -54,3 +54,7 @@ Ako je Arena vec pokrenuta, `start-arena.ps1` ispisuje postojece linkove bez nov
 ## Pokretanje jednim klikom
 
 Dvoklik na Desktop precicu `Pokreni Skocko` provjerava SQL Express, pokrece backend u pozadini i otvara http://localhost:5087/arena. Backend posluzuje i frontend; nije potreban npm start. Postojeci server se koristi bez dupliranja procesa. SQL se pokrece samo ako je ugasen; tada Windows moze traziti administratorsko odobrenje. Prvo pokretanje bez builda automatski pravi FE/BE build. Za primjenu novih izmjena koristi start-arena.ps1 -Public -Restart. Logovi su u .qa/launcher-*.log. Internet tunel se zasebno pokrece skriptom start-internet.ps1; LAN igranje ga ne zahtijeva.
+
+Ako Desktop precica nedostaje, dvoklik na `Vrati precicu.cmd` u folderu projekta ponovo je pravi na stvarnom Windows Desktopu. Zatvaranje browsera ne zaustavlja backend pokrenut launcherom. Poslije gasenja ili restarta racunara ponovo klikni `Pokreni Skocko`.
+
+Desktop pokretac je obican `Pokreni Skocko.cmd`, jer sistem moze odbiti cuvanje .lnk precica koje pokrecu PowerShell. On poziva isti launcher; prozor se zatvara po uspjesnom pokretanju.
