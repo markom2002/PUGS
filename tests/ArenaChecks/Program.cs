@@ -37,6 +37,8 @@ for (int i = 0; i < 30; i++)
 {
     string correct = service.With(code, token, (r, p) => r.Questions[i].Answers[0]);
     service.Answer(code, guestToken, i, correct); expected += 150;
+    var hidden = J(service.State(code, guestToken));
+    Check(hidden.GetProperty("players")[0].GetProperty("score").GetInt32() == expected - 150, "Current score hidden until reveal " + i);
     Reject(() => service.Answer(code, guestToken, i, correct), "Duplicate answer rejected " + i);
     clock.Add(20); var reveal = J(service.State(code, guestToken));
     Check(reveal.GetProperty("phase").GetString() == "reveal", "Reveal phase " + i);

@@ -1,1 +1,46 @@
-﻿*{box-sizing:border-box}html{background:#100f16;color-scheme:dark}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#100f16;color:#f6f3ff;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button,a,input,select{touch-action:manipulation}a{color:#c4aaff}button:focus-visible,a:focus-visible{outline:2px solid #d2ff65;outline-offset:4px}code{font-family:Consolas,monospace}::selection{background:#ab8cff55;color:white}
+﻿* {
+  box-sizing: border-box;
+}
+html {
+  background: #100f16;
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #100f16;
+  color: #f6f3ff;
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+select {
+  touch-action: manipulation;
+}
+a {
+  color: #c4aaff;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #d2ff65;
+  outline-offset: 4px;
+}
+code {
+  font-family: Consolas, monospace;
+}
+::selection {
+  background: #ab8cff55;
+  color: white;
+}

@@ -173,7 +173,7 @@ app.UseSpa(spa =>
 {
     spa.Options.SourcePath = "../FE";
 
-    if (app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("StartReactDevServer"))
     {
         spa.UseReactDevelopmentServer(npmScript: "start");
     }

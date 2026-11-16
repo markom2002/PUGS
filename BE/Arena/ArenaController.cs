@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace BE.Arena;
 
 [ApiController, Route("api/arena")]
-public class ArenaController(ArenaService arena, IWebHostEnvironment env) : ControllerBase
+public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfiguration config) : ControllerBase
 {
+    string AudioDirectory => config["Arena:DataPath"] ?? Path.Combine(env.ContentRootPath, "arena-data");
     public record CreateRequest(string Name, int Seconds = 20);
     public record JoinRequest(string Name);
     public record VoteRequest(string[] Categories);
@@ -31,7 +32,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env) : Cont
         var check = Run(() => arena.With(code, Token, (r, p) => { ArenaService.Host(r, p); if (r.Phase != "lobby" || r.Music.Count >= 5) throw new InvalidOperationException("Možeš dodati pet pjesama u čekaonici."); return new { ok = true }; }));
         if (check is not OkObjectResult) return check;
         // Files stay outside wwwroot; authenticated endpoint serves only the current clip.
-        var folder = Path.Combine(env.ContentRootPath, "arena-data"); Directory.CreateDirectory(folder);
+        var folder = AudioDirectory; Directory.CreateDirectory(folder);
         string id = Guid.NewGuid().ToString("N") + ext;
         await using (var stream = System.IO.File.Create(Path.Combine(folder, id))) await file.CopyToAsync(stream);
         var result = Run(() => arena.With(code, Token, (r, p) => {
@@ -50,7 +51,7 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env) : Cont
                 if (r.Index != index || r.Phase != "question" || r.Questions[index].AudioUrl is not string audio) throw new InvalidOperationException("Isečak trenutno nije dostupan.");
                 return audio;
             });
-            var path = Path.Combine(env.ContentRootPath, "arena-data", id);
+            var path = Path.Combine(AudioDirectory, id);
             string mime = Path.GetExtension(id) switch { ".mp3" => "audio/mpeg", ".wav" => "audio/wav", ".ogg" => "audio/ogg", _ => "audio/mp4" };
             return PhysicalFile(path, mime, enableRangeProcessing: true);
         } catch (Exception e) when (e is InvalidOperationException or UnauthorizedAccessException) { return NotFound(); }

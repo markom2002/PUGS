@@ -1,4 +1,12 @@
-# PUGS - Platforma za Upravljanje i Generisanje Sadržaja kvizova 
+# PUGS - Platforma za Upravljanje i Generisanje Sadržaja kvizova
+
+## Nova multiplayer Arena
+
+Šest rundi, Kaladont, četiri oblasti po izboru ekipe i muzičko finale. Novi responsive UI za telefon i računar, QR/PIN ulazak, serverski tajmeri i bodovanje.
+
+Pokreni `.\start-arena.ps1` iz korijena projekta (.NET 8 SDK + Node.js). Arena: `http://localhost:5087/arena`. Ne zahtijeva SQL Server; baza je potrebna za ranije klasične kvizove.
+
+Detaljna pravila, muzika, razvoj i povezivanje telefona: [docs/ARENA.md](docs/ARENA.md).
 
 Full-stack web aplikacija za upravljanje i izvođenje kvizova u realnom vremenu.
 

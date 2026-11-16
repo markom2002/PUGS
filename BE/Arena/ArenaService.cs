@@ -138,13 +138,14 @@ public class ArenaService
     {
         var q = r.Index >= 0 ? r.Questions[r.Index] : null;
         var reveal = r.Phase == "reveal" || r.Phase == "finished";
+        int VisibleScore(ArenaPlayer player) => player.Score - (!reveal && r.Phase == "question" && player.Answers.TryGetValue(r.Index, out var current) ? current.Points : 0);
         p.Answers.TryGetValue(r.Index, out var mine);
         return new {
             r.Code, r.Phase, r.Index, r.Seconds, serverNow = clock.GetUtcNow(), r.Deadline,
             isHost = r.Players[0] == p, me = p.Name, votes = p.Votes, r.Selected,
             categories = QuestionBank.Categories.Keys, musicCount = r.Music.Count,
             music = r.Players[0] == p && r.Phase == "lobby" ? r.Music.Select(m => new { title = m.Answers[0], m.Artist }).ToArray() : null,
-            players = r.Players.Where(x => r.Phase != "finished" || x != r.Players[0]).OrderByDescending(x => reveal ? x.Score : 0).ThenBy(x => x.Name).Select(x => new { x.Name, host = x == r.Players[0], score = reveal || r.Phase == "lobby" ? x.Score : (int?)null, correct = reveal ? x.Correct : (int?)null, voted = x.Votes.Length == 4, answered = x.Answers.ContainsKey(r.Index) }),
+            players = r.Players.Where(x => r.Phase != "finished" || x != r.Players[0]).OrderBy(x => x == r.Players[0]).ThenByDescending(VisibleScore).ThenBy(x => x.Name).Select(x => new { x.Name, host = x == r.Players[0], score = VisibleScore(x), correct = reveal ? x.Correct : (int?)null, voted = x.Votes.Length == 4, answered = x.Answers.ContainsKey(r.Index) }),
             question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, initial = r.Index < 5 ? q.Answers[0][..1] : null },
             answer = reveal ? q?.Answers[0] : null, artist = reveal ? q?.Artist : null,
             submitted = p.Answers.ContainsKey(r.Index), myAnswer = mine.Text, points = reveal ? mine.Points : (int?)null
