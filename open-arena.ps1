@@ -66,8 +66,16 @@ try {
         } until ($ready -or [DateTime]::UtcNow -ge $deadline)
         if (-not $ready) { throw 'Server nije spreman nakon 180 sekundi. Provjeri .qa logove.' }
     }
-    Write-Host "Kviz je spreman: $url/arena"
-    Start-Process "$url/arena"
+    Write-Host 'Pripremam HTTPS link za telefon i instalaciju...'
+    try {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'start-internet.ps1') -Port $Port
+        if ($LASTEXITCODE -ne 0) { throw 'HTTPS veza nije dostupna.' }
+        $connection = Invoke-RestMethod "$url/api/arena/connection" -TimeoutSec 5
+    } catch { Write-Warning 'Internet link nije dostupan. Lokalna igra i dalje radi.' }
+    $openUrl = "$url/arena"
+    if ($connection.publicUrl -and $connection.publicUrl.StartsWith('https://')) { $openUrl = "$($connection.publicUrl)/arena" }
+    Write-Host "Kviz je spreman: $openUrl"
+    Start-Process $openUrl
 } catch {
     $_ | Out-String | Set-Content -LiteralPath (Join-Path $logDir 'launcher-error.log')
     Write-Host "Pokretanje nije uspjelo: $($_.Exception.Message)" -ForegroundColor Red

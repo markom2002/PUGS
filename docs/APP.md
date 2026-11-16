@@ -60,3 +60,7 @@ Ako Desktop precica nedostaje, dvoklik na `Vrati precicu.cmd` u folderu projekta
 Desktop pokretac je obican `Pokreni Skocko.cmd`, jer sistem moze odbiti cuvanje .lnk precica koje pokrecu PowerShell. On poziva isti launcher; prozor se zatvara po uspjesnom pokretanju.
 
 Pokretac ispisuje status dok ceka server (do 180 sekundi). Ponovni klik otvara vec dostupnu aplikaciju i kada prethodno pokretanje jos traje. Greske ostaju vidljive u prozoru; nema modalnog dijaloga koji drzi zakljucavanje.
+
+Pokretac sada automatski priprema i HTTPS tunel i otvara HTTPS aplikaciju za instalaciju. LAN instalacioni dijalog nudi prelazak na aktivni HTTPS link. Na Androidu koristi Chrome meni / Instaliraj; na iPhone-u Safari / Podijeli / Dodaj na pocetni ekran. HTTPS adresa je privremena i nakon promjene tunela instalirana aplikacija moze traziti ponovno dodavanje s novog linka. Za trajnu instalaciju potreban je stabilan HTTPS domen.
+
+Muzicko pitanje samo pokrece zvuk koristeci audio kontekst otkljucan pri ulasku/glasovima. Snimak prati serverovo vrijeme i staje pola sekunde prije kraja pitanja, uz kratak fade. Povratak na pitanje ne resetuje snimak. Ako browser zahtijeva novi dodir nakon otvaranja ili povratka iz pozadine, postoji dugme Ukljuci zvuk. Kaladont vise ne salje niti prikazuje pocetno slovo odgovora.

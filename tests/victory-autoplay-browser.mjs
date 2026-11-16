@@ -18,6 +18,18 @@ try{
  const point=JSON.parse(await evaluate(`(()=>{const e=document.querySelector('#arena-answer');if(!e)throw Error('Question not rendered');e.scrollIntoView({block:'center'});const r=e.getBoundingClientRect();return JSON.stringify({x:r.x+r.width/2,y:r.y+r.height/2});})()`));
  await send('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,...point});await send('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point});await delay(300);
  assert(await evaluate('navigator.userActivation.hasBeenActive'),'The in-game gesture must be trusted');
+ await stop();room.Index=25;room.Deadline=new Date(Date.now()+20000).toISOString();room.Touched=new Date().toISOString();await fs.writeFile(path.join(data,'rooms.json'),JSON.stringify([room]));await start();
+ let musicPlaying=false;for(let i=0;i<60;i++){musicPlaying=await evaluate(`Boolean(document.querySelector('.music-question .equalizer.playing'))`);if(musicPlaying)break;await delay(200);}
+ assert(musicPlaying,'Question audio starts automatically without a play click');
+ assert.equal(await evaluate(`Boolean(document.querySelector('.initial-hint'))`),false);
+ await delay(8500);
+ assert(await evaluate(`Boolean(document.querySelector('.music-question .equalizer.playing'))`),'Music continues beyond the previous eight-second limit');
+ for(const [label,width,height] of [['desktop',1440,1000],['phone',390,950]]){
+   await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<500});
+   assert(await evaluate('document.documentElement.scrollWidth <= innerWidth+1'),'Question fits '+label);
+   const capture=await send('Page.captureScreenshot',{format:'png'});await fs.writeFile(path.join(root,'.qa','music-question-'+label+'.png'),Buffer.from(capture.data,'base64'));
+ }
+ console.log('PASS automatic question music, longer playback and responsive question stage.');
  await stop();room.Phase='finished';room.Index=29;room.Deadline=new Date().toISOString();room.Touched=new Date().toISOString();await fs.writeFile(path.join(data,'rooms.json'),JSON.stringify([room]));await start();
  let playing=false;for(let i=0;i<90;i++){playing=await evaluate(`Boolean(document.querySelector('.winner-celebration')&&[...document.querySelectorAll('.victory-audio-controls button')].some(b=>b.textContent.includes('Pauziraj')))`);if(playing)break;await delay(200);}
  assert(playing,'Victory audio must start after the earlier gesture, with no click at the finish');

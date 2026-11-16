@@ -160,3 +160,48 @@ export async function createVictoryPlayback(
     segment,
   };
 }
+
+// Shares the context unlocked by joining/voting, including on mobile Safari.
+export async function createQuestionPlayback(
+  blob: Blob, startedAt: number, endsAt: number, onEnded: () => void,
+) {
+  const ctx = getContext();
+  const buffer = await ctx.decodeAudioData(await blob.arrayBuffer());
+  const gain = ctx.createGain();
+  gain.gain.value = 0.85;
+  gain.connect(ctx.destination);
+  let source: AudioBufferSourceNode | null = null;
+  let disposed = false;
+  const pause = () => {
+    if (source) { source.onended = null; try { source.stop(); } catch {} source.disconnect(); source = null; }
+  };
+  return {
+    async play() {
+      if (disposed || source) return;
+      if (ctx.state !== "running") {
+        // Never leave a suspended resume promise hanging after backgrounding.
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        try {
+          const ready = await Promise.race([unlockVictoryAudio(), new Promise<boolean>(resolve => { timeout = setTimeout(() => resolve(false), 1200); })]);
+          if (!ready) throw new Error("Dodirni za zvuk.");
+        } finally { if (timeout) clearTimeout(timeout); }
+      }
+      if (disposed) return;
+      const offset = Math.max(0, (Date.now() - startedAt) / 1000);
+      const duration = Math.min(buffer.duration - offset, (endsAt - Date.now()) / 1000);
+      if (duration <= 0) { onEnded(); return; }
+      const node = ctx.createBufferSource();
+      node.buffer = buffer;
+      node.connect(gain);
+      source = node;
+      gain.gain.cancelScheduledValues(ctx.currentTime);
+      gain.gain.setValueAtTime(0.85, ctx.currentTime);
+      gain.gain.setValueAtTime(0.85, ctx.currentTime + Math.max(0, duration - 0.25));
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+      node.onended = () => { if (source === node) { source = null; node.disconnect(); onEnded(); } };
+      node.start(0, offset, duration);
+    },
+    pause,
+    dispose() { disposed = true; pause(); gain.disconnect(); },
+  };
+}

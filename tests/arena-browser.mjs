@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-const base = process.env.ARENA_TEST_URL || 'http://127.0.0.1:5099';
+const base = process.env.ARENA_TEST_URL || 'http://127.0.0.1:5087';
 const output = path.resolve('.qa'); await mkdir(output, { recursive: true });
 const browser = spawn(process.env.EDGE_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', ['--headless', '--disable-gpu', '--no-first-run', '--remote-debugging-port=9334', `--user-data-dir=${path.join(output, 'cdp-profile')}`, 'about:blank'], { windowsHide: true, stdio: 'ignore' });
 let socket;
@@ -23,7 +23,7 @@ try {
     const metrics = JSON.parse(result.result.value); console.log(name, metrics);
     const screenshot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
     await writeFile(path.join(output, name + '-cdp.png'), Buffer.from(screenshot.data, 'base64'));
-    assert(metrics.heading, 'Page renders its main heading');
+    assert(metrics.heading && !/can't reach|cannot reach|not available/i.test(metrics.heading), 'Application renders its main heading');
     assert(metrics.scroll <= width + 1, name + ' fits the viewport');
   }
   console.log('PASS browser desktop and phone layouts. Screenshots in .qa.');

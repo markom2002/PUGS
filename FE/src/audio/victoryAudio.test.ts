@@ -19,6 +19,7 @@ function harness() {
       context.state = "running";
     }),
     decodeAudioData: jest.fn(async () => ({
+      duration: 30,
       sampleRate: 100,
       getChannelData: () => new Float32Array(3000).fill(0.2),
     })),
@@ -88,4 +89,30 @@ test("highlight starts automatically on the unlocked context, fades, pauses and 
   playback.dispose();
   expect(nodes[2].stop).toHaveBeenCalled();
   expect(gain.disconnect).toHaveBeenCalled();
+});
+
+test("question music starts on the shared context and spans the remaining question, not eight seconds", async () => {
+  const { audio, nodes } = harness();
+  await audio.unlockVictoryAudio();
+  const now = jest.spyOn(Date, "now").mockReturnValue(100000);
+  try {
+    const player = await audio.createQuestionPlayback({ arrayBuffer: async () => new ArrayBuffer(4) }, 98000, 117500, jest.fn());
+    await player.play();
+    expect(nodes[0].start).toHaveBeenCalledWith(0, 2, 17.5);
+    player.dispose();
+    expect(nodes[0].stop).toHaveBeenCalled();
+  } finally { now.mockRestore(); }
+});
+test("late music does not play after the question deadline", async () => {
+  const { audio, nodes } = harness();
+  await audio.unlockVictoryAudio();
+  const now = jest.spyOn(Date, "now").mockReturnValue(120000);
+  const ended = jest.fn();
+  try {
+    const player = await audio.createQuestionPlayback({ arrayBuffer: async () => new ArrayBuffer(4) }, 98000, 117500, ended);
+    await player.play();
+    expect(nodes).toHaveLength(0);
+    expect(ended).toHaveBeenCalledTimes(1);
+    player.dispose();
+  } finally { now.mockRestore(); }
 });

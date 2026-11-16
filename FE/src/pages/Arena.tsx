@@ -6,7 +6,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import RoomInvite from "../components/RoomInvite";
-import { installVictoryAudioUnlock } from "../audio/victoryAudio";
+import { installVictoryAudioUnlock, createQuestionPlayback } from "../audio/victoryAudio";
 import {
   rememberMusicPreview,
   clearMusicPreviews,
@@ -114,8 +114,7 @@ export default function Arena() {
   const [remaining, setRemaining] = useState(0);
   const [audioError, setAudioError] = useState("");
   const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioUrl = useRef<string | null>(null);
+  const audioRef = useRef<Awaited<ReturnType<typeof createQuestionPlayback>> | null>(null);
   const offset = useRef(0);
   const generation = useRef(0);
   const refresh = useCallback(async () => {
@@ -221,56 +220,33 @@ export default function Arena() {
   const index = state?.index;
   const phase = state?.phase;
   const hasAudio = Boolean(state?.question?.audioUrl);
+  const questionDeadline = state?.deadline;
+  const questionSeconds = state?.seconds || 20;
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
-    audioRef.current?.pause();
+    let playback: Awaited<ReturnType<typeof createQuestionPlayback>> | null = null;
+    audioRef.current?.dispose();
     audioRef.current = null;
     setPlaying(false);
-    if (audioUrl.current) {
-      URL.revokeObjectURL(audioUrl.current);
-      audioUrl.current = null;
-    }
+    setAudioError("");
     if (session && hasAudio && phase === "question") {
+      const deadline = Date.parse(questionDeadline || "") - offset.current;
       fetch(`${API}/api/arena/rooms/${session.code}/audio/${index}`, {
-        headers: { "X-Player-Token": session.token },
-        signal: controller.signal,
-      })
-        .then((r) => {
-          if (!r.ok) throw new Error();
-          return r.blob();
-        })
-        .then((blob) => {
+        headers: { "X-Player-Token": session.token }, signal: controller.signal,
+      }).then((r) => { if (!r.ok) throw new Error("audio"); return r.blob(); })
+        .then(async (blob) => {
           if (cancelled) return;
           rememberMusicPreview(session.code, session.token, index!, blob);
-          audioUrl.current = URL.createObjectURL(blob);
-          audioRef.current = new Audio(audioUrl.current);
-        })
-        .catch(() => {
-          if (!cancelled)
-            setAudioError(
-              "Audio nije dostupan. Provjeri vezu ili format fajla.",
-            );
-        });
+          playback = await createQuestionPlayback(blob, deadline - questionSeconds * 1000, deadline - 500, () => { if (!cancelled) setPlaying(false); });
+          if (cancelled) { playback.dispose(); return; }
+          audioRef.current = playback;
+          try { await playback.play(); if (!cancelled) setPlaying(true); }
+          catch { if (!cancelled) setAudioError("Dodirni dugme da uklju?i? zvuk na ovom ure?aju."); }
+        }).catch(() => { if (!cancelled) setAudioError("Pjesma nije dostupna. Provjeri internet vezu."); });
     }
-    return () => {
-      cancelled = true;
-      controller.abort();
-      audioRef.current?.pause();
-      if (audioUrl.current) URL.revokeObjectURL(audioUrl.current);
-    };
-  }, [session, index, phase, hasAudio]);
-  // Stop every device on the shared 8-second clip boundary, even after reconnect.
-  useEffect(() => {
-    if (
-      state &&
-      hasAudio &&
-      (phase !== "question" || remaining <= state.seconds - 8)
-    ) {
-      audioRef.current?.pause();
-      setPlaying(false);
-    }
-  }, [remaining, state, hasAudio, phase]);
+    return () => { cancelled = true; controller.abort(); playback?.dispose(); };
+  }, [session, index, phase, hasAudio, questionDeadline, questionSeconds]);
   async function action(fn: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -642,7 +618,8 @@ export default function Arena() {
                   onAgain={leave}
                 />
               ) : (
-                <section className="question-card" key={state.index}>
+                <section className={`question-card ${hasAudio ? "music-question" : ""} ${questionActive && remaining <= 5 ? "final-seconds" : ""}`} key={state.index}>
+                  <div className="stage-kicker"><span>RUNDA {Math.floor(state.index / 5) + 1} / 6</span><span>{hasAudio ? "PREPOZNAJ HIT" : "BRZINA ? ZNANJE"}</span></div>
                   <div className="question-meta">
                     <span className="pill">{state.question?.category}</span>
                     <span>PITANJE {(state.index % 5) + 1} / 5</span>
@@ -664,12 +641,6 @@ export default function Arena() {
                       }}
                     />
                   </div>
-                  {state.question?.initial && (
-                    <div className="initial-hint">
-                      ODGOVOR POČINJE SLOVOM{" "}
-                      <strong>{state.question.initial}</strong>
-                    </div>
-                  )}
                   <h2>{state.question?.text}</h2>
                   {hasAudio && (
                     <div className="audio-panel">
@@ -686,7 +657,7 @@ export default function Arena() {
                           />
                         ))}
                       </div>
-                      {questionActive && remaining > state.seconds - 8 ? (
+                      {questionActive && remaining > 0 ? (
                         <button
                           className="arena-secondary"
                           disabled={playing}
@@ -698,10 +669,6 @@ export default function Arena() {
                               );
                               return;
                             }
-                            audio.currentTime = Math.max(
-                              0,
-                              state.seconds - remaining,
-                            );
                             audio
                               .play()
                               .then(() => {

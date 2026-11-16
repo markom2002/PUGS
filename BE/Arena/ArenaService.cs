@@ -206,7 +206,7 @@ public class ArenaService
                 averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,
                 fastest=x!=r.Players[0]&&fastestTime!=null&&x.ResponseTimesMs.TryGetValue(r.Index,out var time)&&time==fastestTime
             }),
-            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl, initial = r.Index < 5 ? q.Answers[0][..1] : null },
+            question = q == null ? null : new { q.Text, q.Category, q.AudioUrl },
             answer = reveal ? q?.Answers[0] : null, artist = reveal ? q?.Artist : null,
             musicSourceUrl = reveal && q?.AudioUrl?.StartsWith("deezer:") == true ? "https://www.deezer.com/track/" + q.AudioUrl[7..] : null,
             submitted = p.Answers.ContainsKey(r.Index), myAnswer = mine.Text, points = reveal ? mine.Points : (int?)null

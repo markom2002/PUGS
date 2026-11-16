@@ -22,6 +22,13 @@ export function InstallButton({ className = "" }: { className?: string }) {
   );
 }
 export function PwaProvider({ children }: { children: React.ReactNode }) {
+  const [secureUrl, setSecureUrl] = useState("");
+  useEffect(() => {
+    if (typeof fetch !== "function") return;
+    fetch("/api/arena/connection").then(r => r.json()).then(info => {
+      if (typeof info.publicUrl === "string" && info.publicUrl.startsWith("https://")) setSecureUrl(info.publicUrl + window.location.pathname + window.location.search);
+    }).catch(() => {});
+  }, []);
   const [help, setHelp] = useState(false);
   const [installed, setInstalled] = useState(false);
   const [prompt, setPrompt] = useState<InstallEvent | null>(null);
@@ -206,6 +213,9 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               Dodaj Skočka na telefon ili laptop. Otvara se u svom prozoru,
               spreman za sljedeću partiju.
             </p>
+            {!window.isSecureContext && secureUrl && (
+              <a className="install-primary install-secure-link" href={secureUrl}>Otvori verziju za instalaciju ?</a>
+            )}
             {prompt ? (
               <button
                 className="install-primary"
@@ -243,7 +253,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
             {!window.isSecureContext && (
               <p className="install-notice">
                 Na ovoj lokalnoj adresi možeš igrati u browseru. Za instalaciju
-                na telefonu otvori HTTPS pozivnicu za internet igru.
+                na telefonu otvori HTTPS pozivnicu za internet igru. Nakon prelaska ponovo pritisni Instaliraj. Na novoj adresi ponovo unesi PIN i nadimak.
               </p>
             )}
             {message && <p role="status">{message}</p>}
