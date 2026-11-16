@@ -11,3 +11,4 @@ Thumbs.db
 BE/arena-data/
 .env.local
 .qa/
+.tools/

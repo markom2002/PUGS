@@ -1,4 +1,4 @@
-﻿# Skočko Arena (PUGS)
+# Skočko Arena (PUGS)
 
 Multiplayer kviz za računar i telefon: šest rundi, po pet pitanja, PIN/QR ulazak, serverski tajmer i poredak uživo.
 
@@ -19,6 +19,10 @@ Iz korijena projekta:
 Otvori `http://localhost:5087/arena`. Za drugi port koristi `.\start-arena.ps1 -Port 5099`. Telefon mora biti na istoj mreži; otvori `http://IP-RACUNARA:5087/arena`. Ako dijeliš QR/pozivnicu, i na računaru otvori tu LAN adresu.
 
 Muzički katalog čuva podatke i odgovore. Originalni Deezer preview isečci se dobavljaju preko interneta, pa audio zahtijeva mrežnu vezu i dostupnost izvora.
+
+## Instalacija i internet igra
+
+Aplikacija se može dodati na telefon/laptop preko HTTPS linka. Za lokalno igranje koristi postojeću LAN adresu. Za prijatelje na drugim mrežama pokreni `start-arena.ps1 -Public`, pa `start-internet.ps1`. Privremeni link radi dok je tvoj računar uključen. Detalji: [docs/APP.md](docs/APP.md).
 
 ## Razvoj i provjere
 

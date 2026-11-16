@@ -1,9 +1,46 @@
 ﻿{
-  "short_name": "Skočko",
+  "id": "/",
   "name": "Skočko Arena",
-  "icons": [{"src":"skocko.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}],
-  "start_url": "/arena",
+  "short_name": "Skočko",
+  "description": "Tvoja ekipa. Šest rundi. Jedan pobjednik.",
+  "start_url": "/arena?source=app",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#100f16",
-  "background_color": "#100f16"
+  "orientation": "any",
+  "background_color": "#0d101a",
+  "theme_color": "#0d101a",
+  "lang": "sr-Latn",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "/icons/app-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Okupi ekipu",
+      "url": "/arena",
+      "description": "Napravi novu partiju"
+    },
+    {
+      "name": "Imam PIN",
+      "url": "/arena?code=",
+      "description": "Pridruži se prijateljima"
+    }
+  ]
 }

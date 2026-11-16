@@ -1,0 +1,183 @@
+﻿.install-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff08;
+  color: #f4f0ff;
+  border: 1px solid #ffffff24;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font: 600 12px inherit;
+  cursor: pointer;
+  min-height: 42px;
+}
+.install-button > span {
+  color: #d2ff65;
+  font-size: 20px;
+}
+.app-installed {
+  color: #d2ff65;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.install-overlay {
+  position: fixed;
+  inset: 0;
+  background: #060812dd;
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow: auto;
+}
+.install-dialog {
+  position: relative;
+  width: min(100%, 470px);
+  max-height: 90dvh;
+  overflow-y: auto;
+  border: 1px solid #ab8cff55;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at top right, #4f357544, transparent 65%), #171925;
+  padding: 38px;
+  color: #f6f3ff;
+  box-shadow: 0 30px 100px #0008;
+}
+.install-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: 0;
+  color: #aaa5bc;
+  font-size: 26px;
+  cursor: pointer;
+  min-width: 40px;
+  min-height: 40px;
+}
+.install-dialog > img {
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  display: block;
+  margin-bottom: 24px;
+}
+.install-eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #ab8cff;
+}
+.install-dialog h2 {
+  font-size: 33px;
+  letter-spacing: -1px;
+  margin: 14px 0;
+}
+.install-dialog p,
+.install-dialog li {
+  color: #b8b3cb;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.install-dialog ol {
+  padding-left: 22px;
+  display: grid;
+  gap: 14px;
+  margin: 26px 0;
+}
+.install-dialog strong {
+  color: #f5f0ff;
+}
+.install-primary {
+  width: 100%;
+  background: #d2ff65;
+  color: #16200e;
+  border: 0;
+  padding: 16px;
+  border-radius: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.install-fineprint {
+  font-size: 10px;
+  line-height: 1.8;
+  border-top: 1px solid #ffffff15;
+  padding-top: 20px;
+  margin-top: 24px;
+  color: #8a839e;
+}
+.install-notice {
+  border: 1px solid #eec47a33;
+  padding: 13px;
+  border-radius: 10px;
+  background: #eec47a09;
+  color: #d5be98 !important;
+}
+.app-connection-banner {
+  position: fixed;
+  bottom: 0;
+  inset-inline: 0;
+  z-index: 900;
+  background: #593545;
+  color: #ffe6e6;
+  text-align: center;
+  padding: 13px 18px calc(13px + env(safe-area-inset-bottom));
+  font-size: 12px;
+}
+.app-update-toast {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 900;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 17px 20px;
+  border: 1px solid #ab8cff66;
+  border-radius: 15px;
+  background: #221e32;
+  box-shadow: 0 15px 50px #0007;
+}
+.app-update-toast strong,
+.app-update-toast span {
+  display: block;
+  font-size: 12px;
+}
+.app-update-toast span {
+  font-size: 10px;
+  color: #aaa5bc;
+  margin-top: 5px;
+}
+.app-update-toast button {
+  border: 0;
+  border-radius: 7px;
+  background: #d2ff65;
+  color: #15200a;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+.app-update-toast button:last-child {
+  background: none;
+  color: #aaa5bc;
+  font-size: 20px;
+}
+@media (max-width: 500px) {
+  .install-dialog {
+    padding: 28px;
+  }
+  .install-button {
+    padding: 9px 11px;
+    font-size: 10px;
+    gap: 6px;
+  }
+  .app-update-toast {
+    gap: 10px;
+    padding: 14px;
+  }
+  .install-dialog h2 {
+    font-size: 29px;
+  }
+}

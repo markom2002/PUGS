@@ -44,3 +44,5 @@ code {
   background: #ab8cff55;
   color: white;
 }
+/* Arena night: shared application surface and native-device safe areas. */
+html{background:#0d101a;scroll-behavior:smooth}body{background:radial-gradient(ellipse at 85% 10%,#39275d20,transparent 40%),radial-gradient(ellipse at 10% 65%,#263a5315,transparent 40%),#0d101a;min-height:100dvh}body:before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#b4a6e703 1px,transparent 1px),linear-gradient(90deg,#b4a6e703 1px,transparent 1px);background-size:60px 60px;z-index:-1}#root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}button:active:not(:disabled){transform:translateY(1px)}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

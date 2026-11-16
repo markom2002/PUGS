@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Mvc;
 namespace BE.Arena;
 
@@ -16,10 +17,11 @@ public class ArenaController(ArenaService arena, IWebHostEnvironment env, IConfi
         catch (UnauthorizedAccessException e) { return Unauthorized(new { error = e.Message }); }
         catch (InvalidOperationException e) { return BadRequest(new { error = e.Message }); }
     }
-    [HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds));
-    [HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
+    [EnableRateLimiting("arena-create"), HttpPost("rooms")] public IActionResult Create(CreateRequest req) => Run(() => arena.Create(req.Name, req.Seconds));
+    [EnableRateLimiting("arena-join"), HttpPost("rooms/{code}/join")] public IActionResult Join(string code, JoinRequest req) => Run(() => arena.Join(code, req.Name));
     [HttpGet("rooms/{code}")] public IActionResult State(string code) => Run(() => arena.State(code, Token));
     [HttpPost("rooms/{code}/vote")] public IActionResult Vote(string code, VoteRequest req) => Run(() => arena.Vote(code, Token, req.Categories));
+    [HttpGet("connection")] public IActionResult Connection([FromServices] ArenaConnectionInfo connection) => Ok(connection.Describe(Request));
     [HttpGet("music/status")] public IActionResult MusicStatus() => Ok(music.Summary());
     [HttpPost("rooms/{code}/start")]
     public async Task<IActionResult> Start(string code, CancellationToken ct)

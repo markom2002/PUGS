@@ -1,6 +1,7 @@
 // src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { PwaProvider } from './components/Pwa';
 import Navbar from './components/Navbar';   // dodaj import Navbar-a
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -24,7 +25,7 @@ import Arena from './pages/Arena';
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <PwaProvider><Router>
       <Navbar />
       <Routes>
         <Route path='/arena' element={<Arena />} />
@@ -50,7 +51,7 @@ const App: React.FC = () => {
         <Route path="/join-live" element={<JoinLiveQuiz />} />
         <Route path="/live-quiz" element={<LiveQuiz />} />
       </Routes>
-    </Router>
+    </Router></PwaProvider>
   );
 };
 

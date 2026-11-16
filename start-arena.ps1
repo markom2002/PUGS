@@ -1,7 +1,9 @@
-param([ValidateRange(1024, 65535)][int]$Port = 5087)
+param([ValidateRange(1024, 65535)][int]$Port = 5087, [switch]$Public)
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $previousEnvironment = $env:ASPNETCORE_ENVIRONMENT
+$previousPublic = $env:Arena__PublicMode
+$previousPort = $env:Arena__Port
 try {
     Push-Location (Join-Path $projectRoot 'FE')
     try {
@@ -12,10 +14,12 @@ try {
     Push-Location (Join-Path $projectRoot 'BE')
     try {
         $env:ASPNETCORE_ENVIRONMENT = 'Production'
+        $env:Arena__PublicMode = $Public.IsPresent.ToString().ToLowerInvariant()
+        $env:Arena__Port = $Port.ToString()
         Write-Host "PUGS Arena: http://localhost:$Port/arena"
         Write-Host "Telefon: otvori http://IP-ADRESA-OVOG-RACUNARA:$Port na istoj Wi-Fi mrezi."
         Write-Host 'Zaustavljanje: Ctrl+C'
         & dotnet run --no-launch-profile --urls "http://0.0.0.0:$Port"
         if ($LASTEXITCODE -ne 0) { throw 'Backend nije pokrenut.' }
     } finally { Pop-Location }
-} finally { $env:ASPNETCORE_ENVIRONMENT = $previousEnvironment }
+} finally { $env:ASPNETCORE_ENVIRONMENT = $previousEnvironment; $env:Arena__PublicMode = $previousPublic; $env:Arena__Port = $previousPort }

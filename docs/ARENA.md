@@ -31,7 +31,7 @@ Za razvoj pokreni `dotnet run --launch-profile http` iz `BE`, a `npm start` iz `
 
 ## Oporavak i ograničenja
 
-Sesija igrača ostaje u `sessionStorage`: osvježavanje istog taba vraća igrača u istu sobu. Zatvaranje taba može izgubiti token. „Napusti prikaz” izlazi sa ekrana, ali ne uklanja učesnika iz sobe.
+Sesija igrača se čuva u tabu i na uređaju (`sessionStorage` i `localStorage`): osvježavanje ili ponovno otvaranje na istom origin-u vraća igrača u sobu dok je server čuva. „Napusti prikaz” briše lokalnu aktivnu sesiju, ali ne uklanja učesnika iz sobe. Za instalaciju i lokalnu/internet igru pogledaj [APP.md](APP.md).
 
 Backend čuva stanje i tokene u ignorisanom folderu `BE/arena-data`; muzički katalog je u SQL Server tabeli `QuizAppDB.dbo.MusicTracks`. Ne izlaži taj folder kroz statički server i ne commituj ga. Restart procesa zadržava partije mlađe od tri sata, uz nastavak po stvarnom satu (partija nije pauzirana dok server ne radi). Sačuvano stanje je namijenjeno jednom server procesu sa trajnim diskom. Više instanci zahtijeva zajedničku bazu/Redis i koordinaciju. Stari audio fajlovi se ne brišu automatski.
 

@@ -1,23 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InstallButton } from "../components/Pwa";
 import "./css/Home.css";
 const Home: React.FC = () => (
   <main className="pugs-home">
     <section className="pugs-hero">
       <div className="hero-copy">
         <div className="hero-kicker">
-          <i /> NOVA GENERACIJA KVIZ VEČERI
+          <i /> TVOJA NOVA OMILJENA KVIZ VEČER
         </div>
         <h1>
           Okupi ekipu.
           <br />
-          Uključi mozak.
+          Podigni ulog.
           <br />
           <span>Pokidaj kviz.</span>
         </h1>
         <p>
-          Od prvog slova do posljednjeg refrena. Izazovi prijatelje u šest rundi
-          znanja, brzine i domaćih hitova.
+          Veliko znanje. Brzi prsti. Domaći hitovi. Pretvori običnu večer u šest
+          rundi koje će se prepričavati.
         </p>
         <div className="hero-actions">
           <Link className="hero-primary" to="/arena">
@@ -28,105 +29,131 @@ const Home: React.FC = () => (
           </Link>
         </div>
         <div className="hero-caption">
-          <span>◉ Telefon + računar</span>
-          <span>✦ Bez registracije</span>
-          <span>↗ Do 32 igrača</span>
+          <span>◉ Telefon + laptop</span>
+          <span>Bez registracije</span>
+          <span>Do 32 učesnika</span>
         </div>
       </div>
-      <div className="hero-visual" aria-label="Ilustracija kviz arene">
-        <div className="orbit orbit-one" />
-        <div className="orbit orbit-two" />
-        <div className="floating-chip chip-one">✦ ZNANJE JE TIMSKI SPORT</div>
-        <div className="visual-card">
-          <div className="visual-card-top">
-            <span>Skočko / ARENA</span>
-            <span className="visual-live">● UŽIVO</span>
-          </div>
-          <div className="visual-round">01 / KALADONT</div>
-          <h2>
-            Sve počinje
-            <br />
-            jednim slovom.
-          </h2>
-          <div className="hero-letters">
-            <b>S</b>
-            <span>→</span>
-            <b>N</b>
-            <span>→</span>
-            <b>A</b>
-          </div>
-          <div className="visual-progress">
-            <i />
-          </div>
-          <div className="visual-card-bottom">
-            <span>5 PITANJA</span>
-            <span>20 SEKUNDI / ODGOVOR</span>
-          </div>
+      <div className="hero-stage" aria-label="Pregled kviz arene">
+        <div className="stage-orbit orbit-a" />
+        <div className="stage-orbit orbit-b" />
+        <div className="stage-orbit orbit-c" />
+        <div className="stage-crosshair crosshair-a" />
+        <div className="stage-crosshair crosshair-b" />
+        <div className="hero-mascot">
+          <img src="/skocko.svg" alt="" />
+          <span className="mascot-shadow" />
         </div>
-        <div className="floating-chip chip-two">
-          <span>♫</span>
+        <div className="stage-label">
+          <span className="stage-dot" /> ZNANJE ULAZI U ARENU.
+        </div>
+        <div className="stage-score">
+          <span>TAČAN ODGOVOR</span>
+          <strong>
+            +150<small>POENA</small>
+          </strong>
           <div>
-            Prepoznaj hit.<small>Muzičko finale te čeka.</small>
+            <i /> BRZINA PRAVI RAZLIKU
           </div>
         </div>
-        <div className="visual-star">✳</div>
+        <div className="stage-music">
+          <div className="stage-wave">
+            {[16, 30, 22, 45, 35, 52, 24, 40, 20, 32].map((h, i) => (
+              <i
+                key={i}
+                style={{ height: h, animationDelay: `${i * 0.12}s` }}
+              />
+            ))}
+          </div>
+          <div>
+            <strong>Prepoznaj hit.</strong>
+            <span>MUZIČKO FINALE / 05 PJESAMA</span>
+          </div>
+        </div>
+        <div className="stage-ticket">
+          <span>PRIMJER IGRE</span>
+          <b>01 — KALADONT</b>
+          <div>
+            S<i>→</i>N<i>→</i>A
+          </div>
+          <small>Posljednje slovo. Novi izazov.</small>
+        </div>
+        <span className="stage-index">SKOČKO / SEASON: VEČERAS</span>
       </div>
     </section>
     <section className="home-number-strip">
       <div>
         <b>06</b>
-        <span>različitih rundi</span>
+        <span>rundi za pamćenje</span>
       </div>
       <div>
         <b>30</b>
-        <span>prilika da zablistaš</span>
+        <span>pitanja do podijuma</span>
       </div>
       <div>
-        <b>04</b>
-        <span>oblasti bira ekipa</span>
+        <b>813</b>
+        <span>domaćih hitova</span>
       </div>
       <div>
         <b>01</b>
-        <span>mjesto na vrhu</span>
+        <span>ekipa koju okupljaš</span>
       </div>
     </section>
-    <section className="home-rounds">
+    <section className="home-rounds" id="kako-se-igra">
       <div className="home-section-heading">
         <div>
-          <span className="home-eyebrow">
-            JEDNA PARTIJA. CIJELI SPEKTAR ZNANJA.
-          </span>
-          <h2>Rutina? Ne igra kod nas.</h2>
+          <span className="home-eyebrow">OVDJE SVAKO IMA SVOJ TRENUTAK.</span>
+          <h2>
+            Šest rundi.
+            <br />
+            <em>Nula dosadnih minuta.</em>
+          </h2>
         </div>
         <Link to="/arena">Uđi u arenu ↗</Link>
       </div>
       <div className="home-round-cards">
         <article className="home-round-card kaladont">
-          <span>01 / ZAGRIJAVANJE</span>
-          <div className="round-art">
-            A<span>→</span>B
+          <div className="round-card-top">
+            <span>01 / ZAGRIJAVANJE</span>
+            <b>↗</b>
+          </div>
+          <div className="round-chain">
+            <strong>A</strong>
+            <i>→</i>
+            <strong>B</strong>
+            <i>→</i>
+            <strong>C</strong>
           </div>
           <h3>Kaladont znanja</h3>
           <p>
-            Posljednje slovo odgovora postaje prvo slovo sljedećeg. Pet pitanja,
-            jedan povezan lanac.
+            Odgovori se nadovezuju. Posljednje slovo jednog otvara sljedeće
+            pitanje. Pet karika, jedan lanac znanja.
           </p>
-          <small>OPŠTE ZNANJE · 5 PITANJA</small>
+          <small>OPŠTE ZNANJE / 5 PITANJA</small>
         </article>
         <article className="home-round-card choice">
-          <span>02—05 / VAŠ TEREN</span>
-          <div className="round-art">
-            ◈ <span>✳</span> ◎
+          <div className="round-card-top">
+            <span>02—05 / VAŠ TEREN</span>
+            <b>↗</b>
           </div>
-          <h3>Ekipa bira pravila</h3>
+          <div className="round-topics">
+            <span>SPORT</span>
+            <span>FILM</span>
+            <span>NAUKA</span>
+            <span>ISTORIJA</span>
+          </div>
+          <h3>Vaša igra. Vaša pravila.</h3>
           <p>
-            Sport, film, nauka ili nešto četvrto? Glasajte i igrajte četiri
-            oblasti sa najviše glasova.
+            Neko živi za sport. Neko zna svaki film. Izglasajte četiri oblasti i
+            pustite da svako zablista.
           </p>
-          <small>4 OBLASTI · 20 PITANJA</small>
+          <small>4 IZGLASANE OBLASTI / 20 PITANJA</small>
         </article>
         <article className="home-round-card music">
-          <span>06 / VELIKO FINALE</span>
+          <div className="round-card-top">
+            <span>06 / ZADNJI REFREN</span>
+            <b>↗</b>
+          </div>
           <div className="music-art">
             {[20, 42, 30, 65, 45, 78, 52, 28, 55, 35, 65, 25].map((h, i) => (
               <i key={i} style={{ height: h }} />
@@ -134,67 +161,143 @@ const Home: React.FC = () => (
           </div>
           <h3>Znaš je na prvu.</h3>
           <p>
-            Nekoliko sekundi domaćeg hita. Nema ponuđenih odgovora. Samo ti,
-            melodija i naslov pjesme.
+            Od kafane do modernih hitova. Nekoliko sekundi originalne pjesme i
+            trka za naslovom. Završnica koja diže ekipu.
           </p>
-          <small>DOMAĆA MUZIKA · 5 PJESAMA</small>
+          <small>6 MUZIČKIH ŽANROVA / 5 PJESAMA</small>
         </article>
+      </div>
+    </section>
+    <section className="home-app">
+      <div className="app-pitch">
+        <span className="home-eyebrow">JEDNA ARENA. SVAKI TVOJ EKRAN.</span>
+        <h2>
+          Veliki ekran.
+          <br />
+          Mali ekran.
+          <br />
+          <em>Ista velika igra.</em>
+        </h2>
+        <p>
+          Na laptopu vodiš večer, na telefonu loviš poene. Dodaj Skočka među
+          aplikacije i sljedeći put uđi jednim dodirom.
+        </p>
+        <InstallButton className="app-pitch-install" />
+        <div className="app-feature-line">
+          <span>↓ Instalacija iz browsera</span>
+          <span>↗ Pozovi linkom ili QR kodom</span>
+        </div>
+      </div>
+      <div className="device-stage" aria-label="Skočko na laptopu i telefonu">
+        <div className="device-laptop">
+          <div className="device-browser">
+            <i />
+            <i />
+            <i />
+            <span>SKOČKO / ARENA</span>
+          </div>
+          <div className="device-content">
+            <div className="device-round">RUNDA 01 / KALADONT</div>
+            <strong>
+              Koji je glavni
+              <br />
+              grad Italije?
+            </strong>
+            <div className="device-answer">
+              Rim <span>✓ POSLATO</span>
+            </div>
+            <div className="device-progress">
+              <i />
+            </div>
+            <small>EKIPA JE NA POTEZU.</small>
+          </div>
+          <div className="device-keyboard" />
+        </div>
+        <div className="device-phone">
+          <div className="phone-island" />
+          <img src="/skocko.svg" alt="" />
+          <small>POREDAK UŽIVO</small>
+          <div>
+            <span>01</span>
+            <b>Ti</b>
+            <strong>1.450</strong>
+          </div>
+          <div>
+            <span>02</span>
+            <b>Ekipa</b>
+            <strong>1.320</strong>
+          </div>
+          <p>↑ TVOJ TRENUTAK.</p>
+          <button tabIndex={-1} aria-hidden="true">
+            SLJEDEĆE PITANJE
+          </button>
+        </div>
+        <span className="device-preview-label">ILUSTRACIJA APLIKACIJE</span>
       </div>
     </section>
     <section className="home-how">
       <div>
-        <span className="home-eyebrow">OD DOGOVORA DO PRVOG PITANJA</span>
+        <span className="home-eyebrow">DOGOVOR U GRUPI. PARTIJA ZA MINUT.</span>
         <h2>
-          Manje pripreme.
+          Tri koraka
           <br />
-          Više igre.
+          do dobrog provoda.
         </h2>
-        <p>Arena sama bira pet domaćih hitova. Vi samo okupite ekipu.</p>
+        <p>
+          Bez komplikacija. Domaćin otvara sobu, a arena priprema pitanja i
+          muziku.
+        </p>
       </div>
       <ol>
         <li>
           <b>01</b>
           <div>
-            <h3>Otvori sobu</h3>
-            <p>Izaberi nadimak i tempo. Registracija nije potrebna.</p>
+            <h3>Napravi sobu</h3>
+            <p>Izaberi nadimak i tempo. Pozornica je spremna.</p>
           </div>
         </li>
         <li>
           <b>02</b>
           <div>
-            <h3>Pošalji PIN ekipi</h3>
-            <p>Podijeli pozivnicu ili QR kod. Svako igra sa svog uređaja.</p>
+            <h3>Pozovi ekipu</h3>
+            <p>
+              Pošalji pozivnicu ili pokaži QR kod. Svako igra sa svog uređaja.
+            </p>
           </div>
         </li>
         <li>
           <b>03</b>
           <div>
-            <h3>Izaberite oblasti. Krenite.</h3>
-            <p>Unosite odgovore, skupljajte poene i osvojite podijum.</p>
+            <h3>Glasajte. Igrajte. Slavite.</h3>
+            <p>
+              Izaberite oblasti i krenite po podijum. Najbrži muzički pogodak
+              pobjednika postaje soundtrack slavlja.
+            </p>
           </div>
         </li>
       </ol>
     </section>
     <section className="home-final-cta">
-      <span>EKIPA JE SPREMNA?</span>
+      <div className="cta-orbit" />
+      <span>NEKA SE O OVOJ VEČERI PRIČA.</span>
       <h2>
-        Neko mora biti prvi.
+        Ekipa je spremna.
         <br />
-        Zašto ne ti?
+        <em>Jesi li ti?</em>
       </h2>
       <Link className="hero-primary" to="/arena">
         Napravi svoju partiju ↗
       </Link>
+      <p>Telefon, laptop i malo takmičarskog duha. To je sve.</p>
     </section>
     <footer className="home-footer">
-      <strong>
-        Skočko<span> / ARENA</span>
-      </strong>
+      <Link className="footer-brand" to="/">
+        <img src="/skocko.svg" alt="Skočko" />
+        <span>ARENA</span>
+      </Link>
       <span>DOBRO DRUŠTVO. DOBRA PITANJA.</span>
-      <Link to="/arena">Arena uživo ↗</Link>
+      <Link to="/arena">Ulaz u igru ↗</Link>
     </footer>
   </main>
 );
 export default Home;
-
-

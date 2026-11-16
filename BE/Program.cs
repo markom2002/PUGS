@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using BE;  // tvoji namespace-ovi
@@ -12,6 +14,13 @@ using BE.Models.QuizHub;
 using BE.Services.QuizHub;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<BE.Arena.ArenaConnectionInfo>();
+builder.Services.AddRateLimiter(options=>{
+    options.RejectionStatusCode=429;
+    options.AddPolicy("arena-create",context=>RateLimitPartition.GetFixedWindowLimiter(context.Connection.RemoteIpAddress?.ToString()??"unknown",_=>new FixedWindowRateLimiterOptions{PermitLimit=10,Window=TimeSpan.FromMinutes(1),QueueLimit=0,AutoReplenishment=true}));
+    options.AddPolicy("arena-join",context=>RateLimitPartition.GetFixedWindowLimiter(context.Connection.RemoteIpAddress?.ToString()??"unknown",_=>new FixedWindowRateLimiterOptions{PermitLimit=60,Window=TimeSpan.FromMinutes(1),QueueLimit=0,AutoReplenishment=true}));
+    options.OnRejected=async(context,ct)=>{context.HttpContext.Response.Headers.RetryAfter="60";await context.HttpContext.Response.WriteAsJsonAsync(new{error="Previše pokušaja. Sačekaj minut i pokušaj ponovo."},ct);};
+});
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -140,10 +149,20 @@ var app = builder.Build();
 app.Services.GetRequiredService<BE.Arena.MusicLibrary>();
 
 
+// Public play exposes only the Arena API; legacy administration, uploads and Swagger stay local-only.
+app.Use(async(context,next)=>{
+    var path=context.Request.Path;
+    if(path=="/sw.js"||path=="/manifest.json"||path=="/index.html")context.Response.Headers.CacheControl="no-cache";
+    if(builder.Configuration.GetValue<bool>("Arena:PublicMode")&&
+      ((path.StartsWithSegments("/api")&&!path.StartsWithSegments("/api/arena"))||path.StartsWithSegments("/swagger")||path.StartsWithSegments("/quizhub")||
+      (context.Request.Method=="POST"&&path.Value?.EndsWith("/music",StringComparison.OrdinalIgnoreCase)==true))){context.Response.StatusCode=404;return;}
+    await next();
+});
 app.UseStaticFiles();
 app.UseSpaStaticFiles();
 
 app.UseRouting();
+app.UseRateLimiter();
 
 // CORS middleware pre autentifikacije i autorizacije
 app.UseCors(MyAllowSpecificOrigins);

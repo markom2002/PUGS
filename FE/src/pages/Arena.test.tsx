@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import Arena from "./Arena";
 
 beforeEach(() => {
-  sessionStorage.clear();
+  sessionStorage.clear(); localStorage.removeItem("skocko-session");
   jest.restoreAllMocks();
 });
 test("PIN invitations open the join form and preserve the PIN", () => {

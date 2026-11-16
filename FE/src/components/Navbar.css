@@ -86,3 +86,5 @@
   }
 }
 .navbar .pugs-brand{display:flex;align-items:center}.pugs-brand img{display:block;object-fit:contain}
+.navbar{padding-block:24px}.navbar-links>.install-button{border-color:#ab8cff33;background:#ab8cff08}.navbar .nav-cta{border-radius:11px;padding:14px 20px;box-shadow:0 7px 22px #d2ff6512}.pugs-brand img{filter:drop-shadow(0 0 12px #ffe46b20)}@media(max-width:760px){.navbar{padding-block:18px}.navbar-links{gap:12px}.navbar-links>a[href='/login']{display:none}.navbar .nav-cta{padding:11px 13px}.navbar-links>button:not(.install-button){font-size:10px}}
+@media(max-width:500px){.navbar .nav-how{display:none}}
