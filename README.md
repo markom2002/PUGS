@@ -1,6 +1,6 @@
 # Live Quiz Arena
 
-**Okupi ekipu. Podigni ulog. Pokidaj kviz.**
+**Okupi ekipu. Testiraj znanje. Zabavi se.**
 
 Multiplayer kviz za računar i telefon: napravi sobu, podeli PIN ili QR kod i takmičite se uživo. Kaladont opšteg znanja, oblasti koje ekipa bira, mapa sveta i domaći hitovi u muzičkom finalu — bez registracije.
 

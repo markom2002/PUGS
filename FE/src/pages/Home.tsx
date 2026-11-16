@@ -12,9 +12,9 @@ const Home: React.FC = () => (
         <h1>
           Okupi ekipu.
           <br />
-          Podigni ulog.
+          Testiraj znanje.
           <br />
-          <span>Pokidaj kviz.</span>
+          <span>Zabavi se.</span>
         </h1>
         <p>
           Veliko znanje. Domaći hitovi. Mapa sveta. Pretvori običnu večer u

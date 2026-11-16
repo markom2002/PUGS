@@ -4,7 +4,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 const base = process.env.ARENA_TEST_URL || 'http://127.0.0.1:5087';
 const output = path.resolve('.qa'); await mkdir(output, { recursive: true });
-const browser = spawn(process.env.EDGE_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', ['--headless', '--disable-gpu', '--no-first-run', '--remote-debugging-port=9334', `--user-data-dir=${path.join(output, 'cdp-profile')}`, 'about:blank'], { windowsHide: true, stdio: 'ignore' });
+const browser = spawn(process.env.EDGE_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', ['--headless', '--disable-gpu', '--no-first-run', '--remote-debugging-port=9334', `--user-data-dir=${path.join(output, 'cdp-profile-' + Date.now())}`, 'about:blank'], { windowsHide: true, stdio: 'ignore' });
 let socket;
 try {
   let target;
