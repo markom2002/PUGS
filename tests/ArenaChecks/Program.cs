@@ -37,9 +37,9 @@ int expected = 0;
 for (int i = 0; i < 30; i++)
 {
     string correct = service.With(code, token, (r, p) => r.Questions[i].Answers[0]);
-    service.Answer(code, guestToken, i, correct); expected += 150;
+    service.Answer(code, guestToken, i, correct); expected += i>=25?100:150;
     var hidden = J(service.State(code, observerToken));
-    Check(hidden.GetProperty("players")[0].GetProperty("score").GetInt32() == expected - 150, "Current score hidden until reveal " + i);
+    Check(hidden.GetProperty("players")[0].GetProperty("score").GetInt32() == expected - (i>=25?100:150), "Current score hidden until reveal " + i);
     var locked = J(service.State(code, guestToken));
     Check(locked.GetProperty("players")[0].GetProperty("score").GetInt32()==expected,"Submitted player sees live points "+i);
     Check(locked.GetProperty("players")[0].GetProperty("responseMs").GetInt32()==0,"Response time is server measured "+i);
@@ -49,7 +49,7 @@ for (int i = 0; i < 30; i++)
     Reject(() => service.Answer(code, guestToken, i, correct), "Duplicate answer rejected " + i);
     clock.Add(i>=25?25:20); var reveal = J(service.State(code, guestToken));
     Check(reveal.GetProperty("phase").GetString() == "reveal", "Reveal phase " + i);
-    Check(reveal.GetProperty("points").GetInt32() == 150, "Server computes points " + i);
+    Check(reveal.GetProperty("points").GetInt32() == (i>=25?100:150), "Server computes points " + i);
     Reject(() => service.Answer(code, token, i, correct), "Late answer rejected " + i);
     clock.Add(5);
     service = new ArenaService(clock, config); // Simulate restart every round.
@@ -150,6 +150,13 @@ service.With(pc,pt,(r,p)=>{r.Index=27;r.Questions[27]=r.Questions[27] with {Arti
 service.Answer(pc,pt,27,"Test Artist");
 Check(service.With(pc,pt,(r,p)=>p.Answers[27].Points)==50,"Artist-only answer earns fifty points");
 foreach(var category in QuestionBank.Categories.Values){for(int draw=0;draw<20;draw++){var selected=QuestionBank.PickProgressive(category);Check(selected.Length==5&&selected.Zip(selected.Skip(1)).All(pair=>pair.First.Difficulty<=pair.Second.Difficulty),"Five progressively harder questions");}}
+var songQuestion=new ArenaQuestion("Song",new[]{"Kad zamirisu jorgovani"},"Music", "test.mp3","Singer");
+Check(QuestionBank.PartialTitle(songQuestion,"zamirisu jorgovani"),"Meaningful partial song title accepted");
+Check(!QuestionBank.PartialTitle(songQuestion,"Kad"),"Generic single word is not a partial song answer");
+service.With(pc,pt,(r,p)=>{r.Index=28;r.Phase="question";r.Questions[28]=songQuestion;r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(28);return true;});
+service.Answer(pc,pt,28,"Kad zamirisu jorgovani");Check(service.With(pc,pt,(r,p)=>p.Answers[28].Points)==100,"Exact music title earns fifty plus fifty speed bonus");
+service.With(pc,pt,(r,p)=>{r.Index=29;r.Questions[29]=songQuestion;r.Deadline=clock.GetUtcNow().AddSeconds(25);p.Answers.Remove(29);return true;});
+service.Answer(pc,pt,29,"zamirisu jorgovani");Check(service.With(pc,pt,(r,p)=>p.Answers[29].Points)==50,"Partial title earns fifty without speed bonus");
 Console.WriteLine("All arena checks passed. Temporary test data: " + directory);
 
 class TestClock : TimeProvider

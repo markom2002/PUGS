@@ -668,7 +668,7 @@ export default function Arena() {
                     />
                   </div>
                   <h2>{state.question?.text}</h2>
-                  {hasAudio && <p className="music-scoring-note">MUZICKO FINALE +5 SEKUNDI / naslov: puni poeni / samo izvodjac: 50 poena</p>}
+                  {hasAudio && <p className="music-scoring-note">MUZICKO FINALE +5 SEKUNDI / izvodjac ili dio naslova: 50 / pun naziv: 50 + bonus za brzinu</p>}
                   {hasAudio && (
                     <div className="audio-panel">
                       <div
@@ -793,7 +793,7 @@ export default function Arena() {
                     >
                       <span>
                         {state.points
-                          ? state.points === 50 && hasAudio ? "IZVODJAC POGODJEN! +50 POENA" : `TAČNO! +${state.points} POENA`
+                          ? state.points === 50 && hasAudio ? "MUZICKI POGODAK! +50 POENA" : `TAČNO! +${state.points} POENA`
                           : "TAČAN ODGOVOR"}
                       </span>
                       <h3>{state.answer}</h3>

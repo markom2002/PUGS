@@ -90,3 +90,5 @@ Ako kamera nije dostupna, kodovi se mogu prenijeti rucno iz polja Tvoj kod za po
 Pitanja u rundama 2-5 imaju urednicke nivoe 1-5. Svaka runda bira po jedno pitanje blisko svakom nivou, bez duplikata, i sortira ih rastuce. Rotacija najmanje koriscenih pitanja i dalje vazi unutar odgovarajuceg nivoa. Kaladont zadrzava slovnu vezu.
 
 Automatski test tests/phone-offline-browser.mjs proverava dva browser klijenta: uparivanje, glasanje, potvrdu prenosa muzike, svih 30 pitanja, bodove gosta i pobjednika dok su HTTP/HTTPS zahtjevi blokirani. Ovaj test nije zamjena za fizicku probu kombinacije Android/iPhone i konkretnog hotspota.
+
+Azurirano muzicko bodovanje: izvodjac ili prepoznatljiv dio naslova donose 50 poena bez bonusa; potpuno tacan naslov donosi 50 plus do 50 za brzinu. Dio naslova zahtijeva najmanje dvije uzastopne rijeci, najmanje sest normalizovanih znakova i bar polovinu rijeci prihvacenog naslova. Obicna opsta pitanja ostaju 100 plus bonus. Stare standalone precice na /arena bez PIN-a prebacuju se na homepage; eksplicitne pozivnice sa PIN-om se cuvaju.

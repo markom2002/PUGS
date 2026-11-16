@@ -6,6 +6,12 @@ public record ArenaQuestion(string Text, string[] Answers, string Category, stri
 public static class QuestionBank
 {
     public static string Normalize(string text) => string.Concat(text.Trim().ToLowerInvariant().Replace("đ", "dj").Normalize(NormalizationForm.FormD).Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark && char.IsLetterOrDigit(c)));
+    public static bool PartialTitle(ArenaQuestion q,string answer) {
+        var tokens=answer.Split(new[]{' ','-','.',',','!','?'},StringSplitOptions.RemoveEmptyEntries).Select(Normalize).Where(s=>s.Length>0).ToArray();
+        if(tokens.Length<2||Normalize(answer).Length<6)return false;
+        var phrase=" "+string.Join(" ",tokens)+" ";
+        return q.Answers.Any(title=>{var words=title.Split(new[]{' ','-','.',',','!','?'},StringSplitOptions.RemoveEmptyEntries).Select(Normalize).Where(s=>s.Length>0).ToArray();return tokens.Length>=Math.Ceiling(words.Length/2.0)&&(" "+string.Join(" ",words)+" ").Contains(phrase);});
+    }
     static ArenaQuestion[] Pack(string category, params string[] rows) => rows.Select((row,index) => { var parts = row.Split('~'); return new ArenaQuestion(parts[0], parts[1].Split('|'), category, Difficulty:Math.Min(5,index+1)); }).ToArray();
     public static readonly Dictionary<string, ArenaQuestion[]> Categories = new()
     {

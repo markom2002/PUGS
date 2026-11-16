@@ -173,7 +173,7 @@ public class ArenaService
         if (p.Answers.ContainsKey(index)) throw new InvalidOperationException("Odgovor je već poslat.");
         if (string.IsNullOrWhiteSpace(answer) || answer.Length > 160) throw new InvalidOperationException("Unesi odgovor do 160 znakova.");
         bool correct = r.Questions[index].Answers.Any(a => QuestionBank.Normalize(a) == QuestionBank.Normalize(answer));
-        int points = correct ? 100 + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / Duration(r) * 50, 0, 50) : r.Index>=25 && !string.IsNullOrWhiteSpace(r.Questions[index].Artist) && QuestionBank.Normalize(r.Questions[index].Artist!)==QuestionBank.Normalize(answer) ? 50 : 0;
+        int points = correct ? (r.Index>=25?50:100) + (int)Math.Clamp((r.Deadline - clock.GetUtcNow()).TotalSeconds / Duration(r) * 50, 0, 50) : r.Index>=25 && (QuestionBank.PartialTitle(r.Questions[index],answer)||!string.IsNullOrWhiteSpace(r.Questions[index].Artist) && QuestionBank.Normalize(r.Questions[index].Artist!)==QuestionBank.Normalize(answer)) ? 50 : 0;
         p.ResponseTimesMs[index] = (int)Math.Clamp((clock.GetUtcNow() - r.Deadline.AddSeconds(-Duration(r))).TotalMilliseconds, 0, Duration(r) * 1000);
         p.Answers[index] = (answer.Trim(), points); p.Score += points; if (correct) p.Correct++;
         // Correctness is returned only during reveal, never while opponents can answer.
@@ -217,7 +217,7 @@ public class ArenaService
             players = r.Players.Where(x=>r.Phase!="finished"||IsCompetitor(r,x)).OrderBy(x=>!IsCompetitor(r,x)).ThenByDescending(VisibleScore).ThenBy(x=>AverageTime(x)??double.MaxValue).ThenBy(x=>x.Name).Select(x=>new {
                 x.Name, host=x==r.Players[0], participating=IsCompetitor(r,x), score=VisibleScore(x),
                 rank=!IsCompetitor(r,x)?(int?)null:Rank(x), rankChange=!IsCompetitor(r,x)?0:PreviousRank(x)-Rank(x),
-                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&PointsNow(x)>=100?1:0),
+                correct=x.Correct-(!canSeeCurrent&&r.Phase=="question"&&x.Answers.TryGetValue(r.Index,out var currentAnswer)&&r.Questions[r.Index].Answers.Any(title=>QuestionBank.Normalize(title)==QuestionBank.Normalize(currentAnswer.Text))?1:0),
                 voted=x.Votes.Length==4, answered=x.Answers.ContainsKey(r.Index),
                 responseMs=x.ResponseTimesMs.TryGetValue(r.Index,out var ms)?(int?)ms:null,
                 averageMs=AverageTime(x), questionPoints=canSeeCurrent?PointsNow(x):(int?)null,
