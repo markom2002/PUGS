@@ -46,3 +46,7 @@ Lokalni server nastavlja raditi. Za stalni HTTPS hosting postavi `Arena:PublicUr
 - U javnom režimu (`Arena:PublicMode=true`) dostupni su Arena API i interfejs. Raniji administratorski API, Swagger, stari SignalR i upload su blokirani. Kreiranje i ulazak imaju ograničenje pokušaja po IP adresi.
 
 Ovo je privatna multiplayer aplikacija za probne partije s društvom, ne završena infrastruktura za javni komercijalni servis. Postojeće AutoMapper/CRA zavisnosti imaju prijavljena upozorenja koja treba zasebno riješiti prije takvog lansiranja.
+
+## Ponovno pokretanje i zakljucan BE.exe
+
+Ako je Arena vec pokrenuta, `start-arena.ps1` ispisuje postojece linkove bez novog builda. Za obnovu aplikacije koristi `.\start-arena.ps1 -Restart`, odnosno `.\start-arena.ps1 -Public -Restart` za internet. Restart prekida aktivne veze. Skripta zaustavlja samo backend iz ovog foldera. Nemoj paralelno pokretati `dotnet run` ili `dotnet ef database update` dok isti backend radi: Windows zakljucava njegov BE.exe i build prijavljuje MSB3027/MSB3021.
