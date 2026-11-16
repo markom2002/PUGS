@@ -1,6 +1,6 @@
 # Aplikacija na telefonu i laptopu
 
-Skočko je instalabilna web aplikacija (PWA). Nije APK/EXE paket i ne zahtijeva App Store. Chrome/Edge mogu ponuditi instalaciju, a iPhone koristi Safari → Podijeli → Dodaj na početni ekran. Puna instalacija zahtijeva HTTPS, osim lokalnog razvoja na localhost-u. Izvor: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable.
+Live Quiz Arena je instalabilna web aplikacija (PWA). Nije APK/EXE paket i ne zahtijeva App Store. Chrome/Edge mogu ponuditi instalaciju, a iPhone koristi Safari → Podijeli → Dodaj na početni ekran. Puna instalacija zahtijeva HTTPS, osim lokalnog razvoja na localhost-u. Izvor: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable.
 
 ## Ista Wi-Fi mreža
 
@@ -53,11 +53,10 @@ Ako je Arena vec pokrenuta, `start-arena.ps1` ispisuje postojece linkove bez nov
 
 ## Pokretanje jednim klikom
 
-Dvoklik na Desktop aplikaciju `Skocko` proverava SQL Express, pravi noviji FE/BE build po potrebi, pokrece server i automatski priprema proverenu internet pozivnicu. Desktop otvara http://localhost:5087/. Telefon koristi QR/link iz sobe. Logovi su u .qa/launcher-*.log.
+Dvoklik na Desktop aplikaciju `Live Quiz Arena` proverava SQL Express, pravi noviji FE/BE build po potrebi, pokrece server i automatski priprema proverenu internet pozivnicu. Desktop otvara http://localhost:5087/. Telefon koristi QR/link iz sobe. Logovi su u .qa/launcher-*.log.
 
-Ako Desktop precica nedostaje, dvoklik na `Vrati precicu.cmd` u folderu projekta ponovo je pravi na stvarnom Windows Desktopu. Zatvaranje browsera ne zaustavlja backend pokrenut launcherom. Poslije gasenja ili restarta racunara ponovo klikni `Skocko`.
+Ako Desktop precica nedostaje, dvoklik na `Vrati precicu.cmd` u folderu projekta ponovo je pravi na stvarnom Windows Desktopu. Zatvaranje browsera ne zaustavlja backend pokrenut launcherom. Poslije gasenja ili restarta racunara ponovo klikni `Live Quiz Arena`.
 
-Desktop pokretac je obican `Skocko.cmd`, jer sistem moze odbiti cuvanje .lnk precica koje pokrecu PowerShell. On poziva isti launcher; prozor se zatvara po uspjesnom pokretanju.
 
 Pokretac ispisuje status dok ceka server (do 180 sekundi). Ponovni klik otvara vec dostupnu aplikaciju i kada prethodno pokretanje jos traje. Greske ostaju vidljive u prozoru; nema modalnog dijaloga koji drzi zakljucavanje.
 
@@ -69,7 +68,7 @@ Aplikacija i Desktop pokretac sada otvaraju pocetnu stranicu. Admin u cekaonici 
 
 ## Lokalna igra bez interneta i desktop prozor
 
-`install-desktop-app.ps1` pravi Desktop precicu Skocko aplikacija: launcher pali lokalni server i otvara poseban Edge app prozor bez kartica. To je desktop web aplikacija, ne samostalni nativni EXE paket. Native PWA instalacija je i dalje dostupna kroz Instaliraj na HTTPS adresi.
+`install-desktop-app.ps1` pravi Desktop precicu Live Quiz Arena: launcher pali lokalni server i otvara poseban Edge app prozor bez kartica. To je desktop web aplikacija, ne samostalni nativni EXE paket. Native PWA instalacija je i dalje dostupna kroz Instaliraj na HTTPS adresi.
 
 Prije izlaska pripremi muziku uz `node scripts/prepare-offline-music.mjs`. Lokalni previewi ostaju u ignorisanom BE/arena-data/audio-cache; ne salju se na GitHub. Za offline sobu ukljuci Lokalna igra bez interneta. Izbor pjesama se tada ogranicava na pripremljene snimke. Laptop i njegov SQL Server moraju ostati ukljuceni; povezi telefone i laptop na isti Wi-Fi ili hotspot. Koristi LAN pozivnicu, ne internet adresu instalirane PWA. Internet nije potreban za pitanja, bodove ni pripremljenu muziku. Telefon sam bez laptop/servera ne moze hostovati ovu verziju. Ako hotspot ne dozvoljava medjusobnu komunikaciju klijenata, koristi drugu lokalnu mrezu.
 

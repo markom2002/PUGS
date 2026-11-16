@@ -318,7 +318,7 @@ export default function Arena() {
     <main className="arena-shell">
       <div className="arena-topline">
         <Link to="/">
-          <img src="/skocko.svg" alt="Skočko" width="38" height="44" />{" "}
+          <img src="/skocko.svg" alt="Live Quiz Arena" width="38" height="44" />{" "}
           <span>/ ARENA</span>
         </Link>
         <div className="arena-header-actions">
@@ -994,7 +994,7 @@ export default function Arena() {
         </>
       )}
       <footer className="arena-footer">
-        <span>Skočko / IGRA ZA ZNATIŽELJNE.</span>
+        <span>Live Quiz Arena / IGRA ZA ZNATIŽELJNE.</span>
         <span>Dobro društvo. Dobra pitanja.</span>
       </footer>
     </main>

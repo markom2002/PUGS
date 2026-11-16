@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import {
   render,
   screen,
@@ -37,7 +37,7 @@ test("native installation prompt only runs after the user requests it", async ()
   expect(prompt).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole("button", { name: /Instaliraj/ }));
   fireEvent.click(
-    screen.getByRole("button", { name: /Instaliraj Skočko Arenu/ }),
+    screen.getByRole("button", { name: /Instaliraj Live Quiz Arena/ }),
   );
   await waitFor(() => expect(prompt).toHaveBeenCalledTimes(1));
   await waitFor(() =>

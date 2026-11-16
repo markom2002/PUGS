@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <Link className="pugs-brand" to="/">
-        <img src="/skocko.svg" alt="Skočko" width="48" height="54" />
+        <img src="/skocko.svg" alt="Live Quiz Arena" width="48" height="54" />
       </Link>
       <div className="navbar-links">
         <a className="nav-how" href="/#kako-se-igra">

@@ -79,7 +79,7 @@ const Home: React.FC = () => (
           </div>
           <small>Posljednje slovo. Novi izazov.</small>
         </div>
-        <span className="stage-index">SKOČKO / SEASON: VEČERAS</span>
+        <span className="stage-index">LIVE QUIZ ARENA / SEASON: VEČERAS</span>
       </div>
     </section>
     <section className="home-number-strip">
@@ -180,7 +180,7 @@ const Home: React.FC = () => (
           <em>Ista velika igra.</em>
         </h2>
         <p>
-          Na laptopu vodiš večer, na telefonu loviš poene. Dodaj Skočka među
+          Na laptopu vodiš večer, na telefonu loviš poene. Dodaj Live Quiz Arena među
           aplikacije i sljedeći put uđi jednim dodirom.
         </p>
         <InstallButton className="app-pitch-install" />
@@ -189,13 +189,13 @@ const Home: React.FC = () => (
           <span>↗ Pozovi linkom ili QR kodom</span>
         </div>
       </div>
-      <div className="device-stage" aria-label="Skočko na laptopu i telefonu">
+      <div className="device-stage" aria-label="Live Quiz Arena na laptopu i telefonu">
         <div className="device-laptop">
           <div className="device-browser">
             <i />
             <i />
             <i />
-            <span>SKOČKO / ARENA</span>
+            <span>LIVE QUIZ ARENA</span>
           </div>
           <div className="device-content">
             <div className="device-round">RUNDA 01 / KALADONT</div>
@@ -293,7 +293,7 @@ const Home: React.FC = () => (
     </section>
     <footer className="home-footer">
       <Link className="footer-brand" to="/">
-        <img src="/skocko.svg" alt="Skočko" />
+        <img src="/skocko.svg" alt="Live Quiz Arena" />
         <span>ARENA</span>
       </Link>
       <span>DOBRO DRUŠTVO. DOBRA PITANJA.</span>

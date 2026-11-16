@@ -210,7 +210,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
             </span>
             <h2 id="install-title">Arena ide s tobom.</h2>
             <p>
-              Dodaj Skočka na telefon ili laptop. Otvara se u svom prozoru,
+              Dodaj Live Quiz Arena na telefon ili laptop. Otvara se u svom prozoru,
               spreman za sljedeću partiju.
             </p>
             {!window.isSecureContext && secureUrl && (
@@ -224,7 +224,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               >
                 {installing
                   ? "Otvaramo instalaciju…"
-                  : "Instaliraj Skočko Arenu ↗"}
+                  : "Instaliraj Live Quiz Arena ↗"}
               </button>
             ) : (
               <ol>
@@ -245,7 +245,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
                       <strong>Instaliraj aplikaciju</strong> ili{" "}
                       <strong>Dodaj na početni ekran</strong>.
                     </li>
-                    <li>Pokreni Skočka kao zasebnu aplikaciju.</li>
+                    <li>Pokreni Live Quiz Arena kao zasebnu aplikaciju.</li>
                   </>
                 )}
               </ol>

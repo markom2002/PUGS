@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Skočko Arena",
-  "short_name": "Skočko",
-  "description": "Tvoja ekipa. Šest rundi. Jedan pobjednik.",
+  "name": "Live Quiz Arena",
+  "short_name": "Live Quiz Arena",
+  "description": "Kviz uživo: znanje, igrice, mapa sveta i muzičko finale.",
   "start_url": "/?source=app",
   "scope": "/",
   "display": "standalone",

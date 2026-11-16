@@ -68,7 +68,7 @@ export default function RoomInvite({ code }: { code: string }) {
     try {
       if (navigator.share) {
         await navigator.share({
-          title: "Ulazi u Skočko Arenu",
+          title: "Ulazi u Live Quiz Arena",
           text: `Ekipa te čeka! PIN: ${code}`,
           url: link,
         });
