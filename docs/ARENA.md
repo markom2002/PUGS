@@ -66,7 +66,7 @@ Timske lige/turniri, AI editor uz provjeru izvora, ponavljanje grešaka, analiti
 Provjera nove putanje bez uploada: na razvojnom serveru pokreni `node tests/music-library-http.mjs`. Ovo pravi probnu sobu i zahtijeva dostupnost muzičkog servisa. Nije test za produkcioni server.
 ### Prošireni SQL katalog
 
-Trenutni početni katalog: 813 pjesama i 84 izvođača. Narodna 120, kafanska 120, pop-folk 120, pop/rock 170, rep 118 i moderna 165. Broj se može provjeriti kroz `GET /api/arena/music/status` ili u SSMS:
+Trenutni početni katalog: 1848 pjesama i 93 izvođača. Narodna 810, kafanska 465, pop-folk 120, pop/rock 170, rep 118 i moderna 165. Broj se može provjeriti kroz `GET /api/arena/music/status` ili u SSMS:
 
 ```sql
 USE QuizAppDB;
@@ -105,3 +105,5 @@ Svako kreiranje sobe dobija nov šestocifreni PIN. Već iskorišćeni PIN-ovi č
 
 Domaćin prije početka može kliknuti „Isprazni čekaonicu”: svi gosti se uklanjaju, tokeni prestaju da važe i svi ponovo glasaju. PIN se pri pražnjenju iste čekaonice ne mijenja; novi PIN dobija se kreiranjem nove sobe. Aktivni meč se ovim dugmetom ne može resetovati. Završni ekran ostaje vidljiv učesnicima koji su ga dočekali, ali se prijava ne koristi za automatski ulazak u naredni meč.
 Otvaranje `/arena` bez PIN-a uvijek započinje novu prijavu. Povratak u postojeći meč preko sačuvane sesije dozvoljen je samo ako URL sadrži isti aktivni PIN. Nakon ulaska URL se usklađuje sa novim PIN-om.
+
+Za prosirenje narodne i kafanske biblioteke koristi `node scripts/seed-music.mjs --folk --per-artist=40`. Broj je ciljani maksimum razlicitih naslova po izvodjacu; postojeci unosi se cuvaju. Originalni izvodjac i dostupnost audio previewa provjeravaju se prije upisa, uz ogranicenu paralelnost. Ponovni uvoz ne dodaje iste naslove pod drugim ID-jevima za istog izvodjaca. Vesna Zmijanac, Halid Beslic, Saban Saulic i Serif Konjevic imaju po 40 pjesama.
