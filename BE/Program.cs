@@ -93,6 +93,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 //QuizHub
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<LiveQuizManager>();
+builder.Services.AddSingleton<BE.Arena.ArenaService>();
+builder.Services.AddSingleton(TimeProvider.System);
 
 
 
