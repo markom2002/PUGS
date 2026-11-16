@@ -7,6 +7,7 @@ if ($runningBackends.Count -gt 0) {
     if (-not $Restart) {
         Write-Host 'Arena je vec pokrenuta. Koristi postojece linkove:'
         $listeners = @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -in $runningBackends.Id } | Select-Object -ExpandProperty LocalPort -Unique)
+        if ($listeners.Count -eq 0) { $listeners = @($Port) }
         foreach ($activePort in $listeners) {
             Write-Host "Racunar: http://localhost:$activePort/arena"
             try {
