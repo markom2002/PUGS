@@ -88,3 +88,13 @@ Završetak prikazuje krunu, animirani podijum, konfete i svjetlosne zrake. Pobje
 Server bira muzičko pitanje koje je pobjednik najbrže tačno odgovorio, prema sačuvanom serverskom vremenu. Kod više pobjednika bira se najbrži takav pogodak među njima. Pogrešni odgovori, protivnički pogoci i odgovori bez zabilježenog vremena se ne koriste. Ako nema odgovarajućeg pogotka, finale prikazuje slavlje bez soundtracka.
 
 Zvanični preview izabrane pjesme pokušava da se pusti automatski, jednom, uz početnu jačinu od 35%. Browser može zahtijevati klik na „Pusti slavlje”. Dostupni su pauza, ponavljanje i jačina zvuka. Izlazak iz završnog prikaza zaustavlja zvuk. Zaštićeni `victory-audio` endpoint dostupan je samo učesnicima završene partije; prije kraja ne otkriva pjesmu. Potrebna je internet veza i dostupan preview kod muzičkog servisa.
+
+### Automatski zvuk i izbor slavljeničkog dijela
+
+AudioContext se priprema tokom prvog normalnog dodira/klika ili pritiska tipke u Areni. Završnica koristi isti kontekst, pa u redovnoj partiji ne zahtijeva dodatni klik za zvuk. Browser pravila se ne mijenjaju niti zaobilaze: direktno otvaranje završnice bez ranijeg dodira, povratak iz pozadine ili izričita zabrana zvuka i dalje mogu zahtijevati dodir na „Pusti slavlje”. Mehanizam prati preporuku za igre: https://developer.chrome.com/blog/web-audio-autoplay.
+
+Do pet preview isečaka koji su već učitani tokom muzičkih pitanja privremeno se drži samo u RAM-u, vezano za sobu i sesiju. Pobjednička pjesma se zato obično ne preuzima ponovo. Izlazak iz partije briše ove podatke; nema trajnog niti PWA keširanja audio snimaka.
+
+Iz dostupnog preview-a bira se do 18 sekundi kontinuirano energičnog zvuka, uz kratko poravnanje početka na jači ulaz fraze i postepeno pojačavanje/stišavanje. Analiza koristi amplitudu i kontinuitet energije, bez semantičkog prepoznavanja refrena; ne garantuje refren niti pristup punoj pjesmi. Kratak preview svira u svojoj raspoloživoj dužini. Pauza, nastavak, ponavljanje i jačina zvuka ostaju dostupni.
+
+Provjere: `npm test -- --watchAll=false --runInBand` u FE; `node tests/victory-autoplay-browser.mjs` iz korijena za stvarni Edge s pravilom `document-user-activation-required`. Browser provjera pokreće svoj razvojni backend na portu 5108 s izolovanim podacima u `.qa`, koristi stvarni preview i ne mijenja aktivne sobe. Potrebni su .NET, lokalni SQL Server, internet, izgrađeni frontend i instaliran Edge.

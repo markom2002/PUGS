@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import RoomInvite from "../components/RoomInvite";
+import { installVictoryAudioUnlock } from "../audio/victoryAudio";
+import {
+  rememberMusicPreview,
+  clearMusicPreviews,
+} from "../audio/musicPreviewCache";
 import "./css/Arena.css";
 import { InstallButton } from "../components/Pwa";
 import WinnerCelebration, { Victory } from "../components/WinnerCelebration";
@@ -81,6 +86,7 @@ export async function arenaRequest(
 const icons = ["↗", "◈", "◎", "⚡", "◷", "⌘", "✳", "❋"];
 export default function Arena() {
   const [params] = useSearchParams();
+  useEffect(() => installVictoryAudioUnlock(), []);
   const [session, setSession] = useState<Session | null>(() => {
     try {
       return JSON.parse(
@@ -185,6 +191,7 @@ export default function Arena() {
         })
         .then((blob) => {
           if (cancelled) return;
+          rememberMusicPreview(session.code, session.token, index!, blob);
           audioUrl.current = URL.createObjectURL(blob);
           audioRef.current = new Audio(audioUrl.current);
         })
@@ -225,6 +232,7 @@ export default function Arena() {
     }
   }
   function leave() {
+    clearMusicPreviews();
     generation.current++;
     sessionStorage.removeItem("pugs-arena");
     localStorage.removeItem("skocko-session");
